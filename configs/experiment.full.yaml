@@ -1,0 +1,105 @@
+# Experimento completo del TFG: todos los agentes en un solo fichero.
+#
+# Pool de instancias: 120 instancias SWE-bench Lite estratificadas por repo (seed 42).
+# Todos los agentes del grupo principal corren sobre las 120 instancias.
+# Los agentes de ablación corren sobre un sub-slice de 40 (misma estrategia y seed),
+# que es un subconjunto propio de las 120, permitiendo comparaciones directas.
+#
+# Matriz de runs:
+#   default, robust_strict, robust_balanced, robust_permissive → 4 × 120 = 480 runs
+#   robust_no_intervention, robust_v2                          → 2 ×  40 =  80 runs
+#   Total                                                               → 560 runs
+#
+# Uso:
+#   python -m benchmark.run --config configs/experiment.full.yaml
+#
+# Reanudar tras un corte (sin --force-rerun):
+#   python -m benchmark.run --config configs/experiment.full.yaml
+
+experiment_id_explicit: full-lite-120inst-6agents
+
+# ── Dataset ────────────────────────────────────────────────────────────────────
+# Pool global. Los agentes con dataset_slice_size usan un sub-slice de este pool.
+dataset:
+  name: SWE-bench/SWE-bench_Lite
+  subset: lite
+  split: test
+  slice_strategy: stratified_by_repo
+  slice_size: 120
+  slice_seed: 42
+
+# ── Benchmark ──────────────────────────────────────────────────────────────────
+benchmark:
+  runs_root: runs
+  workers: 4
+  inter_run_delay_seconds: 0      # delay dinamico: arranca en 0 y sube hasta 60s si hay errores 429
+  functional_backend: sb_cli
+  evaluation_skip: true           # fase 1: ejecutar todos los agentes sin evaluar
+                                  # fase 2: cambiar a false y re-lanzar para sb-cli
+  mini_agent_config: configs/mini/swebench_gemini_json.yaml
+
+# ── Parámetros compartidos (YAML anchors) ─────────────────────────────────────
+x-gemini-agent: &gemini-agent
+  model_id: gemini/gemini-2.5-flash
+  environment_class: minisweagent.environments.docker.DockerEnvironment
+  cost_limit: 2.0
+  step_limit: 250
+
+x-robust-base: &robust-base
+  <<: *gemini-agent
+  agent_class: agent.robust_agent.RobustAgent
+  mini_agent_config: configs/mini/swebench_gemini_json_robust.yaml
+
+# ── Agentes ───────────────────────────────────────────────────────────────────
+agents:
+
+  # ════════════════════════════════════════════════════════════════════════════
+  # GRUPO PRINCIPAL  — 120 instancias c/u
+  # ════════════════════════════════════════════════════════════════════════════
+
+  - <<: *gemini-agent
+    agent_id: default
+    agent_class: minisweagent.agents.default.DefaultAgent
+
+  - <<: *robust-base
+    agent_id: robust_strict
+
+  - <<: *robust-base
+    agent_id: robust_balanced
+
+  - <<: *robust-base
+    agent_id: robust_permissive
+
+  # ════════════════════════════════════════════════════════════════════════════
+  # ABLACIONES  — 40 instancias c/u (sub-slice del pool de 120, misma seed)
+  # ════════════════════════════════════════════════════════════════════════════
+
+  # Ablación 1: controlador inerte (siempre PROCEED)
+  - <<: *robust-base
+    agent_id: robust_no_intervention
+    dataset_slice_size: 40        # sub-slice del pool global de 120
+    config_overrides:
+      profile: balanced
+      controller:
+        policy_matrix:
+          low:    {low: PROCEED, medium: PROCEED, high: PROCEED}
+          medium: {low: PROCEED, medium: PROCEED, high: PROCEED}
+          high:   {low: PROCEED, medium: PROCEED, high: PROCEED}
+        high_high_per_profile:
+          strict: PROCEED
+          balanced: PROCEED
+          permissive: PROCEED
+        stability_window: 9999
+
+  # Ablación 2: umbrales conservadores (high=0.80, low=0.40)
+  - <<: *robust-base
+    agent_id: robust_v2
+    dataset_slice_size: 40        # sub-slice del pool global de 120
+    config_overrides:
+      profile: balanced
+      uncertainty:
+        high_threshold: 0.80
+        low_threshold: 0.40
+      structural_metrics:
+        high_threshold: 0.80
+        low_threshold: 0.40

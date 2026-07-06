@@ -1,0 +1,25 @@
+.env
+.env.local
+
+.venv/
+venv/
+
+src/robust_agents_tfg.egg-info/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+site/
+
+# Artefactos autocontenidos de tests E2E del agente (repos git y trazas).
+tests/agent/tmp/*
+!tests/agent/tmp/.gitkeep
+
+runs/
+
+# Bloque 3 - sistema de analisis (artefactos derivados reproducibles).
+# Ver docs/especificaciones/analisis/modulo_consolidacion.md MCO.8.
+# Se ignora todo el directorio data/ porque su contenido son descargas
+# de terceros (data/external_predictions/) y salidas reproducibles del
+# pipeline de analisis (data/<experiment_id>/). Para versionar una
+# instantanea puntual, usar git add -f sobre el fichero concreto.
+data/

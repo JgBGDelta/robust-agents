@@ -1,0 +1,129 @@
+# Smoke run completo: 1 instancia x todos los agentes del experimento.
+#
+# Propósito: validar la integración end-to-end de TODOS los agentes antes de
+# lanzar los lotes completos (main + ablations). Una sola instancia canónica
+# es suficiente para detectar fallos de configuración, imports rotos o
+# incompatibilidades de entorno.
+#
+# Cobertura:
+#   - Lote principal (experiment.main.yaml):     default, robust_{strict,balanced,permissive}
+#   - Lote ablaciones (experiment.ablations.yaml): robust_no_intervention, robust_v2
+#   - Agentes externos (pendientes de integrar):  ver sección «EXTERNOS» abajo
+#
+# Uso:
+#   python -m benchmark.run --config configs/experiment.smoke.yaml --force-rerun
+#
+# Reanudar tras un corte (sin --force-rerun):
+#   python -m benchmark.run --config configs/experiment.smoke.yaml
+
+experiment_id_explicit: smoke-run-full-1inst
+
+# ── Dataset ────────────────────────────────────────────────────────────────────
+# Instancia canónica usada en todos los smoke runs.
+dataset:
+  name: SWE-bench/SWE-bench_Lite
+  subset: lite
+  split: test
+  instance_ids:
+    - astropy__astropy-12907
+  slice_strategy: full
+
+# ── Benchmark ──────────────────────────────────────────────────────────────────
+benchmark:
+  runs_root: runs
+  workers: 1
+  functional_backend: sb_cli
+  evaluation_skip: true           # NO gastar cuota sb-cli hasta confirmar todo
+  mini_agent_config: configs/mini/swebench_gemini_json.yaml
+
+# ── Parámetros compartidos (YAML anchors) ─────────────────────────────────────
+# Estos bloques son ignorados por el schema de ExperimentConfig.
+# Se referencian con <<: *anchor en cada entrada de agents para evitar repetir
+# parámetros idénticos. Si cambia algo global (modelo, límites), editar aquí.
+
+x-gemini-agent: &gemini-agent
+  model_id: gemini/gemini-2.5-flash
+  environment_class: minisweagent.environments.docker.DockerEnvironment
+  cost_limit: 2.0
+  step_limit: 250
+
+x-robust-base: &robust-base
+  <<: *gemini-agent
+  agent_class: agent.robust_agent.RobustAgent
+  mini_agent_config: configs/mini/swebench_gemini_json_robust.yaml
+
+# ── Agentes ───────────────────────────────────────────────────────────────────
+agents:
+
+  # ════════════════════════════════════════════════════════════════════════════
+  # LOTE PRINCIPAL  (experiment.main.yaml)
+  # ════════════════════════════════════════════════════════════════════════════
+
+  # Baseline: mini-swe-agent sin controlador
+  - <<: *gemini-agent
+    agent_id: default
+    agent_class: minisweagent.agents.default.DefaultAgent
+
+  # Agente robusto — perfil estricto (interviene ante cualquier señal)
+  - <<: *robust-base
+    agent_id: robust_strict
+
+  # Agente robusto — perfil equilibrado (interviene en casos moderados-altos)
+  - <<: *robust-base
+    agent_id: robust_balanced
+
+  # Agente robusto — perfil permisivo (solo interviene en casos extremos)
+  - <<: *robust-base
+    agent_id: robust_permissive
+
+  # ════════════════════════════════════════════════════════════════════════════
+  # ABLACIONES  (experiment.ablations.yaml)
+  # ════════════════════════════════════════════════════════════════════════════
+
+  # Ablación 1: controlador inerte (siempre PROCEED)
+  # Permite aislar el aporte real del controlador vs. overhead puro.
+  - <<: *robust-base
+    agent_id: robust_no_intervention
+    config_overrides:
+      profile: balanced
+      controller:
+        policy_matrix:
+          low:    {low: PROCEED, medium: PROCEED, high: PROCEED}
+          medium: {low: PROCEED, medium: PROCEED, high: PROCEED}
+          high:   {low: PROCEED, medium: PROCEED, high: PROCEED}
+        high_high_per_profile:
+          strict: PROCEED
+          balanced: PROCEED
+          permissive: PROCEED
+        stability_window: 9999
+
+  # Ablación 2: umbrales conservadores (high=0.80, low=0.40)
+  # Llena el hueco entre balanced y permissive; interviene solo en casos extremos.
+  - <<: *robust-base
+    agent_id: robust_v2
+    config_overrides:
+      profile: balanced
+      uncertainty:
+        high_threshold: 0.80
+        low_threshold: 0.40
+      structural_metrics:
+        high_threshold: 0.80
+        low_threshold: 0.40
+
+  # ════════════════════════════════════════════════════════════════════════════
+  # AGENTES EXTERNOS  (pendientes de integrar)
+  # ════════════════════════════════════════════════════════════════════════════
+  # Descomentar cuando estén implementados sus wrappers (agent_class).
+  # El smoke run debe pasar con estos agentes antes de lanzar los lotes completos.
+
+  # SWE-agent (baseline externo)
+  # - <<: *gemini-agent
+  #   agent_id: sweagent
+  #   agent_class: agent.external.sweagent_wrapper.SWEAgentWrapper
+  #   mini_agent_config: configs/mini/sweagent.yaml
+
+  # Agentless (baseline externo sin agente)
+  # - <<: *gemini-agent
+  #   agent_id: agentless
+  #   agent_class: agent.external.agentless_wrapper.AgentlessWrapper
+  #   mini_agent_config: configs/mini/agentless.yaml

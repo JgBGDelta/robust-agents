@@ -1,0 +1,46 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "robust-agents-tfg"
+version = "0.1.0"
+description = "Agente robusto sobre mini-SWE-agent (TFG)."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    # `mini-swe-agent` vive incluido en el repositorio (`src/agent/mini-swe-agent/`)
+    # instala aparte en editable (ver README). No se redeclara aquí como
+    # path-dependency para no acoplar el build a una resolución frágil
+    # de PEP 508 con paths relativos en Windows.
+    "pydantic >= 2.0",
+    "python-dotenv >= 1.0",
+    "pyyaml >= 6.0",
+    "datasets >= 2.14",
+    "sb-cli >= 0.1.5",
+    "google-cloud-aiplatform >= 1.60",  # Vertex AI fallback para Gemini (ver P14)
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest >= 8.0",
+    # Bloque 3 (consolidacion tabular y graficas).
+    "pandas >= 2.0",
+    "matplotlib >= 3.8",
+]
+docs = [
+    "mkdocs-material >= 9.0",
+    "mkdocs-redirects >= 1.2",
+    "mkdocstrings[python] >= 0.27",
+    "ruff >= 0.8",
+]
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["agent*", "benchmark*", "common*", "analysis*"]
+# La copia local de `mini-swe-agent/` no es un paquete Python valido
+# (lleva guiones); setuptools la ignora, pero la excluimos explicitamente.
+exclude = ["agent.mini-swe-agent*", "agent.mini_swe_agent*"]

@@ -1,0 +1,35 @@
+# Validación mínima de sb-cli: 1 instancia × 1 agente = 1 cuota sb-cli.
+#
+# Propósito: confirmar que autenticación, formato de predictions y respuesta
+# de sb-cli funcionan correctamente antes de lanzar el experimento completo.
+# NO re-ejecuta el agente si ya existe el run en disco (sin --force-rerun).
+#
+# Coste: 1 cuota sb-cli (de 10 mensuales disponibles).
+#
+# Uso:
+#   python -m benchmark.run --config configs/experiment.sbcli_validation.yaml
+
+experiment_id_explicit: sbcli-validation-1inst-1agent
+
+dataset:
+  name: SWE-bench/SWE-bench_Lite
+  subset: lite
+  split: test
+  instance_ids:
+    - astropy__astropy-12907
+  slice_strategy: full
+
+benchmark:
+  runs_root: runs
+  workers: 1
+  functional_backend: sb_cli
+  evaluation_skip: false          # ← evaluación real con sb-cli
+  mini_agent_config: configs/mini/swebench_gemini_json.yaml
+
+agents:
+  - agent_id: robust_strict
+    agent_class: agent.robust_agent.RobustAgent
+    model_id: gemini/gemini-2.5-flash
+    environment_class: minisweagent.environments.docker.DockerEnvironment
+    cost_limit: 2.0
+    step_limit: 250

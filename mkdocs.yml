@@ -1,0 +1,134 @@
+site_name: Robust Agents TFG
+site_url: https://jgbgdelta.github.io/robust-agents/
+site_description: Agente robusto sobre mini-SWE-agent y benchmark extendido (TFG).
+
+theme:
+  name: material
+  language: es
+  icon:
+    repo: fontawesome/brands/github
+  palette:
+    - scheme: slate
+      primary: black
+      accent: deep orange
+      toggle:
+        icon: material/weather-sunny
+        name: Modo claro
+    - scheme: default
+      primary: black
+      accent: deep orange
+      toggle:
+        icon: material/weather-night
+        name: Modo oscuro
+  features:
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.sections
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+
+repo_url: https://github.com/JgBGDelta/robust-agents
+repo_name: JgBGDelta/robust-agents
+edit_uri: edit/main/
+
+extra_css:
+  - assets/custom.css
+  - assets/mkdocstrings.css
+
+validation:
+  nav:
+    omitted_files: info
+  links:
+    not_found: info
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.snippets:
+      base_path: ['.']
+      check_paths: true
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.highlight
+  - pymdownx.inlinehilite
+  - toc:
+      permalink: true
+
+plugins:
+  - redirects:
+      redirect_maps:
+        index.md: manual-usuario.md
+  - search
+  - mkdocstrings:
+      default_handler: python
+      handlers:
+        python:
+          paths: [src]
+          options:
+            docstring_style: google
+            merge_init_into_class: true
+            show_root_heading: true
+            heading_level: 2
+            show_signature: true
+            show_signature_annotations: true
+            separate_signature: true
+            show_symbol_type_heading: true
+            show_symbol_type_toc: true
+            members_order: source
+            filters:
+              - "!^_"
+              - "!^model_config"
+              - "!^model_post_init"
+              - "!^model_fields"
+
+nav:
+  - Documentación:
+    - Manual de usuario: manual-usuario.md
+    - Sobre la documentación: sobre-la-documentacion.md
+    - Especificaciones — Agente:
+      - Visión general: especificaciones/agente/especificacion_agente.md
+      - Módulo incertidumbre: especificaciones/agente/modulo_incertidumbre.md
+      - Módulo métricas: especificaciones/agente/modulo_metricas.md
+      - Módulo controlador: especificaciones/agente/modulo_controlador.md
+      - Tests: especificaciones/agente/tests.md
+    - Especificaciones — Benchmark:
+      - Visión general: especificaciones/benchmark/especificacion_benchmark.md
+      - Módulo dataset: especificaciones/benchmark/modulo_dataset.md
+      - Módulo ejecución: especificaciones/benchmark/modulo_ejecucion.md
+      - Módulo evaluación: especificaciones/benchmark/modulo_evaluacion.md
+      - Módulo resultados: especificaciones/benchmark/modulo_resultados.md
+      - Ejemplo evaluation result: especificaciones/benchmark/ejemplo_evaluation_result.md
+    - Especificaciones — Análisis:
+      - Visión general: especificaciones/analisis/especificacion_analisis.md
+      - Módulo métricas de agentes externos: especificaciones/analisis/modulo_metricas_agentes_externos.md
+      - Módulo consolidación: especificaciones/analisis/modulo_consolidacion.md
+      - Módulo diagramas: especificaciones/analisis/modulo_diagramas.md
+  - Implementación:
+    - Visión general: api/index.md
+    - Agente:
+      - Resumen: api/agent/index.md
+      - RobustAgent: api/agent/robust_agent.md
+      - Configuración: api/agent/config.md
+      - Estado y traza: api/agent/episode_state.md
+      - Métricas estructurales: api/agent/structural_metrics.md
+      - Incertidumbre: api/agent/uncertainty.md
+      - Controlador: api/agent/controller.md
+    - Benchmark:
+      - Resumen: api/benchmark/index.md
+      - BenchmarkRunner: api/benchmark/benchmark_runner.md
+      - Configuración: api/benchmark/config.md
+      - Dataset: api/benchmark/dataset.md
+      - Ejecución: api/benchmark/execution.md
+      - Evaluación: api/benchmark/evaluation.md
+      - Resultados: api/benchmark/results.md
+    - Análisis:
+      - Resumen: api/analysis/index.md
+      - Consolidación: api/analysis/consolidation.md
+      - Métricas externas: api/analysis/external_metrics.md
+      - Diagramas: api/analysis/diagrams.md
+      - Punto de entrada CLI: api/analysis/run.md

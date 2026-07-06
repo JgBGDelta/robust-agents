@@ -1,0 +1,151 @@
+# Variante JSON-mode de swebench_gemini.yaml para Gemini + SWE-bench.
+#
+# Diferencia clave: usa JsonBashModel en lugar de LitellmModel, que elimina
+# el parametro `tools` de la llamada a la API. Esto resuelve el bug de Gemini
+# que devuelve finish_reason=stop con content=None en conversaciones largas con
+# tool-calling activado, causando EmptyModelResponseError.
+#
+# El agente responde con JSON plano en lugar de tool_calls nativos:
+#   {"command": "cd /testbed && grep -n 'foo' bar.py"}
+#
+# Ver configs/mini/swebench_gemini_json.yaml y modulo_evaluacion.md.
+
+agent:
+  system_template: |
+    You are a helpful assistant that can interact with a computer shell to solve programming tasks.
+  instance_template: |
+    <pr_description>
+    {{task}}
+    </pr_description>
+
+    <instructions>
+    Fix the issue in the repository at /testbed (your working directory for all commands).
+    Modify only non-test source files unless the issue explicitly requires otherwise.
+
+    Response format — every response MUST be exactly one JSON object, nothing else:
+      {"command": "your bash command here"}
+
+    Rules:
+    - No text before or after the JSON. No markdown code fences.
+    - Every response must contain a "command" key.
+    - Use && to chain multiple commands when needed.
+    - Prefix commands with `cd /testbed &&` if you need to be in the project root.
+    - Use non-interactive flags; avoid vi/nano and other interactive tools.
+    - Do not modify tests or packaging/config files unless strictly required.
+    - HEREDOC RULE: when chaining commands after a heredoc, the next command must be on
+      a NEW line WITHOUT && prefix. Never start a line with " && " after EOF.
+      WRONG: "cat > f.txt << 'EOF'\ntext\nEOF\n && next_cmd"
+      RIGHT: "cat > f.txt << 'EOF'\ntext\nEOF\nnext_cmd"
+    - For multi-block file edits, prefer Python: {"command": "python3 -c \"import pathlib; ...\""}
+      or write a helper script to /tmp/ first and then run it.
+    - NEVER nest single quotes inside a single-quoted sed argument. Bash closes the
+      quote at the first ' it finds, silently corrupting your pattern.
+      WRONG: sed -i '/foo == 'bar'/d' file.py   (breaks into three shell tokens)
+      If the exact text you need to match/replace contains a quote character, do NOT
+      use sed -i or a python3 -c one-liner — use a heredoc script instead. A heredoc
+      with a quoted delimiter ('PYEOF') passes its body completely literally: bash does
+      NOT interpret quotes or backslashes inside it, so there is nothing to escape.
+      RIGHT: "cat > /tmp/edit.py << 'PYEOF'\nimport pathlib\np = pathlib.Path('/testbed/file.py')\ns = p.read_text()\ns = s.replace(\"foo == 'bar'\", \"foo == 'baz'\")\np.write_text(s)\nPYEOF\npython3 /tmp/edit.py"
+    - sed -i is only safe for trivial substitutions with NO quotes inside the pattern:
+      {"command": "cd /testbed && sed -i 's/old_text/new_text/' path/to/file.py"}
+      For anything multi-line, indentation-sensitive, or containing quotes, use the
+      heredoc-script technique above instead.
+
+    Recommended workflow:
+    1. Explore: {"command": "cd /testbed && grep -rn 'keyword' --include='*.py' ."}
+    2. Read:    {"command": "cd /testbed && grep -n 'relevant_function' path/to/file.py"}
+       Prefer grep or head/sed over cat for large files to keep context short:
+       {"command": "cd /testbed && sed -n '70,120p' path/to/file.py"}
+    3. Patch:
+       - Trivial one-line change without quotes: {"command": "cd /testbed && sed -i 's/old/new/g' path/to/file.py"}
+       - Multi-line or indentation-sensitive change, text WITHOUT quotes: use Python, e.g.
+         {"command": "python3 -c \"import pathlib; p = pathlib.Path('/testbed/path/to/file.py'); s = p.read_text(); s = s.replace('EXACT_OLD_TEXT', 'EXACT_NEW_TEXT'); p.write_text(s)\""}
+       - If EXACT_OLD_TEXT or EXACT_NEW_TEXT itself contains a quote character, do NOT
+         try to escape it inline — use the heredoc-script technique from the rules above.
+       Read the exact text first (step 2) — the old text must match character-for-character.
+    4. Verify edit worked — MANDATORY after every edit, before doing anything else:
+       {"command": "cd /testbed && git diff --stat"}
+       IMPORTANT: if git diff --stat shows nothing, your edit did NOT apply, even if the
+       previous command returned exit code 0 (sed and python exit 0 even when they change nothing).
+       Do NOT proceed to test/submit. Go back to step 2, re-read the exact current text of the
+       file, and retry the edit with a pattern that matches character-for-character.
+    5. Test:    {"command": "cd /testbed && python -c 'from module import fn; print(fn())'"}
+    6. Submit (two separate commands):
+       Step 1 — create patch.txt (captures ALL changes, no need to specify files):
+         {"command": "cd /testbed && git diff > patch.txt"}
+       Step 2 — before submitting, confirm the patch is non-empty:
+         {"command": "cd /testbed && git diff --stat && wc -c patch.txt"}
+         IMPORTANT: if git diff --stat is empty or patch.txt is 0 bytes, DO NOT submit.
+         Your edits never applied — go back to step 2/3 and fix the edit first.
+       Step 3 — submit (only once patch.txt is confirmed non-empty):
+         {"command": "echo COMPLETE_TASK_AND_SUBMIT_FINAL_OUTPUT && cat patch.txt"}
+
+    The patch must contain only intended source changes (no tests, helpers, or binaries).
+    After submitting you cannot continue working on this task.
+    </instructions>
+  step_limit: 250
+  cost_limit: 3.
+
+environment:
+  cwd: "/testbed"
+  timeout: 60
+  interpreter: ["bash", "-c"]
+  env:
+    PAGER: cat
+    MANPAGER: cat
+    LESS: -R
+    PIP_PROGRESS_BAR: "off"
+    TQDM_DISABLE: "1"
+  environment_class: docker
+
+model:
+  # Override externo: usa JsonBashModel en lugar de LitellmModel por defecto.
+  # JsonBashModel elimina tools=[BASH_TOOL] de la llamada a la API de Gemini,
+  # resolviendo el bug de respuestas vacias a contextos largos.
+  # Ver src/agent/models/json_bash_model.py
+  model_class: agent.models.json_bash_model.JsonBashModel
+  observation_template: |
+    {% if output.exception_info -%}
+    <exception>{{output.exception_info}}</exception>
+    {% endif -%}
+    <returncode>{{output.returncode}}</returncode>
+    {% if output.output | length < 10000 -%}
+    <output>
+    {{ output.output -}}
+    </output>
+    {%- else -%}
+    <warning>
+    The output of your last command was too long.
+    Please try a different command that produces less output.
+    If you're looking at a file you can try use head, tail or sed to view a smaller number of lines selectively.
+    </warning>
+    {%- set elided_chars = output.output | length - 10000 -%}
+    <output_head>
+    {{ output.output[:5000] }}
+    </output_head>
+    <elided_chars>
+    {{ elided_chars }} characters elided
+    </elided_chars>
+    <output_tail>
+    {{ output.output[-5000:] }}
+    </output_tail>
+    {%- endif -%}
+  format_error_template: |
+    Your response must be a single JSON object with a "command" key:
+      {{"command": "your bash command here"}}
+
+    Error: {error}
+
+    Example valid responses:
+      {{"command": "cd /testbed && ls -la"}}
+      {{"command": "cd /testbed && grep -n 'separability_matrix' astropy/modeling/separable.py"}}
+
+    To submit your fix:
+      {{"command": "echo COMPLETE_TASK_AND_SUBMIT_FINAL_OUTPUT && cat patch.txt"}}
+  model_kwargs:
+    drop_params: true
+    temperature: 0.0
+    thinking:
+      type: enabled
+      budget_tokens: 0
+  cost_tracking: ignore_errors

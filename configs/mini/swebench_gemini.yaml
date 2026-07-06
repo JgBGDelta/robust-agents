@@ -1,0 +1,113 @@
+# Variante de swebench.yaml compatible con Gemini + tool calling.
+#
+# El instance_template oficial de swebench.yaml (~5.7k chars) hace que Gemini
+# devuelva choices=[] con tools (IndexError en LitellmModel). Este YAML conserva
+# el flujo de envio con git diff + patch.txt pero con instrucciones compactas.
+#
+# Ver LiteLLM issues #16651, #21744 y configs/mini/swebench_gemini_json.yaml.
+
+agent:
+  system_template: |
+    You are a helpful assistant that can interact with a computer shell to solve programming tasks.
+  instance_template: |
+    <pr_description>
+    {{task}}
+    </pr_description>
+
+    <instructions>
+    Fix the issue in the repository at /testbed (your working directory for all commands).
+    Modify only non-test source files unless the issue explicitly requires otherwise.
+
+    For each response:
+    1. Explain your reasoning briefly.
+    2. Issue at least one bash tool call (multiple independent calls are allowed).
+
+    Rules:
+    - Every action runs in a fresh subshell; prefix with `cd /testbed &&` when needed.
+    - Use non-interactive flags; avoid vi/nano and other interactive tools.
+    - Do not modify tests or packaging/config files unless strictly required.
+
+    Recommended workflow:
+    1. Explore the codebase and reproduce the issue.
+    2. Patch the source code.
+    3. Verify with your reproduction script.
+    4. Submit as a git patch (separate commands, do not chain with &&):
+
+    Step 1 — create patch.txt:
+    `git diff -- path/to/changed/files > patch.txt`
+
+    Step 2 — submit exactly:
+    `echo COMPLETE_TASK_AND_SUBMIT_FINAL_OUTPUT && cat patch.txt`
+
+    The patch must contain only intended source changes (no tests, helpers, or binaries).
+    After submitting you cannot continue working on this task.
+    </instructions>
+  step_limit: 250
+  cost_limit: 3.
+
+environment:
+  cwd: "/testbed"
+  timeout: 60
+  interpreter: ["bash", "-c"]
+  env:
+    PAGER: cat
+    MANPAGER: cat
+    LESS: -R
+    PIP_PROGRESS_BAR: "off"
+    TQDM_DISABLE: "1"
+  environment_class: docker
+
+model:
+  observation_template: |
+    {% if output.exception_info -%}
+    <exception>{{output.exception_info}}</exception>
+    {% endif -%}
+    <returncode>{{output.returncode}}</returncode>
+    {% if output.output | length < 10000 -%}
+    <output>
+    {{ output.output -}}
+    </output>
+    {%- else -%}
+    <warning>
+    The output of your last command was too long.
+    Please try a different command that produces less output.
+    If you're looking at a file you can try use head, tail or sed to view a smaller number of lines selectively.
+    If you're using grep or find and it produced too much output, you can use a more selective search pattern.
+    If you really need to see something from the full command's output, you can redirect output to a file and then search in that file.
+    </warning>
+    {%- set elided_chars = output.output | length - 10000 -%}
+    <output_head>
+    {{ output.output[:5000] }}
+    </output_head>
+    <elided_chars>
+    {{ elided_chars }} characters elided
+    </elided_chars>
+    <output_tail>
+    {{ output.output[-5000:] }}
+    </output_tail>
+    {%- endif -%}
+  format_error_template: |
+    Tool call error:
+
+    <error>
+    {{error}}
+    </error>
+
+    Every response must use the bash tool at least once:
+    - Tool: bash
+    - Arguments: {"command": "your_command_here"}
+
+    To submit, create patch.txt with git diff, then run:
+    `echo COMPLETE_TASK_AND_SUBMIT_FINAL_OUTPUT && cat patch.txt`
+  model_kwargs:
+    drop_params: true
+    temperature: 0.0
+    # Gemini 2.5 Flash tiene "dynamic thinking" habilitado por defecto.
+    # Cuando thinking + tool calling coinciden, Gemini genera MALFORMED_FUNCTION_CALL
+    # y LiteLLM (≤1.89) lo descarta silenciosamente → choices=[].
+    # Deshabilitar thinking elimina ese conflicto.
+    # Ver LiteLLM issues #16651, #21744.
+    thinking:
+      type: disabled
+      budget_tokens: 0
+  cost_tracking: ignore_errors
