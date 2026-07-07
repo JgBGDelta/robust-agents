@@ -14,6 +14,7 @@ import matplotlib.pyplot as plt
 
 from analysis.diagrams_module import style
 from analysis.diagrams_module.analysis_frames import AnalysisFrames
+from analysis.diagrams_module.resolution_metrics import resolution_rate_pct
 
 _AGENTS = ("default", "robust_strict", "robust_balanced", "robust_permissive")
 
@@ -54,14 +55,19 @@ def plot_baseline_vs_robust(frames: AnalysisFrames, output_path: Path) -> Path:
 def _bar_metric(ax, df, agents: list[str], *, metric: str, is_rate: bool, title: str) -> None:
     """Auxiliar interno: bar metric."""
     for i, agent in enumerate(agents):
-        values = df.loc[df["agent_id"] == agent, metric].dropna()
+        subset = df.loc[df["agent_id"] == agent]
+        if is_rate:
+            rate = resolution_rate_pct(subset)
+            if rate is None:
+                style.annotate_missing(ax, i)
+                continue
+            style.plot_rate_bar(ax, i, rate, style.get_color(agent))
+            continue
+        values = subset[metric].dropna()
         if len(values) == 0:
             style.annotate_missing(ax, i)
             continue
-        if is_rate:
-            style.plot_rate_bar(ax, i, float(values.mean()) * 100, style.get_color(agent))
-        else:
-            style.plot_metric_bar(ax, i, float(values.mean()), style.get_color(agent))
+        style.plot_metric_bar(ax, i, float(values.mean()), style.get_color(agent))
     if is_rate:
         style.configure_rate_axis(ax, title=title)
     else:

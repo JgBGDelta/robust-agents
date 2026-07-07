@@ -1,8 +1,8 @@
 """8.1.1 Tasa de resolución por configuración.
 
-Porcentaje de instancias resueltas (`resolved`) por `agent_id`,
-respetando `sample_group` para no mezclar denominadores de 120 y 40 instancias
-sin indicarlo (`especificacion_analisis.md` S6.1/S8.1).
+Porcentaje de instancias resueltas sobre el total de filas por `agent_id`
+(`resolved == True` / total de instancias). Respeta `sample_group` para no
+mezclar denominadores de 120 y 40 instancias sin indicarlo.
 """
 
 from __future__ import annotations
@@ -13,6 +13,7 @@ import matplotlib.pyplot as plt
 
 from analysis.diagrams_module import style
 from analysis.diagrams_module.analysis_frames import AnalysisFrames
+from analysis.diagrams_module.resolution_metrics import resolution_rate_pct
 
 
 def plot_resolution_rate(frames: AnalysisFrames, output_path: Path) -> Path:
@@ -30,10 +31,9 @@ def plot_resolution_rate(frames: AnalysisFrames, output_path: Path) -> Path:
     sizes: list[int] = []
     for agent in agents:
         subset = df[df["agent_id"] == agent]
-        evaluated = subset["resolved"].dropna()
         labels.append(style.format_agent_label(agent))
         sizes.append(len(subset))
-        rates.append(float(evaluated.mean()) * 100 if len(evaluated) > 0 else None)
+        rates.append(resolution_rate_pct(subset))
 
     fig, ax = plt.subplots(figsize=style.FIGSIZE_WIDE)
     x_positions = range(len(agents))

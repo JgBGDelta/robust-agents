@@ -75,10 +75,10 @@ class Evaluator:
         incluso si `functional.status == "evaluated"`, y se somete de nuevo a
         `sb-cli` bajo un `run_id` nuevo (con sufijo de reintento). Uso
         excepcional: solo cuando se sospecha que un `evaluated` previo es
-        erróneo por un fallo del backend de `sb-cli` (p. ej. `sb-cli` devolvio
-        `Failed runs` para el 100% de las instancias sin fallo tecnico) y se
-        decide consumir cuota deliberadamente en un reintento — ver `modulo_evaluacion.md` seccion 3
-        (`force_agent_ids`). No confundir con
+        basura del backend (p. ej. `sb-cli` devolvio `Failed runs` para el
+        100% de las instancias sin fallo tecnico) y se decide gastar cuota
+        deliberadamente en un reintento — ver
+        `docs_propios/problemas_encontrados.md` P19. No confundir con
         `only_agent_ids` (que solo filtra el alcance, no fuerza reintento).
         """
         instance_by_id = {inst.instance_id: inst for inst in instances}

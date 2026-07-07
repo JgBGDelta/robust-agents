@@ -12,6 +12,7 @@ import matplotlib.pyplot as plt
 
 from analysis.diagrams_module import style
 from analysis.diagrams_module.analysis_frames import AnalysisFrames
+from analysis.diagrams_module.resolution_metrics import resolution_rate_pct
 
 
 def plot_results_by_repository(frames: AnalysisFrames, output_path: Path) -> Path:
@@ -30,11 +31,11 @@ def plot_results_by_repository(frames: AnalysisFrames, output_path: Path) -> Pat
     for i, repo in enumerate(repos):
         subset = df[df["repository"] == repo]
 
-        resolved_values = subset["resolved"].dropna()
-        if len(resolved_values) == 0:
+        rate = resolution_rate_pct(subset)
+        if rate is None:
             style.annotate_missing(ax_res, i)
         else:
-            style.plot_rate_bar(ax_res, i, float(resolved_values.mean()) * 100, "#1f77b4")
+            style.plot_rate_bar(ax_res, i, rate, "#1f77b4")
 
         cost_values = subset["cost_usd"].dropna() if "cost_usd" in subset.columns else subset.iloc[0:0]
         if len(cost_values) == 0:

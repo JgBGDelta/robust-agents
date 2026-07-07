@@ -1,7 +1,7 @@
 """Señales single-shot del modelo (Capa 1).
 
 Implementa las tres subseñales L1 descritas en
-`docs/especificaciones/agente/modulo_incertidumbre.md` (sección 5):
+`docs/fase2_especificaciones/fase2_1/metodos_incertidumbre.md` 6.1:
 
 - L1.a verbalized confidence: confianza estructurada que reporta el modelo.
 - L1.b token-level entropy: entropia media de los logprobs por token cuando

@@ -9,7 +9,7 @@ Estos tests ejercitan el bucle completo del agente robusto sobre:
 El objetivo no es verificar fórmulas internas (eso lo cubren los tests
 unitarios de `tests/agent/test_*_module.py`) sino el *wiring* del bucle
 y el contrato de la traza `robust-agent-1.0`. El diseño completo y los
-gaps explícitos están documentados en `docs/especificaciones/agente/tests.md`.
+gaps explícitos están documentados en `docs/fase2/agente/tests.md`.
 
 Los artefactos (git de prueba, trazas JSON) se crean bajo `tests/agent/tmp/`,
 no en el TMP del sistema.
@@ -63,8 +63,8 @@ def _force_remove_readonly(func, path, _exc_info) -> None:
 
     Necesario en Windows con repos git: los ficheros bajo `.git/objects`
     se crean read-only y bloquean `os.unlink`. Sin este handler, los
-    `PermissionError` se descartarian silenciosamente y dejarian ficheros
-    residuales en `tests/agent/tmp/`.
+    `PermissionError` se descartarian silenciosamente y dejarian basura
+    en `tests/agent/tmp/`.
     """
     try:
         os.chmod(path, stat.S_IWRITE)

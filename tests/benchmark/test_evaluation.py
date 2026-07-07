@@ -654,8 +654,7 @@ def test_evaluator_force_agent_ids_resubmits_evaluated_group_with_new_run_id(tmp
 
     Regresion P19: `sb-cli` bloquea permanentemente las instancias ya sometidas
     bajo un `run_id` ("no se pueden cambiar"), asi que un reintento deliberado
-    de un grupo cuyo `evaluated` previo se sospecha erróneo por fallo del
-    backend de `sb-cli` debe
+    de un grupo cuyo `evaluated` previo se sospecha basura del backend debe
     generar un `run_id` distinto del `group_id` normal, o `sb-cli` se limitaria
     a devolver el reporte viejo sin re-evaluar nada.
     """

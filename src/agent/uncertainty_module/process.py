@@ -1,7 +1,7 @@
 """Señales de proceso (Capa 2) del modulo de incertidumbre.
 
 Implementa las tres subseñales L2 descritas en
-`docs/especificaciones/agente/modulo_incertidumbre.md` (sección 5):
+`docs/fase2_especificaciones/fase2_1/metodos_incertidumbre.md` 6.2:
 
 - L2.a cycle detection: acciones equivalentes en ventana reciente.
 - L2.b observation failure rate: ratio reciente de fallos del entorno.

@@ -275,6 +275,22 @@ Las métricas de incertidumbre, riesgo estructural y controlador **solo existen 
 
 Por ello, el módulo de consolidación no copia `dispersion_score`/`test_touch_ratio`/`hunks_per_file` desde `signals_history` (que solo existe para `robust_*`), sino que los recalcula de forma independiente sobre el `model_patch` final de cada run -propio o externo- reutilizando la misma fórmula de agregación que `structural_metrics_module/computer.py`, pero aplicada una única vez sobre el diff completo en lugar de paso a paso. Esta decisión es la que permite que la familia de "Estructura de los parches" de los diagramas (SAN.8) compare `default`, `robust_*` y `agentless_v1.5` en igualdad de condiciones.
 
+#### 6.3.3 Tasa de resolución (métrica agregada principal)
+
+La **tasa de resolución** reportada en diagramas y tablas del Bloque 3 sigue la política de `especificacion_benchmark.md` EB.8.4:
+
+\[
+\text{resolution\_rate} = \dfrac{\#\{\text{filas con } \texttt{resolved == true}\}}{\#\{\text{filas del grupo}\}}
+\]
+
+- **Numerador**: únicamente instancias con `resolved == true`. Cualquier otro valor (`false`, `null`, ausente) no incrementa el numerador.
+- **Denominador**: **todas** las filas del grupo analizado (configuración, repositorio, cohorte externa, etc.), sin excluir límites agotados, excepciones, precondición fallida ni filas sin evaluación funcional.
+- **No se modifica** el campo `resolved` en `datos_consolidados.csv`: la conversión implícita «ausente = no resuelto» ocurre solo en la lógica de agregación (`resolution_metrics.py`).
+- **`evaluable`**: métrica descriptiva secundaria (conteo de filas con `functional.status == "evaluated"` o equivalente externo). **No** es el denominador de la tasa principal y no debe etiquetarse como «tasa de resolución».
+- Para agentes externos con 120 filas consolidadas pero sin predicción en una instancia (p. ej. Moatless y `pytest-dev__pytest-7168`), esa fila permanece en el denominador y cuenta como no resuelta.
+
+Implementación: función centralizada `resolution_rate_pct()` / `resolution_rate_stats()` en `diagrams_module/resolution_metrics.py`; todas las figuras que muestran tasas de resolución deben usarla.
+
 ## 7. Contrato secundario: `datos_pasos_consolidados.csv`
 
 Fichero tabular con **una fila por paso**, exclusivamente para runs propios con traza `robust_agent` (`source_type == own` y `trace_format == robust-agent-1.0`). No existe para `default` ni para agentes externos. Es la entrada de los diagramas que necesitan resolución temporal dentro del run (mapa incertidumbre × riesgo × acción, series de intervención).
@@ -297,7 +313,7 @@ Los diagramas se generan exclusivamente a partir de `datos_consolidados.csv` y `
 
 ### 8.1 Diagramas mínimos
 
-1. **Tasa de resolución por configuración** - porcentaje de instancias resueltas (`resolved`) por `configuration_id`, respetando `sample_group` (SAN.6.1) para no mezclar denominadores de 120 y 40 instancias sin indicarlo. Etiqueta `0.0%` visible cuando la tasa es cero real.
+1. **Tasa de resolución por configuración** - porcentaje de instancias resueltas sobre el **total de filas** por `agent_id` (`resolved == true` / total de instancias de la configuración), respetando `sample_group` (SAN.6.1/SAN.6.3.3) para no mezclar denominadores de 120 y 40 instancias sin indicarlo. El `n` mostrado en etiquetas es el total de instancias, no el subconjunto evaluable. Etiqueta `0.0%` visible cuando la tasa es cero real.
 2. **Estados finales** - distribución de éxitos, fallos, parches vacíos y errores (`run_status`, `failure_category`, `empty_submission`) por configuración; valor numérico en cada segmento de la barra apilada.
 3. **Coste y esfuerzo** - coste (`cost_usd`), pasos (`steps_used`), duración (`duration_seconds`) y tokens (`total_tokens`) por configuración (solo `own`).
 4. **Estructura de los parches** - archivos modificados, *churn*, *hunks* y dispersión (`files_modified_count`, `churn_total`, `hunks_count`, `dispersion_score`) por configuración, incluyendo externos. Panel 2×2 con etiquetas de agente en los cuatro subpaneles; *churn* en escala symlog si el rango lo exige.
@@ -314,7 +330,7 @@ Los diagramas se generan exclusivamente a partir de `datos_consolidados.csv` y `
 - **Mapa incertidumbre × riesgo × acción** - a partir de `datos_pasos_consolidados.csv`, comprueba la aplicación real de la matriz de decisión (`uncertainty_level` × `structural_risk_level` → `controller_action`) frente a la matriz teórica de `especificacion_agente.md` EA.5.1. Texto de celda con color adaptativo al fondo.
 - **Coste o tokens por solución resuelta** - `cost_usd`/`total_tokens` normalizado sobre instancias con `resolved == true`; tokens en miles en el eje Y.
 - **Resolución acumulada frente a coste** - curva de instancias resueltas acumuladas a medida que aumenta el gasto, por configuración; origen en (0, 0).
-- **Resultados por repositorio** - tasa de resolución y coste desglosados por `repository`, para detectar diferencias entre proyectos.
+- **Resultados por repositorio** - tasa de resolución (SAN.6.3.3: todas las filas del repositorio en el denominador) y coste desglosados por `repository`, para detectar diferencias entre proyectos.
 - **Motivos de terminación** - desglose de `termination` por configuración (`robust_*`); valor numérico en cada segmento apilado.
 
 ## 9. Organización del código

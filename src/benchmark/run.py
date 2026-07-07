@@ -261,9 +261,9 @@ def _build_parser() -> argparse.ArgumentParser:
             "Uso excepcional: vuelve a someter a sb-cli estos agent_id aunque ya "
             "tengan functional.status=evaluated cacheado, bajo un run_id nuevo "
             "(sb-cli bloquea permanentemente las instancias ya sometidas a un "
-            "run_id). Consume cuota adicional de forma deliberada; solo tiene sentido si "
-            "se sospecha que el resultado 'evaluated' previo es erróneo por un fallo "
-            "del backend de sb-cli (ver modulo_evaluacion.md seccion 3). Implica "
+            "run_id). Gasta cuota de nuevo deliberadamente; solo tiene sentido si "
+            "se sospecha que el resultado 'evaluated' previo es basura del "
+            "backend (ver docs_propios/problemas_encontrados.md P19). Implica "
             "inclusion en el alcance de evaluacion de esta pasada. Requiere "
             "--evaluate."
         ),

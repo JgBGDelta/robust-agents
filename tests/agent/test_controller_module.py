@@ -1,7 +1,7 @@
 """Tests unitarios del modulo controlador (fase 4b).
 
 Cubren la interfaz publica (`ControllerModule.decide`, `BudgetGuard`)
-y los contratos de la spec `docs/especificaciones/agente/modulo_controlador.md`:
+y los contratos de la spec `docs/fase2/agente/modulo_controlador.md`:
 matriz por celda y perfil, correctores (`BudgetGuard`,
 `StabilityMonitor`), politica ante entradas degradadas, fallback de
 validacion y registro en `EpisodeState.decisions_history`.

@@ -114,7 +114,7 @@ class SbCliClient:
         nueva: `sb-cli` bloquea permanentemente las instancias ya sometidas
         bajo un `run_id` dado ("estas no se pueden cambiar"), asi que
         reenviar el mismo `run_id` tras un fallo del backend solo devuelve el
-        reporte viejo sin re-evaluar nada — ver `modulo_evaluacion.md` seccion 3.
+        reporte viejo sin re-evaluar nada — ver `docs_propios/problemas_encontrados.md` P19.
         """
         if not self.is_available():
             return SbCliSubmissionResult(

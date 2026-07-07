@@ -366,7 +366,7 @@ Para que los resultados sean comparables con la literatura de SWE-bench, el benc
 
 donde el denominador incluye **todos** los runs lanzados, sin descontar `failed`, `precondition_failed` ni `skipped`. Esta es la política usada por SWE-bench oficial y por todos los leaderboards públicos.
 
-El Bloque 3 puede calcular métricas auxiliares con denominadores alternativos (p. ej. `resolved` sobre runs `completed`, o sobre `total - precondition_failed`) para diagnóstico interno, pero la cifra reportada como tasa de resolución del agente es la fórmula anterior.
+El Bloque 3 aplica la misma fórmula en `diagrams_module/resolution_metrics.py` para todas las figuras de tasa de resolución (SAN.6.3.3). Métricas auxiliares con denominadores alternativos (p. ej. tasa condicionada a `evaluable == true`) solo pueden usarse con etiquetado explícito distinto de «tasa de resolución» y nunca sustituyen la cifra principal.
 
 ## 9. Reutilización de mini-SWE-agent
 

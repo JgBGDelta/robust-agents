@@ -13,6 +13,7 @@ import matplotlib.pyplot as plt
 
 from analysis.diagrams_module import style
 from analysis.diagrams_module.analysis_frames import AnalysisFrames
+from analysis.diagrams_module.resolution_metrics import resolution_rate_pct
 
 _OWN_BASELINE_AGENTS = ("default", "robust_strict", "robust_balanced", "robust_permissive")
 
@@ -43,8 +44,7 @@ def plot_external_agents(frames: AnalysisFrames, output_path: Path) -> Path:
     churn_means: list[float | None] = []
     for agent in agents:
         subset = combined.loc[combined["agent_id"] == agent]
-        resolved_values = subset["resolved"].dropna()
-        resolution_rates.append(float(resolved_values.mean()) * 100 if len(resolved_values) else None)
+        resolution_rates.append(resolution_rate_pct(subset))
         churn_values = subset["churn_total"].dropna()
         churn_means.append(float(churn_values.mean()) if len(churn_values) else None)
 

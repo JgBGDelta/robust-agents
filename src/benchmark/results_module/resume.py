@@ -98,7 +98,7 @@ class ResumeDetector:
     # funcional sobre los runs ya en disco) del mismo experimento. Si se
     # incluyera en la comparacion, ``--evaluate`` abortaria siempre la
     # reanudacion en cualquier experimento cuyo `config.yaml` persistido
-    # tuviera `evaluation_skip: true` (ver modulo_resultados.md seccion 6.1).
+    # tuviera `evaluation_skip: true` (ver docs_propios/problemas_encontrados.md).
     _BENCHMARK_OPERATIONAL_KEYS: frozenset[str] = frozenset(
         {"workers", "inter_run_delay_seconds", "disk_min_free_gb", "evaluation_skip"}
     )

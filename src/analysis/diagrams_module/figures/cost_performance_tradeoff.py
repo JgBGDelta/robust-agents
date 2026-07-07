@@ -13,6 +13,7 @@ import matplotlib.pyplot as plt
 
 from analysis.diagrams_module import style
 from analysis.diagrams_module.analysis_frames import AnalysisFrames
+from analysis.diagrams_module.resolution_metrics import resolution_rate_pct
 
 
 def plot_cost_performance_tradeoff(frames: AnalysisFrames, output_path: Path) -> Path:
@@ -34,8 +35,7 @@ def plot_cost_performance_tradeoff(frames: AnalysisFrames, output_path: Path) ->
         label = style.format_agent_label(agent)
         n = len(subset)
 
-        resolved_values = subset["resolved"].dropna()
-        resolution_rate = float(resolved_values.mean()) * 100 if len(resolved_values) > 0 else None
+        resolution_rate = resolution_rate_pct(subset)
 
         cost_values = subset["cost_usd"].dropna()
         if resolution_rate is not None and len(cost_values) > 0:

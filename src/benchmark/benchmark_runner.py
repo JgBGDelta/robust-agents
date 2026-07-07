@@ -116,7 +116,7 @@ class BenchmarkRunner:
         (no se persiste en `config.yaml`, no interviene en la validacion de
         reanudacion): es puramente un filtro de esta invocacion, pensado
         para someter a `sb-cli` un perfil/ablacion a la vez y controlar el
-        gasto de cuota. El
+        gasto de cuota (ver docs_propios/problemas_encontrados.md). El
         `manifest.json` de esta pasada reflejara solo los runs procesados;
         una pasada final sin filtro corrige `runs_completed` al total real.
 
@@ -129,18 +129,17 @@ class BenchmarkRunner:
         disco": sin este flag, cualquier run no terminal (p. ej. `failed` por
         Ctrl+C o timeout) se trataria como pendiente y se re-ejecutaria de
         verdad -consumiendo cuota del LLM y tiempo- durante lo que se creia una
-        pasada de solo evaluacion. Ver `modulo_evaluacion.md` seccion 3
-        (`evaluation_only`). (`EmptySubmission` es terminal desde la politica
-        de reanudacion de `modulo_resultados.md` seccion 4.)
+        pasada de solo evaluacion. Ver `docs_propios/problemas_encontrados.md`
+        P18. (`EmptySubmission` es terminal desde P20 y ya no entra en ese
+        riesgo.)
 
         ``force_reevaluate_agents``: agentes para los que se ignora un
         `functional.status == "evaluated"` cacheado y se vuelve a someter a
         `sb-cli` bajo un `run_id` nuevo (sufijo de reintento). Uso
-        excepcional y deliberado: consume cuota adicional en un grupo que
+        excepcional y deliberado: gasta cuota de nuevo en un grupo que
         `sb-cli` ya marco como "evaluado" pero cuyo resultado se sospecha
-        erróneo por un fallo del backend de `sb-cli` (p. ej. 100% `Failed runs`
-        sin fallo tecnico propio) — ver `modulo_evaluacion.md` seccion 3
-        (`force_agent_ids`).
+        basura del backend (p. ej. 100% `Failed runs` sin fallo tecnico
+        propio) — ver `docs_propios/problemas_encontrados.md` P19.
         """
         instances = self.dataset_module.load_instances(self._experiment_config.dataset)
         self.results_module.set_dataset_summary(self.dataset_module.selection_summary())

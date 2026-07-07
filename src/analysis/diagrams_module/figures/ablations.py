@@ -17,6 +17,7 @@ import matplotlib.pyplot as plt
 
 from analysis.diagrams_module import style
 from analysis.diagrams_module.analysis_frames import AnalysisFrames
+from analysis.diagrams_module.resolution_metrics import resolution_rate_pct
 
 _AGENTS = ("robust_balanced", "robust_no_intervention", "robust_v2")
 
@@ -36,11 +37,12 @@ def plot_ablations(frames: AnalysisFrames, output_path: Path) -> Path:
     sizes = [len(subset[subset["agent_id"] == a]) for a in present_agents]
 
     for i, agent in enumerate(present_agents):
-        resolved_values = subset.loc[subset["agent_id"] == agent, "resolved"].dropna()
-        if len(resolved_values) == 0:
+        agent_subset = subset.loc[subset["agent_id"] == agent]
+        rate = resolution_rate_pct(agent_subset)
+        if rate is None:
             style.annotate_missing(ax_res, i)
         else:
-            style.plot_rate_bar(ax_res, i, float(resolved_values.mean()) * 100, style.get_color(agent))
+            style.plot_rate_bar(ax_res, i, rate, style.get_color(agent))
 
         cost_values = subset.loc[subset["agent_id"] == agent, "cost_usd"].dropna()
         if len(cost_values) == 0:
