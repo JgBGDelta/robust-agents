@@ -1,0 +1,3632 @@
+
+<!doctype html>
+<html lang="es" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Agente robusto sobre mini-SWE-agent y benchmark extendido (TFG).">
+      
+      
+      
+        <link rel="canonical" href="https://jgbgdelta.github.io/robust-agents/especificaciones/benchmark/especificacion_benchmark/">
+      
+      
+        <link rel="prev" href="../../agente/tests/">
+      
+      
+        <link rel="next" href="../modulo_dataset/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Visión general - Robust Agents TFG</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/_mkdocstrings.css">
+    
+      <link rel="stylesheet" href="../../../assets/custom.css">
+    
+      <link rel="stylesheet" href="../../../assets/mkdocstrings.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="deep-orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#fase-22-especificacion-del-benchmark-extendido" class="md-skip">
+          Saltar a contenido
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabecera">
+    <a href="../../.." title="Robust Agents TFG" class="md-header__button md-logo" aria-label="Robust Agents TFG" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Robust Agents TFG
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Visión general
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="deep-orange"  aria-label="Modo claro"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Modo claro" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="deep-orange"  aria-label="Modo oscuro"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Modo oscuro" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Búsqueda" placeholder="Búsqueda" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Buscar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpiar" aria-label="Limpiar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando búsqueda
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/JgBGDelta/robust-agents" title="Ir al repositorio" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    JgBGDelta/robust-agents
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Pestañas" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../../manual-usuario/" class="md-tabs__link">
+          
+  
+  
+  Documentación
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../api/" class="md-tabs__link">
+          
+  
+  
+  Implementación
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navegación" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Robust Agents TFG" class="md-nav__button md-logo" aria-label="Robust Agents TFG" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Robust Agents TFG
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/JgBGDelta/robust-agents" title="Ir al repositorio" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    JgBGDelta/robust-agents
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Documentación
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Documentación
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../manual-usuario/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Manual de usuario
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../sobre-la-documentacion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sobre la documentación
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_3" id="__nav_1_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Especificaciones — Agente
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Especificaciones — Agente
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../agente/especificacion_agente/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Visión general
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../agente/modulo_incertidumbre/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Módulo incertidumbre
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../agente/modulo_metricas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Módulo métricas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../agente/modulo_controlador/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Módulo controlador
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../agente/tests/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tests
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_1_4" id="__nav_1_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Especificaciones — Benchmark
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_1_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Especificaciones — Benchmark
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Visión general
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Visión general
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-objetivo-y-alcance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Objetivo y alcance
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Objetivo y alcance">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-documentos-hermanos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1 Documentos hermanos
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-benchmark-base-y-motivacion-de-la-eleccion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Benchmark base y motivación de la elección
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Benchmark base y motivación de la elección">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-variantes-usadas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 Variantes usadas
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-precondiciones-del-entorno-y-dependencias-tecnicas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Precondiciones del entorno y dependencias técnicas
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Precondiciones del entorno y dependencias técnicas">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-gestion-de-secretos-y-variables-de-entorno" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 Gestión de secretos y variables de entorno
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-arquitectura-de-alto-nivel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Arquitectura de alto nivel
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Arquitectura de alto nivel">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-componentes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 Componentes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-flujo-logico" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 Flujo lógico
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-comunicacion-entre-modulos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 Comunicación entre módulos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-principios-de-diseno" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4 Principios de diseño
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#45-limites-bloque-2-bloque-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.5 Límites Bloque 2 / Bloque 3
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#46-pipeline-contractual-del-lote" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.6 Pipeline contractual del lote
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-agentes-y-configuracion-del-experimento" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Agentes y configuración del experimento
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Agentes y configuración del experimento">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-agentes-del-tfg-lista-plana" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 Agentes del TFG (lista plana)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-baselines-y-comparabilidad" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 Baselines y comparabilidad
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53-semillas-y-repeticion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3 Semillas y repetición
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#54-paralelismo-y-reintentos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.4 Paralelismo y reintentos
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-interaccion-detallada-por-ejecucion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Interacción detallada por ejecución
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-contratos-de-datos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Contratos de datos
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. Contratos de datos">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71-benchmarkinstance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.1 BenchmarkInstance
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#72-agentrunconfig" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.2 AgentRunConfig
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#73-benchmarkrunrecord" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.3 BenchmarkRunRecord
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#74-evaluationresult" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.4 EvaluationResult
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7.4 EvaluationResult">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#functional-veredicto-swe-bench" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        functional (veredicto SWE-bench)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#extended-metricas-comparables-entre-agentes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        extended (métricas comparables entre agentes)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#75-benchmarktaskresult" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.5 BenchmarkTaskResult
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-trazabilidad-y-formato-de-salida" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Trazabilidad y formato de salida
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. Trazabilidad y formato de salida">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#81-layout-de-resultados" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.1 Layout de resultados
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#82-manifestjson-minimo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.2 manifest.json (mínimo)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#83-compatibilidad-con-predsjson-y-grupos-de-evaluacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.3 Compatibilidad con preds.json y grupos de evaluación
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#84-politica-de-denominador-para-metricas-agregadas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.4 Política de denominador para métricas agregadas
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-reutilizacion-de-mini-swe-agent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Reutilización de mini-SWE-agent
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-organizacion-del-codigo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Organización del código
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-interfaz-con-el-bloque-1-agente" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. Interfaz con el Bloque 1 (agente)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11. Interfaz con el Bloque 1 (agente)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#111-entrada-hacia-el-agente" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.1 Entrada hacia el agente
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#112-salida-consumida-del-agente" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.2 Salida consumida del agente
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#113-validacion-durante-el-run" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.3 Validación durante el run
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-interfaz-con-el-bloque-3-analisis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. Interfaz con el Bloque 3 (análisis)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-configuracion-experimental-del-lote-principal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13. Configuración experimental del lote principal
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13. Configuración experimental del lote principal">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#matriz-experimental" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Matriz experimental
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#procedimiento-previo-al-lote-principal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Procedimiento previo al lote principal
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#politica-de-fallos-y-limitaciones" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Política de fallos y limitaciones
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14-referencias-tecnicas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14. Referencias técnicas
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../modulo_dataset/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Módulo dataset
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../modulo_ejecucion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Módulo ejecución
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../modulo_evaluacion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Módulo evaluación
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../modulo_resultados/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Módulo resultados
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ejemplo_evaluation_result/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ejemplo evaluation result
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_5" id="__nav_1_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Especificaciones — Análisis
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Especificaciones — Análisis
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../analisis/especificacion_analisis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Visión general
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../analisis/modulo_metricas_agentes_externos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Módulo métricas de agentes externos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../analisis/modulo_consolidacion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Módulo consolidación
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../analisis/modulo_diagramas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Módulo diagramas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Implementación
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Implementación
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Visión general
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Agente
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Agente
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/agent/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Resumen
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/agent/robust_agent/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RobustAgent
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/agent/config/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuración
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/agent/episode_state/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Estado y traza
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/agent/structural_metrics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Métricas estructurales
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/agent/uncertainty/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Incertidumbre
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/agent/controller/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Controlador
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Benchmark
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Benchmark
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/benchmark/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Resumen
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/benchmark/benchmark_runner/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BenchmarkRunner
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/benchmark/config/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuración
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/benchmark/dataset/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dataset
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/benchmark/execution/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ejecución
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/benchmark/evaluation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Evaluación
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/benchmark/results/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Resultados
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_4" id="__nav_2_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Análisis
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Análisis
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/analysis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Resumen
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/analysis/consolidation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Consolidación
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/analysis/external_metrics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Métricas externas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/analysis/diagrams/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Diagramas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/analysis/run/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Punto de entrada CLI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-objetivo-y-alcance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Objetivo y alcance
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Objetivo y alcance">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-documentos-hermanos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1 Documentos hermanos
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-benchmark-base-y-motivacion-de-la-eleccion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Benchmark base y motivación de la elección
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Benchmark base y motivación de la elección">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-variantes-usadas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 Variantes usadas
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-precondiciones-del-entorno-y-dependencias-tecnicas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Precondiciones del entorno y dependencias técnicas
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Precondiciones del entorno y dependencias técnicas">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-gestion-de-secretos-y-variables-de-entorno" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 Gestión de secretos y variables de entorno
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-arquitectura-de-alto-nivel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Arquitectura de alto nivel
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Arquitectura de alto nivel">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-componentes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 Componentes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-flujo-logico" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 Flujo lógico
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-comunicacion-entre-modulos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 Comunicación entre módulos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-principios-de-diseno" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4 Principios de diseño
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#45-limites-bloque-2-bloque-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.5 Límites Bloque 2 / Bloque 3
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#46-pipeline-contractual-del-lote" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.6 Pipeline contractual del lote
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-agentes-y-configuracion-del-experimento" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Agentes y configuración del experimento
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Agentes y configuración del experimento">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-agentes-del-tfg-lista-plana" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 Agentes del TFG (lista plana)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-baselines-y-comparabilidad" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 Baselines y comparabilidad
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53-semillas-y-repeticion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3 Semillas y repetición
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#54-paralelismo-y-reintentos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.4 Paralelismo y reintentos
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-interaccion-detallada-por-ejecucion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Interacción detallada por ejecución
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-contratos-de-datos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Contratos de datos
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. Contratos de datos">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71-benchmarkinstance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.1 BenchmarkInstance
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#72-agentrunconfig" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.2 AgentRunConfig
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#73-benchmarkrunrecord" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.3 BenchmarkRunRecord
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#74-evaluationresult" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.4 EvaluationResult
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7.4 EvaluationResult">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#functional-veredicto-swe-bench" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        functional (veredicto SWE-bench)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#extended-metricas-comparables-entre-agentes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        extended (métricas comparables entre agentes)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#75-benchmarktaskresult" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.5 BenchmarkTaskResult
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-trazabilidad-y-formato-de-salida" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Trazabilidad y formato de salida
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. Trazabilidad y formato de salida">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#81-layout-de-resultados" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.1 Layout de resultados
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#82-manifestjson-minimo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.2 manifest.json (mínimo)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#83-compatibilidad-con-predsjson-y-grupos-de-evaluacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.3 Compatibilidad con preds.json y grupos de evaluación
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#84-politica-de-denominador-para-metricas-agregadas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.4 Política de denominador para métricas agregadas
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-reutilizacion-de-mini-swe-agent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Reutilización de mini-SWE-agent
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-organizacion-del-codigo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Organización del código
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-interfaz-con-el-bloque-1-agente" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. Interfaz con el Bloque 1 (agente)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11. Interfaz con el Bloque 1 (agente)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#111-entrada-hacia-el-agente" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.1 Entrada hacia el agente
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#112-salida-consumida-del-agente" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.2 Salida consumida del agente
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#113-validacion-durante-el-run" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.3 Validación durante el run
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-interfaz-con-el-bloque-3-analisis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. Interfaz con el Bloque 3 (análisis)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-configuracion-experimental-del-lote-principal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13. Configuración experimental del lote principal
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13. Configuración experimental del lote principal">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#matriz-experimental" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Matriz experimental
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#procedimiento-previo-al-lote-principal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Procedimiento previo al lote principal
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#politica-de-fallos-y-limitaciones" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Política de fallos y limitaciones
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14-referencias-tecnicas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14. Referencias técnicas
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="fase-22-especificacion-del-benchmark-extendido">Fase 2.2 - Especificación del benchmark extendido<a class="headerlink" href="#fase-22-especificacion-del-benchmark-extendido" title="Permanent link">&para;</a></h1>
+<h2 id="1-objetivo-y-alcance">1. Objetivo y alcance<a class="headerlink" href="#1-objetivo-y-alcance" title="Permanent link">&para;</a></h2>
+<p>Este documento especifica el <strong>Bloque 2: benchmark extendido de evaluación</strong> del TFG: arquitectura general, responsabilidades, interacciones entre módulos, contratos de datos transversales, organización del código e interfaces con el Bloque 1 (agente) y el Bloque 3 (análisis de resultados).</p>
+<p>El objetivo del bloque es ejecutar de forma reproducible un lote de agentes sobre tareas de SWE-bench (baseline <code>default</code> y variantes robustas como <code>robust_strict</code>, <code>robust_balanced</code>, <code>robust_permissive</code>) y convertir cada ejecución en <strong>datos comparables entre agentes</strong>: corrección funcional (<code>resolved</code>), métricas de run (<code>run_metrics</code>) y métricas del parche emitido (<code>patch_metrics</code>). El análisis agregado (medias, correlaciones, series temporales, gráficos) y el estudio de incertidumbre/riesgo/decisiones del proceso robusto corresponden al <strong>Bloque 3</strong>, que lee <code>evaluation_result.json</code> para comparativas tabulares y <code>trajectory.traj.json</code> cuando necesita detalle paso a paso del bloque <code>robust_agent</code>.</p>
+<p>El alcance de este documento es exclusivamente el <strong>Bloque 2</strong>. Quedan fuera:</p>
+<ul>
+<li>la lógica interna del agente robusto, ya especificada en <code>especificacion_agente.md</code>,</li>
+<li>el análisis estadístico, visualización y explotación final de resultados, que corresponde al Bloque 3,</li>
+<li>la implementación concreta de cada clase, fórmula final y esquema de almacenamiento físico, que se cierra en documentos específicos por módulo.</li>
+</ul>
+<h3 id="11-documentos-hermanos">1.1 Documentos hermanos<a class="headerlink" href="#11-documentos-hermanos" title="Permanent link">&para;</a></h3>
+<p>La especificación del benchmark extendido queda repartida en varios documentos. <strong>Este documento describe el sistema general</strong>; cada módulo tiene su propio documento con interfaz pública, contratos de datos, política de fallos y detalle interno.</p>
+<p>Documentos de la serie:</p>
+<ul>
+<li><code>docs/especificaciones/benchmark/modulo_dataset.md</code> - selección, carga y normalización de instancias SWE-bench.</li>
+<li><code>docs/especificaciones/benchmark/modulo_ejecucion.md</code> - harness de ejecución, matriz experimental, entornos y lanzamiento de agentes.</li>
+<li><code>docs/especificaciones/benchmark/modulo_evaluacion.md</code> - evaluación funcional SWE-bench y evaluación ampliada.</li>
+<li><code>docs/especificaciones/benchmark/modulo_resultados.md</code> - persistencia, manifiesto mínimo y contrato de salida hacia el Bloque 3.</li>
+</ul>
+<h2 id="2-benchmark-base-y-motivacion-de-la-eleccion">2. Benchmark base y motivación de la elección<a class="headerlink" href="#2-benchmark-base-y-motivacion-de-la-eleccion" title="Permanent link">&para;</a></h2>
+<p>El benchmark base seleccionado es <strong>SWE-bench</strong>, tras una evaluación multicriterio (encaje con el contrato del agente, soporte nativo en mini-SWE-agent, reproducibilidad vía harness oficial y <code>sb-cli</code>, y adecuación para métricas ampliadas de parche).</p>
+<p>Se elige SWE-bench por cuatro motivos alineados con los objetivos del TFG:</p>
+<ol>
+<li><strong>Encaje con el contrato del agente.</strong> Las tareas siguen el patrón <code>issue -&gt; repositorio -&gt; parche -&gt; tests</code>, que coincide con el flujo de mini-SWE-agent y con las precondiciones del <code>RobustAgent</code>.</li>
+<li><strong>Soporte nativo en mini-SWE-agent.</strong> La copia local de mini-SWE-agent incluida en el repositorio trae runners <code>swebench.py</code> y <code>swebench_single.py</code>, configuraciones YAML y soporte de entornos <code>docker</code>/<code>singularity</code>, lo que permite extender el harness existente en lugar de construir uno desde cero.</li>
+<li><strong>Reproducibilidad y evaluación funcional estándar.</strong> SWE-bench proporciona imágenes por instancia, suites de test y harness oficial de evaluación, además de la opción de evaluación cloud vía <code>sb-cli</code>.</li>
+<li><strong>Adecuación para métricas ampliadas.</strong> Cada instancia contiene metadatos útiles para comparar el parche del agente con el parche de referencia y para relacionar éxito funcional con coste, incertidumbre y riesgo estructural.</li>
+</ol>
+<h3 id="21-variantes-usadas">2.1 Variantes usadas<a class="headerlink" href="#21-variantes-usadas" title="Permanent link">&para;</a></h3>
+<p>Se distinguen dos usos:</p>
+<ul>
+<li><strong>SWE-bench Lite</strong>: conjunto de iteración y validación interna del benchmark extendido. Puede ejecutarse completo o reducido con <code>--slice</code>/<code>--filter</code>.</li>
+<li><strong>SWE-bench Verified</strong>: conjunto de evaluación final o semidefinitiva. Es el subconjunto más comparable con la literatura reciente, aunque su ejecución completa depende del presupuesto disponible.</li>
+</ul>
+<p>La especificación no acopla el bloque a un subset fijo. El módulo de dataset expone <code>subset</code>, <code>split</code>, <code>slice_strategy</code>, <code>slice_size</code>, <code>slice_seed</code>, <code>shuffle</code> e <code>instance_ids</code> como parámetros configurables para poder incorporar <code>Lite</code>, <code>Verified</code>, <code>SWE-bench-Live</code> u otra variante compatible con el formato SWE-bench.</p>
+<h2 id="3-precondiciones-del-entorno-y-dependencias-tecnicas">3. Precondiciones del entorno y dependencias técnicas<a class="headerlink" href="#3-precondiciones-del-entorno-y-dependencias-tecnicas" title="Permanent link">&para;</a></h2>
+<p>El bloque del benchmark debe garantizar las precondiciones que el agente necesita y las que la evaluación funcional requiere.</p>
+<ul>
+<li><strong>PB1. Instancia SWE-bench válida.</strong> Cada tarea debe incluir al menos <code>instance_id</code>, <code>problem_statement</code>, metadatos de repositorio, parche de referencia cuando esté disponible e información de tests compatible con el harness de SWE-bench.</li>
+<li><strong>PB2. Entorno aislado por instancia.</strong> Cada ejecución se realiza en un entorno independiente, preferentemente Docker. El estado del repositorio se comprueba antes de llamar al agente (<code>git status --porcelain</code>) y se registra en <code>environment_meta</code>, pero no bloquea el run: las imágenes oficiales de SWE-bench a veces contienen ficheros pre-modificados por configuración del entorno de test (p. ej. <code>setup.py</code>, <code>tox.ini</code>), y <code>sb-cli</code> evalúa siempre contra el <code>base_commit</code> correcto independientemente del estado inicial del directorio.</li>
+<li><strong>PB3. Compatibilidad con mini-SWE-agent.</strong> El entorno debe poder instanciar un <code>Model</code>, un <code>Environment</code> y un agente compatible con el protocolo de mini-SWE-agent. Para el agente del TFG se instancia <code>RobustAgent</code>; para baselines se pueden instanciar <code>DefaultAgent</code> u otros agentes compatibles.</li>
+<li><strong>PB4. Persistencia de artefactos.</strong> Cada ejecución debe producir una trayectoria serializada, un parche/model patch y metadatos suficientes para auditar el run. Si un run falla antes de generar parche, el fallo se registra explícitamente y no se oculta.</li>
+<li><strong>PB5. Evaluador funcional disponible (<code>sb-cli</code>).</strong> En la versión inicial, la métrica funcional se calcula con <code>sb-cli</code>, autenticado mediante la variable de entorno <code>SWEBENCH_API_KEY</code> (ver EB.3.1). <strong>Antes de ejecutar agentes</strong>, el benchmark comprueba que <code>sb-cli</code> está accesible; si no lo está, el experimento <strong>aborta</strong> sin lanzar la matriz. La evaluación funcional puede desactivarse deliberadamente con <code>functional_backend='none'</code> o <code>evaluation_skip=True</code> (útil para tiradas de depuración o ablaciones que quieran ahorrar cuota de <code>sb-cli</code>): en ese caso el preflight no aplica, los runs se ejecutan igualmente y las métricas locales (<code>run_metrics</code>, <code>patch_metrics</code>) se calculan con normalidad; <code>functional.resolved</code> queda a <code>null</code>. El fallback a <code>swebench.harness.run_evaluation</code> queda fuera de esta versión inicial.</li>
+<li><strong>PB6. Configuración experimental congelada.</strong> Cada lote de ejecuciones registra versión del código, subset, split, filtro, modelo, perfil, límites, entorno y versión del formato de salida.</li>
+<li><strong>PB7. Proveedor de modelo configurable.</strong> El benchmark soporta dos endpoints para Gemini: AI Studio (<code>gemini/&lt;model&gt;</code>) y Vertex AI (<code>vertex_ai/&lt;model&gt;</code>). Si la variable de entorno <code>VERTEXAI_PROJECT</code> está definida, <code>run.py</code> instala un wrapper transparente que redirige todas las llamadas <code>gemini/*</code> a Vertex AI como destino primario, con fallback automático a AI Studio ante errores 429, 503 o de red. Para la comparación de reanudación, <code>vertex_ai/gemini-2.5-flash</code> y <code>gemini/gemini-2.5-flash</code> se tratan como el mismo modelo.</li>
+</ul>
+<p>La degradación limpia aplica a fallos recuperables de evaluación o metadatos incompletos. El estado del repositorio (PR1) se registra como dato informativo en <code>run_record.json</code> (<code>environment.pr1_check</code>), pero no aborta el run (ver PB2).</p>
+<h3 id="31-gestion-de-secretos-y-variables-de-entorno">3.1 Gestión de secretos y variables de entorno<a class="headerlink" href="#31-gestion-de-secretos-y-variables-de-entorno" title="Permanent link">&para;</a></h3>
+<p>El benchmark comparte con el Bloque 1 el mismo mecanismo de carga de secretos, definido en <code>common.env</code> (utilidad transversal fuera de <code>src/agent/</code> y <code>src/benchmark/</code>; ver <code>especificacion_agente.md</code> EA.3.1):</p>
+<ul>
+<li><code>common.env.load_project_env()</code> carga <code>.env</code> de la raíz del repositorio (y el <code>.env</code> global de mini-swe-agent) al arrancar. <code>python -m benchmark.run</code> la invoca en su <code>main()</code> <strong>antes</strong> de configurar LiteLLM y el routing de Vertex AI (PB7), de modo que <code>VERTEXAI_PROJECT</code> y las API keys de modelo ya están disponibles en ese punto.</li>
+<li><code>common.env.api_key_error_for_model()</code> valida la API key del modelo por <code>agent_id</code>/<code>model_id</code> según la convención del proveedor o el <code>api_key_env</code> explícito de <code>AgentRunConfig</code> (EB.7.2).</li>
+<li><code>common.env.swebench_api_key_error()</code> valida específicamente <code>SWEBENCH_API_KEY</code> (PB5) durante el preflight de <code>sb-cli</code> en <code>BenchmarkRunner</code>; si falta, el mensaje de error indica que se define en <code>.env</code> y que se carga automáticamente al arrancar <code>python -m benchmark.run</code>.</li>
+</ul>
+<p>Las API keys <strong>no</strong> se declaran en el YAML de experimento ni en ningún fichero versionado: solo en <code>.env</code> (gitignored) o en el entorno del proceso. <code>AgentRunConfig.api_key_env</code> (EB.7.2) referencia el <em>nombre</em> de la variable, nunca su valor. Ver <code>README.md</code> (sección 3) para el procedimiento de configuración.</p>
+<h2 id="4-arquitectura-de-alto-nivel">4. Arquitectura de alto nivel<a class="headerlink" href="#4-arquitectura-de-alto-nivel" title="Permanent link">&para;</a></h2>
+<h3 id="41-componentes">4.1 Componentes<a class="headerlink" href="#41-componentes" title="Permanent link">&para;</a></h3>
+<p>El Bloque 2 se organiza en cuatro módulos principales:</p>
+<ul>
+<li><strong>Módulo de dataset (<code>BenchmarkDatasetModule</code>).</strong> Carga SWE-bench, selecciona subsets/slices/filtros, normaliza cada instancia a un contrato interno <code>BenchmarkInstance</code> y expone los metadatos necesarios para ejecución y evaluación.</li>
+<li><strong>Módulo de ejecución (<code>BenchmarkExecutionModule</code>).</strong> Actúa como harness: construye la matriz experimental, prepara entornos, instancia agentes, ejecuta tareas, captura trayectorias y registra el resultado bruto de cada run.</li>
+<li><strong>Módulo de evaluación (<code>BenchmarkEvaluationModule</code>).</strong> (1) Evaluación funcional vía <code>sb-cli</code> por grupo de configuración. (2) <strong>Extracción ampliada comparable</strong>: por cada run, produce <code>run_metrics</code> y <code>patch_metrics</code> en un esquema <strong>idéntico para todos los agentes</strong> (baseline y robusto). No agrega series temporales ni snapshots del bloque <code>robust_agent</code>; eso queda en la traza para el Bloque 3.</li>
+<li><strong>Módulo de resultados (<code>BenchmarkResultsModule</code>).</strong> Gestiona el layout de persistencia, manifiesto mínimo, versiones de formato y exportación hacia el Bloque 3. <strong>No</strong> materializa un índice tabular <code>results.jsonl</code>; el Bloque 3 escanea el árbol <code>instances/</code> o consume <code>BenchmarkExport</code>.</li>
+</ul>
+<p>Esta descomposición concreta el planteamiento inicial del diseño del TFG. El diseño inicial distinguía genéricamente "ejecución" y "evaluación ampliada"; aquí se separa también la carga/normalización de tareas y la persistencia de resultados porque ambas responsabilidades son transversales y conviene mantenerlas desacopladas.</p>
+<h3 id="42-flujo-logico">4.2 Flujo lógico<a class="headerlink" href="#42-flujo-logico" title="Permanent link">&para;</a></h3>
+<pre class="mermaid"><code>flowchart TD
+    A[Config experimental] --&gt; B[BenchmarkDatasetModule]
+    B --&gt; C[BenchmarkInstance list]
+    C --&gt; D[BenchmarkExecutionModule]
+    D --&gt; E[Preparar entorno aislado]
+    E --&gt; F[Instanciar agente y modelo]
+    F --&gt; G[Ejecutar tarea]
+    G --&gt; H[Guardar trayectoria y parche]
+    H --&gt; I[BenchmarkEvaluationModule]
+    I --&gt; J[Evaluacion funcional SWE-bench]
+    I --&gt; K[Evaluacion ampliada]
+    J --&gt; L[BenchmarkTaskResult]
+    K --&gt; L
+    L --&gt; M[BenchmarkResultsModule]
+    M --&gt; N[Manifest + export Bloque 3]</code></pre>
+<p>El flujo es por instancia y por configuración experimental. Una misma instancia puede ejecutarse varias veces con distintos agentes, perfiles o semillas, pero cada ejecución produce un <code>run_id</code> único y artefactos independientes.</p>
+<h3 id="43-comunicacion-entre-modulos">4.3 Comunicación entre módulos<a class="headerlink" href="#43-comunicacion-entre-modulos" title="Permanent link">&para;</a></h3>
+<p>Los módulos se comunican mediante contratos de datos serializables. Ningún módulo debe depender de detalles internos de otro módulo fuera de su interfaz pública.</p>
+<pre class="mermaid"><code>flowchart LR
+    DS[BenchmarkDatasetModule] -- BenchmarkInstance --&gt; EX[BenchmarkExecutionModule]
+    DS -- BenchmarkInstance --&gt; EV[BenchmarkEvaluationModule]
+    EX -- BenchmarkRunRecord --&gt; EV
+    EV -- BenchmarkTaskResult --&gt; RS[BenchmarkResultsModule]
+    RS -- BenchmarkExport --&gt; BA[Bloque 3: Analisis]
+
+    EX -.instancia.-&gt; AG[Bloque 1: RobustAgent / baselines]
+    AG -.trace + patch.-&gt; EX
+    EV -.lee.-&gt; TR[(Trayectorias robust-agent-1.0)]
+    EV -.usa gold_patch / tests.-&gt; DS</code></pre>
+<p>El módulo de evaluación consume <code>BenchmarkInstance</code> además de <code>BenchmarkRunRecord</code> porque las métricas funcional y ampliada requieren el <code>gold_patch</code>, los tests (<code>fail_to_pass</code>, <code>pass_to_pass</code>) y los metadatos de la tarea (repo, base_commit) que viven en la instancia, no en el record bruto.</p>
+<p>Reglas de comunicación:</p>
+<ul>
+<li><strong>Acoplamiento por interfaz.</strong> Cada módulo expone una clase principal con métodos públicos claros (<code>load_instances</code>, <code>run_matrix</code>, <code>evaluate_runs</code>, <code>write_manifest</code>, etc.). Los nombres exactos se cierran en los documentos de módulo.</li>
+<li><strong>Contratos serializables.</strong> Todo dato que cruza módulos debe poder persistirse como JSON o JSONL sin depender de objetos vivos en memoria.</li>
+<li><strong>Sin inspección interna del agente.</strong> El benchmark instancia el agente y consume su salida serializada. No lee atributos internos del <code>RobustAgent</code> durante el run.</li>
+<li><strong>Separación entre ejecución y evaluación.</strong> La ejecución no decide si una solución es correcta; solo genera artefactos. La evaluación funcional y ampliada se calcula después sobre esos artefactos.</li>
+<li><strong>Errores explícitos.</strong> Una ejecución o evaluación fallida produce un contrato con <code>status=error</code> y evidencia, no una ausencia silenciosa de datos.</li>
+</ul>
+<h3 id="44-principios-de-diseno">4.4 Principios de diseño<a class="headerlink" href="#44-principios-de-diseno" title="Permanent link">&para;</a></h3>
+<p>El bloque extiende el runner de mini-SWE-agent y el formato de SWE-bench siempre que sea razonable, en lugar de reimplementar la carga de dataset, la evaluación funcional o la gestión de imágenes sin necesidad justificada. Cada módulo encapsula una responsabilidad concreta tras una interfaz mínima, de modo que su detalle interno puede cambiar sin afectar a los demás.</p>
+<p>Cada run deja suficientes artefactos para reconstruir qué tarea se ejecutó, con qué agente, en qué entorno, con qué configuración y qué salida produjo. La configuración experimental se versiona junto a los resultados -filtros, slices, seeds, modelo, perfil y límites quedan siempre en el manifiesto- para que cualquier lote sea reproducible. Cuando una métrica ampliada no puede calcularse se marca explícitamente como <code>unavailable</code> o <code>error</code> con su causa, en lugar de contaminar otras métricas u ocultar el fallo; y el coste no se infiere a posteriori si el agente ya lo reporta, sino que se consume el desglose de <code>EpisodeState.budget</code> tal cual. Por último, el diseño busca que añadir un perfil, un baseline, una variante de SWE-bench o una métrica nueva no requiera modificar el núcleo de ejecución.</p>
+<h3 id="45-limites-bloque-2-bloque-3">4.5 Límites Bloque 2 / Bloque 3<a class="headerlink" href="#45-limites-bloque-2-bloque-3" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Responsabilidad</th>
+<th>Bloque 2</th>
+<th>Bloque 3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Ejecutar matriz experimental</td>
+<td>Sí</td>
+<td>No</td>
+</tr>
+<tr>
+<td><code>resolved</code> (sb-cli)</td>
+<td>Sí</td>
+<td>Agrega y compara</td>
+</tr>
+<tr>
+<td><code>run_metrics</code>, <code>patch_metrics</code> por run (todos los agentes)</td>
+<td>Extrae y persiste en <code>evaluation_result.json</code> (<code>extended</code>)</td>
+<td>Agrega, correlaciona, grafica</td>
+</tr>
+<tr>
+<td>Señales <code>robust_agent</code> (incertidumbre, riesgo, decisiones…)</td>
+<td>No en <code>extended</code>; viven en <code>trajectory.traj.json</code></td>
+<td>Lee traza y analiza</td>
+</tr>
+<tr>
+<td>Medias, series, matrices, trade-offs globales</td>
+<td>No</td>
+<td>Sí</td>
+</tr>
+</tbody>
+</table>
+<h3 id="46-pipeline-contractual-del-lote">4.6 Pipeline contractual del lote<a class="headerlink" href="#46-pipeline-contractual-del-lote" title="Permanent link">&para;</a></h3>
+<p>Orden comprometido de <code>BenchmarkRunner.run()</code>:</p>
+<ol>
+<li><strong>Preflight <code>sb-cli</code>:</strong> comprobar que el binario/servicio está disponible; si no → abort del experimento (sin ejecutar agentes).</li>
+<li><strong>Ejecución:</strong> para cada slot pendiente de la matriz, lanzar el agente, persistir <code>trajectory.traj.json</code>, <code>model.patch</code>, <code>run_record.json</code>.</li>
+<li><strong>Fase de evaluación</strong> (idempotente; por <strong>grupo</strong> <code>(agent_id, model_id)</code>):</li>
+<li>Por cada run del grupo: métricas locales (<code>run_metrics</code>, <code>patch_metrics</code>) desde disco.</li>
+<li>Un <code>preds.json</code> + un <code>sb-cli submit</code> por grupo.</li>
+<li>Por cada run: unificar veredicto funcional + métricas → <code>evaluation_result.json</code>.</li>
+<li>Dentro del grupo, el orden entre métricas locales y submit <strong>no es contractual</strong>.</li>
+<li><strong>Cierre:</strong> <code>manifest.json</code> → <code>finalized</code>; <code>BenchmarkExport</code> hacia Bloque 3.</li>
+</ol>
+<h2 id="5-agentes-y-configuracion-del-experimento">5. Agentes y configuración del experimento<a class="headerlink" href="#5-agentes-y-configuracion-del-experimento" title="Permanent link">&para;</a></h2>
+<p>El benchmark no contiene la lógica interna de los agentes. Define una <strong>lista de trabajos</strong>: cada instancia del slice × cada entrada en <code>experiment_config.agents</code>.</p>
+<h3 id="51-agentes-del-tfg-lista-plana">5.1 Agentes del TFG (lista plana)<a class="headerlink" href="#51-agentes-del-tfg-lista-plana" title="Permanent link">&para;</a></h3>
+<p>Cada variante experimental es un <code>AgentRunConfig</code> distinto en YAML. Los perfiles de repositorio del RobustAgent (<code>strict</code>, <code>balanced</code>, <code>permissive</code>) se modelan como <strong><code>agent_id</code> separados</strong>, no como un eje <code>profile</code> en rutas ni en agrupación:</p>
+<table>
+<thead>
+<tr>
+<th><code>agent_id</code></th>
+<th>Rol</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>default</code></td>
+<td>Baseline (<code>DefaultAgent</code>), mismo <code>model_id</code></td>
+</tr>
+<tr>
+<td><code>robust_strict</code></td>
+<td><code>RobustAgent</code> con perfil strict en <code>config_overrides</code></td>
+</tr>
+<tr>
+<td><code>robust_balanced</code></td>
+<td><code>RobustAgent</code> con perfil balanced</td>
+</tr>
+<tr>
+<td><code>robust_permissive</code></td>
+<td><code>RobustAgent</code> con perfil permissive</td>
+</tr>
+</tbody>
+</table>
+<p>El Bloque 1 sigue definiendo los perfiles en <code>especificacion_agente.md</code>; el benchmark solo instancia el agente con la config adecuada por fila.</p>
+<h3 id="52-baselines-y-comparabilidad">5.2 Baselines y comparabilidad<a class="headerlink" href="#52-baselines-y-comparabilidad" title="Permanent link">&para;</a></h3>
+<p><code>default</code> es el baseline principal. Los <code>robust_*</code> comparten dataset, <code>model_id</code> y entorno. El harness <strong>no</strong> exige bloque <code>robust_agent</code> para las métricas comparables: <code>run_metrics</code> y <code>patch_metrics</code> se extraen igual para todos; <code>trace_format</code> es <code>robust-agent-1.0</code> cuando la traza incluye <code>robust_agent</code>, <code>null</code> en baseline.</p>
+<h3 id="53-semillas-y-repeticion">5.3 Semillas y repetición<a class="headerlink" href="#53-semillas-y-repeticion" title="Permanent link">&para;</a></h3>
+<p>Cuando el modelo o el entorno introduzcan aleatoriedad, el benchmark registra la semilla o marca el run como no determinista. El TFG usa <strong>N=1</strong> por combinación <code>(instance_id, agent_id, model_id)</code>; cada celda produce un único <code>run_id</code>. Las repeticiones con N&gt;1 quedan fuera del alcance de esta versión inicial (ver EB.13).</p>
+<h3 id="54-paralelismo-y-reintentos">5.4 Paralelismo y reintentos<a class="headerlink" href="#54-paralelismo-y-reintentos" title="Permanent link">&para;</a></h3>
+<p>El bloque del benchmark debe admitir ejecución concurrente de varios runs (varios <code>workers</code>) y una política de reintentos acotada para fallos transitorios del entorno (timeouts de Docker, fallos de red al cargar el dataset, etc.). Los detalles concretos (número de workers por defecto, política de retry, <em>timeouts</em> por fase) se cierran en <code>modulo_ejecucion.md</code>. A nivel de bloque solo se compromete:</p>
+<ul>
+<li>cada run se ejecuta en un entorno aislado independiente; los workers no comparten estado del agente,</li>
+<li>los reintentos siempre generan un nuevo <code>run_id</code> y conservan los artefactos del intento previo,</li>
+<li>los fallos no recuperables se registran como <code>status=failed</code> (o <code>precondition_failed</code>) en el <code>BenchmarkRunRecord</code> y no se silencian.</li>
+</ul>
+<h2 id="6-interaccion-detallada-por-ejecucion">6. Interacción detallada por ejecución<a class="headerlink" href="#6-interaccion-detallada-por-ejecucion" title="Permanent link">&para;</a></h2>
+<p>Para cada combinación experimental, el flujo es:</p>
+<ol>
+<li><strong>Selección de instancia:</strong> <code>BenchmarkDatasetModule</code> devuelve un <code>BenchmarkInstance</code> normalizado.</li>
+<li><strong>Preparación del entorno:</strong> <code>BenchmarkExecutionModule</code> crea o arranca el entorno aislado asociado a la instancia. Por defecto se usa Docker, siguiendo el runner SWE-bench de mini-SWE-agent.</li>
+<li><strong>Verificación de precondiciones:</strong> antes de llamar al agente se comprueba que el entorno expone un repositorio git limpio en el directorio de trabajo. Esta precondición se registra también porque el agente la verificará internamente.</li>
+<li><strong>Instanciación:</strong> se construyen modelo, entorno y agente según <code>AgentRunConfig</code>. Para el agente robusto se inyecta el perfil correspondiente.</li>
+<li><strong>Ejecución:</strong> se llama a <code>agent.run(problem_statement)</code>.</li>
+<li><strong>Captura de salida:</strong> se guarda la trayectoria (<code>.traj.json</code>), el parche emitido por el agente (<code>model_patch</code>) y los metadatos de salida (<code>exit_status</code>, excepciones, coste, duración). Si el parche está vacío, el run queda <code>failed</code> (<code>EmptySubmission</code>), no <code>completed</code>.</li>
+<li><strong>Registro bruto:</strong> se crea un <code>BenchmarkRunRecord</code> aún sin juicio funcional definitivo.</li>
+<li><strong>Fase de evaluación (lote):</strong> por grupo <code>(agent_id, model_id)</code> → <code>evaluation_result.json</code> por run (funcional + métricas comparables).</li>
+<li><strong>Persistencia:</strong> <code>BenchmarkResultsModule</code> escribe manifiesto mínimo y export listo para Bloque 3. La traza completa (incluido <code>robust_agent</code> si existe) queda en <code>trajectory.traj.json</code> para análisis en Bloque 3.</li>
+</ol>
+<h2 id="7-contratos-de-datos">7. Contratos de datos<a class="headerlink" href="#7-contratos-de-datos" title="Permanent link">&para;</a></h2>
+<p>Los contratos quedan fijados a nivel estructural. Los tipos concretos (<code>dataclass</code>, <code>pydantic</code>, <code>TypedDict</code>) y validaciones se cierran en bajo nivel. Todos los contratos deben ser serializables a JSON.</p>
+<h3 id="71-benchmarkinstance">7.1 <code>BenchmarkInstance</code><a class="headerlink" href="#71-benchmarkinstance" title="Permanent link">&para;</a></h3>
+<p>Unidad normalizada de tarea.</p>
+<ul>
+<li><code>instance_id: str</code></li>
+<li><code>dataset_name: str</code></li>
+<li><code>subset: str</code></li>
+<li><code>split: str</code></li>
+<li><code>repo: str | None</code></li>
+<li><code>base_commit: str | None</code></li>
+<li><code>problem_statement: str</code></li>
+<li><code>gold_patch: str | None</code></li>
+<li><code>test_patch: str | None</code></li>
+<li><code>fail_to_pass: list[str]</code></li>
+<li><code>pass_to_pass: list[str]</code></li>
+<li><code>metadata: dict</code></li>
+</ul>
+<h3 id="72-agentrunconfig">7.2 <code>AgentRunConfig</code><a class="headerlink" href="#72-agentrunconfig" title="Permanent link">&para;</a></h3>
+<p>Configuración de una ejecución concreta.</p>
+<ul>
+<li><code>agent_id: str</code> - identificador estable (<code>default</code>, <code>robust_strict</code>, <code>robust_balanced</code>, <code>robust_permissive</code>, etc.). Cada perfil de repositorio del RobustAgent es un <code>agent_id</code> distinto, no un campo <code>profile</code> en rutas ni en agrupación.</li>
+<li><code>agent_class: str</code></li>
+<li><code>model_id: str</code></li>
+<li><code>environment_class: str</code></li>
+<li><code>cost_limit: float | None</code></li>
+<li><code>step_limit: int | None</code></li>
+<li><code>seed: int | None</code></li>
+<li><code>api_key_env: str | None</code> - nombre de variable de entorno con la API key (opcional; nunca el valor). Si es <code>None</code>, LiteLLM infiere la convención del proveedor desde <code>model_id</code>. Validado por <code>common.env.api_key_error_for_model()</code> (EB.3.1). Ver <code>README.md</code> (sección 3).</li>
+<li><code>mini_agent_config: str | None</code> - ruta al YAML de mini-swe-agent (prompts, parámetros de modelo) específica para este agente. Si es <code>None</code>, hereda el valor global de <code>BenchmarkConfig.mini_agent_config</code>. Permite que distintas entradas de la lista <code>agents:</code> usen configuraciones de prompt diferentes dentro del mismo experimento (p. ej. ablación con controlador desactivado, variante v2 con umbrales distintos, agente externo con prompt propio). Ver EB.13 sobre el plan experimental y ablaciones.</li>
+<li><code>dataset_slice_size: int | None</code> - sub-slice del pool global solo para este agente. Si se define, el agente solo corre en las primeras <code>dataset_slice_size</code> instancias seleccionadas del pool global (misma <code>slice_strategy</code> y <code>slice_seed</code> que el <code>DatasetConfig</code>). Permite mezclar en un mismo YAML agentes principales (pool completo) con ablaciones que necesitan menos instancias, sin crear ficheros separados. <code>None</code> = usa todas las instancias del pool global.</li>
+<li><code>config_overrides: dict</code></li>
+</ul>
+<h3 id="73-benchmarkrunrecord">7.3 <code>BenchmarkRunRecord</code><a class="headerlink" href="#73-benchmarkrunrecord" title="Permanent link">&para;</a></h3>
+<p>Registro bruto producido por el módulo de ejecución.</p>
+<ul>
+<li><code>run_id: str</code></li>
+<li><code>instance_id: str</code></li>
+<li><code>agent_run_config: AgentRunConfig</code></li>
+<li><code>status: str</code> in <code>{completed, failed, precondition_failed}</code></li>
+<li><code>exit_status: str | None</code> - incluye <code>EmptySubmission</code> cuando el agente cerró sin parche útil</li>
+<li><code>trajectory_path: str | None</code></li>
+<li><code>model_patch_path: str | None</code></li>
+<li><code>preds_entry: dict | None</code></li>
+<li><code>started_at: float</code></li>
+<li><code>ended_at: float</code></li>
+<li><code>duration_seconds: float</code></li>
+<li><code>error: dict | None</code></li>
+<li><code>environment: dict</code> - incluye <code>pr1_check: bool</code> (resultado informativo de la comprobación PR1) y <code>worker_id</code></li>
+<li><code>contamination_detected: bool</code> - resultado del <code>ContaminationDetector</code>; <code>True</code> si se encontraron coincidencias de <code>forbidden_test_ids</code> en la traza</li>
+<li><code>contamination_evidence: dict | None</code> - detalle de coincidencias cuando <code>contamination_detected=True</code></li>
+<li><code>cost_usd: float</code> - coste en USD del run según <code>info.model_stats.instance_cost</code> de la traza</li>
+</ul>
+<h3 id="74-evaluationresult">7.4 <code>EvaluationResult</code><a class="headerlink" href="#74-evaluationresult" title="Permanent link">&para;</a></h3>
+<p>Registro <strong>único por run</strong>, persistido en <code>evaluation_result.json</code>. El módulo de evaluación es su único productor. Combina veredicto SWE-bench y métricas comparables del TFG.</p>
+<p>Campos top-level:</p>
+<ul>
+<li><code>run_id: str</code>, <code>instance_id: str</code>, <code>agent_id: str</code></li>
+<li><code>trace_format: str | None</code> - <code>robust-agent-1.0</code> si la traza incluye <code>robust_agent</code>; <code>null</code> en baseline</li>
+</ul>
+<h4 id="functional-veredicto-swe-bench"><code>functional</code> (veredicto SWE-bench)<a class="headerlink" href="#functional-veredicto-swe-bench" title="Permanent link">&para;</a></h4>
+<ul>
+<li><code>resolved: bool | None</code> - veredicto: <code>True</code> / <code>False</code> / <code>None</code> si no hubo evaluación (run fallido, parche vacío o evaluación desactivada)</li>
+<li><code>status: str</code> in <code>{evaluated, evaluation_error, unavailable, skipped}</code></li>
+<li><code>evaluation_backend: str</code> in <code>{sb_cli, none}</code></li>
+<li><code>report_path: str | None</code></li>
+<li><code>evidence: dict</code></li>
+</ul>
+<h4 id="extended-metricas-comparables-entre-agentes"><code>extended</code> (métricas comparables entre agentes)<a class="headerlink" href="#extended-metricas-comparables-entre-agentes" title="Permanent link">&para;</a></h4>
+<p>Objeto con <code>run_metrics</code>, <code>patch_metrics</code>, <code>availability</code>, <code>errors</code> (misma semántica que la spec simplificada anterior):</p>
+<ul>
+<li><strong><code>run_metrics</code>:</strong> <code>trajectory_format</code>, <code>exit_status</code>, <code>termination</code>, <code>steps_used</code>, <code>cost_total</code>, <code>wallclock_seconds</code> (fuentes: traza + <code>BenchmarkRunRecord</code>)</li>
+<li><strong><code>patch_metrics</code>:</strong> <code>lines_added</code>, <code>lines_deleted</code>, <code>hunks_count</code>, <code>files_modified</code>, comparativos con gold (<code>jaccard_*</code>, etc.)</li>
+<li><strong><code>availability</code>:</strong> claves <code>run_metrics</code> y <code>patch_metrics</code> → <code>{status, cause}</code></li>
+<li><strong><code>errors</code>:</strong> <code>list[dict]</code></li>
+</ul>
+<p>Reglas: baseline sin <code>robust_agent</code> no impide métricas; run sin parche → <code>patch_metrics</code> vacío y <code>not_applicable</code>; sin agregados ni series en Bloque 2 (eso es Bloque 3 + traza).</p>
+<p>Ejemplos: <code>docs/especificaciones/benchmark/ejemplo_evaluation_result.md</code>.</p>
+<h3 id="75-benchmarktaskresult">7.5 <code>BenchmarkTaskResult</code><a class="headerlink" href="#75-benchmarktaskresult" title="Permanent link">&para;</a></h3>
+<p>Vista unificada en memoria de un run completo, definida en <code>results_module/contracts.py</code>. No es lo que devuelve <code>evaluate_runs()</code> (que devuelve <code>dict[str, EvaluationResult]</code>); es un contrato auxiliar para que el Bloque 3 pueda componer la vista completa de un run a partir de sus partes cuando lo necesite.</p>
+<ul>
+<li><code>run_id: str</code></li>
+<li><code>instance: BenchmarkInstance</code></li>
+<li><code>agent_run_config: AgentRunConfig</code></li>
+<li><code>run_record: BenchmarkRunRecord</code></li>
+<li><code>evaluation: EvaluationResult</code></li>
+</ul>
+<h2 id="8-trazabilidad-y-formato-de-salida">8. Trazabilidad y formato de salida<a class="headerlink" href="#8-trazabilidad-y-formato-de-salida" title="Permanent link">&para;</a></h2>
+<p>El benchmark mantiene compatibilidad con el formato nativo de mini-SWE-agent/SWE-bench siempre que sea posible.</p>
+<h3 id="81-layout-de-resultados">8.1 Layout de resultados<a class="headerlink" href="#81-layout-de-resultados" title="Permanent link">&para;</a></h3>
+<p>Layout propuesto:</p>
+<div class="highlight"><pre><span></span><code>runs/
+└── &lt;experiment_id&gt;/
+    ├── manifest.json
+    ├── config.yaml
+    ├── dataset_summary.json
+    ├── groups/
+    │   └── &lt;agent_id&gt;__&lt;model_id&gt;/
+    │       ├── preds.json
+    │       └── functional_report/
+    └── instances/
+        └── &lt;instance_id&gt;/
+            └── &lt;agent_id&gt;/
+                └── &lt;run_id&gt;/
+                    ├── trajectory.traj.json
+                    ├── model.patch
+                    ├── run_record.json
+                    ├── evaluation_result.json
+                    └── llm_debug.jsonl
+</code></pre></div>
+<p>Un directorio por instancia y agente; un <code>preds.json</code> por grupo <code>(agent_id, model_id)</code> bajo <code>groups/</code> (EB.8.3). Los perfiles Robust van en el <code>agent_id</code>, no en un nivel extra de carpetas.</p>
+<h3 id="82-manifestjson-minimo">8.2 <code>manifest.json</code> (mínimo)<a class="headerlink" href="#82-manifestjson-minimo" title="Permanent link">&para;</a></h3>
+<p>Cabecera del experimento. <strong>No</strong> sustituye al árbol <code>instances/</code> para reanudación ni para el Bloque 3 (este escanea carpetas). Campos mínimos comprometidos:</p>
+<ul>
+<li><code>benchmark_format_version: str</code> - p. ej. <code>robust-benchmark-1.0</code></li>
+<li><code>experiment_id: str</code></li>
+<li><code>status: str</code> - <code>{initialized, running, finalized, aborted}</code></li>
+<li><code>created_at: str</code> - ISO 8601 UTC (p. ej. <code>"2026-06-25T11:02:31+00:00"</code>)</li>
+<li><code>updated_at: str | null</code> - ISO 8601 UTC; <code>null</code> hasta la primera actualización</li>
+<li><code>matrix_size: int</code> - número de celdas de la matriz (instancias × configs)</li>
+<li><code>runs_completed: int | null</code> - contador de progreso; <code>null</code> hasta <code>finalize()</code></li>
+<li><code>abort_reason: str | null</code> - si <code>status=aborted</code></li>
+</ul>
+<p>Campos más detallados (versiones de código, listado exhaustivo de runs) no son parte del contrato mínimo; ver <code>modulo_resultados.md</code> si se necesitan como extensión.</p>
+<h3 id="83-compatibilidad-con-predsjson-y-grupos-de-evaluacion">8.3 Compatibilidad con <code>preds.json</code> y grupos de evaluación<a class="headerlink" href="#83-compatibilidad-con-predsjson-y-grupos-de-evaluacion" title="Permanent link">&para;</a></h3>
+<p>SWE-bench evalúa un único <code>preds.json</code> por <code>model_name_or_path</code>. El benchmark <strong>agrupa runs por</strong> <code>(agent_id, model_id)</code> (<strong>grupo de evaluación</strong>) y produce un <code>preds.json</code> bajo <code>groups/&lt;agent_id&gt;__&lt;model_id&gt;/preds.json</code>. Con la lista plana del TFG hay <strong>4 grupos</strong> principales (default + tres <code>robust_*</code>) si todos comparten el mismo <code>model_id</code>.</p>
+<p>Cada entrada del preds conserva el formato nativo SWE-bench. El campo <code>model_name_or_path</code> de cada entrada se sobrescribe con el <code>group_id</code> (<code>&lt;agent_id&gt;__&lt;model_id&gt;</code>) para que <code>sb-cli</code> identifique el grupo correctamente. <strong>N=1</strong> por instancia y agente en la versión inicial.</p>
+<h3 id="84-politica-de-denominador-para-metricas-agregadas">8.4 Política de denominador para métricas agregadas<a class="headerlink" href="#84-politica-de-denominador-para-metricas-agregadas" title="Permanent link">&para;</a></h3>
+<p>Para que los resultados sean comparables con la literatura de SWE-bench, el benchmark adopta como <strong>métrica oficial de éxito</strong>:</p>
+<p>[
+\text{resolved_rate} = \dfrac{#{\text{runs con } \texttt{resolved=True}}}{#{\text{runs intentados}}}
+]</p>
+<p>donde el denominador incluye <strong>todos</strong> los runs lanzados, sin descontar <code>failed</code>, <code>precondition_failed</code> ni <code>skipped</code>. Esta es la política usada por SWE-bench oficial y por todos los leaderboards públicos.</p>
+<p>El Bloque 3 aplica la misma fórmula en <code>diagrams_module/resolution_metrics.py</code> para todas las figuras de tasa de resolución (SAN.6.3.3). Métricas auxiliares con denominadores alternativos (p. ej. tasa condicionada a <code>evaluable == true</code>) solo pueden usarse con etiquetado explícito distinto de «tasa de resolución» y nunca sustituyen la cifra principal.</p>
+<h2 id="9-reutilizacion-de-mini-swe-agent">9. Reutilización de mini-SWE-agent<a class="headerlink" href="#9-reutilizacion-de-mini-swe-agent" title="Permanent link">&para;</a></h2>
+<p>La intención es <strong>no modificar el código upstream de mini-SWE-agent</strong> incluido en el repositorio. El Bloque 2 lo reutiliza por composición:</p>
+<ol>
+<li><strong>Carga de configuración:</strong> se reutilizan los YAML de SWE-bench como base (<code>swebench.yaml</code>) y se aplican overrides del TFG.</li>
+<li><strong>Carga de dataset:</strong> se mantiene la compatibilidad con <code>datasets.load_dataset</code> y los aliases de SWE-bench (<code>lite</code>, <code>verified</code>, etc.).</li>
+<li><strong>Entornos:</strong> se reutiliza la lógica de imágenes Docker/Singularity del runner nativo cuando sea posible.</li>
+<li><strong>Agentes:</strong> el harness del TFG instancia <code>RobustAgent</code> o baselines compatibles en lugar de acoplarse a una única clase.</li>
+<li><strong>Persistencia:</strong> se respeta la trayectoria <code>.traj.json</code> de mini-SWE-agent y se añaden artefactos propios del benchmark alrededor.</li>
+</ol>
+<p>Si en implementación aparece la necesidad de copiar o adaptar funciones del runner nativo, se hace en módulos propios bajo <code>src/benchmark/</code> y se documenta la razón. Cualquier parche excepcional al upstream requiere acuerdo explícito y se documenta junto a la copia local (p. ej. <code>modifications.md</code>).</p>
+<h2 id="10-organizacion-del-codigo">10. Organización del código<a class="headerlink" href="#10-organizacion-del-codigo" title="Permanent link">&para;</a></h2>
+<p>El bloque del benchmark sigue convenciones análogas al bloque del agente:</p>
+<ul>
+<li>una carpeta por módulo, sufijada con <code>_module/</code>,</li>
+<li>archivo principal con el mismo nombre que la carpeta,</li>
+<li>contratos junto al módulo que los produce,</li>
+<li><code>__init__.py</code> reexportando solo la clase principal y contratos públicos,</li>
+<li>submódulos internos importables para tests, pero no parte de la API por defecto.</li>
+</ul>
+<p>Vista propuesta del paquete:</p>
+<div class="highlight"><pre><span></span><code>src/benchmark/
+├── __init__.py                              # exporta BenchmarkRunner y config principal
+├── benchmark_runner.py                      # fachada de alto nivel del Bloque 2
+├── run.py                                   # CLI + routing Vertex AI + callbacks LiteLLM
+├── run_progress.py                          # progreso de ejecucion en consola (duracion, coste)
+├── shutdown.py                              # coordinacion de parada global (Ctrl+C / quota)
+├── config.py                                # BenchmarkConfig, ExperimentConfig
+│
+├── dataset_module/
+│   ├── dataset_module.py
+│   ├── benchmark_instance.py
+│   ├── dataset_loader.py
+│   ├── instance_normalizer.py               # normalizacion + validacion estructural
+│   └── slice_selector.py
+│
+├── execution_module/
+│   ├── execution_module.py                  # incluye build_run_list, run_id
+│   ├── run_executor.py
+│   ├── agent_factory.py
+│   ├── environment_factory.py
+│   ├── contamination_detector.py
+│   ├── retry_policy.py
+│   └── benchmark_run_record.py
+│
+├── evaluation_module/
+│   ├── evaluation_module.py                 # facade
+│   ├── evaluator.py                         # evaluacion por grupo → EvaluationResult
+│   ├── evaluation_result.py
+│   ├── sb_cli_client.py
+│   └── extractors/
+│       ├── run_metrics.py                   # lectura .traj.json + metricas
+│       └── patch_metrics.py
+│
+└── results_module/
+    ├── results_module.py
+    ├── layout.py
+    ├── artifact_store.py
+    ├── contracts.py                           # BenchmarkExport, BenchmarkTaskResult, PlannedRun
+    └── resume.py
+</code></pre></div>
+<p>Reglas adicionales:</p>
+<ul>
+<li><strong><code>BenchmarkRunner</code> como fachada.</strong> Expone el flujo completo para CLI o scripts, pero delega en los cuatro módulos. No contiene lógica de métrica ni de agente.</li>
+<li><strong>Contratos cerca del productor.</strong> Los contratos específicos viven en el módulo que los emite. Los contratos compartidos o agregados pueden vivir en <code>contracts.py</code> si evitan dependencias circulares.</li>
+<li><strong>Sin dependencia del Bloque 3.</strong> El benchmark produce archivos y contratos estables; el análisis los consume. El benchmark no importa código del Bloque 3.</li>
+<li><strong>Dependencia unidireccional con Bloque 1.</strong> El benchmark puede importar <code>RobustAgent</code> y <code>RobustAgentConfig</code>, pero el Bloque 1 no importa el benchmark.</li>
+</ul>
+<h2 id="11-interfaz-con-el-bloque-1-agente">11. Interfaz con el Bloque 1 (agente)<a class="headerlink" href="#11-interfaz-con-el-bloque-1-agente" title="Permanent link">&para;</a></h2>
+<p>El acoplamiento benchmark -&gt; agente queda fijado por tres puntos.</p>
+<h3 id="111-entrada-hacia-el-agente">11.1 Entrada hacia el agente<a class="headerlink" href="#111-entrada-hacia-el-agente" title="Permanent link">&para;</a></h3>
+<p>El benchmark proporciona al agente:</p>
+<ul>
+<li><code>problem_statement</code> de la instancia SWE-bench como tarea textual.</li>
+<li>entorno compatible con mini-SWE-agent, con <code>cwd</code> en el repositorio de la instancia.</li>
+<li>configuración del agente (<code>RobustAgentConfig</code> o equivalente), incluyendo perfil, límites de coste/pasos y comando de validación si procede.</li>
+</ul>
+<p>Antes de invocar <code>RobustAgent.run()</code>, el módulo de ejecución comprueba el estado del repositorio con <code>git status --porcelain</code> y registra el resultado en <code>run_record.json</code> como <code>environment.pr1_check</code>. Este check es <strong>informativo, no bloqueante</strong>: las imágenes oficiales de SWE-bench a veces contienen ficheros pre-modificados para la configuración del entorno de test (<code>setup.py</code>, <code>tox.ini</code>), y <code>sb-cli</code> evalúa el parche del agente contra el <code>base_commit</code> correcto independientemente del estado inicial del directorio. El run avanza siempre; el dato <code>pr1_check=false</code> queda disponible para análisis posterior en el Bloque 3.</p>
+<h3 id="112-salida-consumida-del-agente">11.2 Salida consumida del agente<a class="headerlink" href="#112-salida-consumida-del-agente" title="Permanent link">&para;</a></h3>
+<p>El benchmark consume de la salida del agente:</p>
+<ul>
+<li><code>exit_status</code> y <code>submission</code> / <code>model_patch</code> (artefactos de ejecución y <code>patch_metrics</code>),</li>
+<li>trayectoria <code>.traj.json</code> en formato base <code>mini-swe-agent-1.1</code> (<code>run_metrics</code>: pasos, coste, <code>exit_status</code>, y <code>termination</code> si existe en <code>robust_agent</code>),</li>
+<li>bloque <code>robust_agent</code> <strong>solo</strong> para campos puntuales de <code>run_metrics</code> (p. ej. <code>termination</code>); <strong>no</strong> se copian incertidumbre, riesgo, decisiones ni validaciones a <code>evaluation_result.json</code> (<code>extended</code>).</li>
+</ul>
+<p>Incertidumbre, riesgo estructural, decisiones y validaciones permanecen en <code>trajectory.traj.json</code> para el <strong>Bloque 3</strong>. El benchmark no depende de atributos internos no serializados. Si un dato no aparece en la traza, se marca como no disponible en <code>availability</code>.</p>
+<h3 id="113-validacion-durante-el-run">11.3 Validación durante el run<a class="headerlink" href="#113-validacion-durante-el-run" title="Permanent link">&para;</a></h3>
+<p>El agente puede ejecutar <code>RUN_VALIDATION</code> dentro de su propio bucle si el perfil lo habilita. La validación <code>tests</code> del agente sigue el modelo de <strong>validación dirigida</strong> descrito en <code>especificacion_agente.md</code> EA.5.4: el controlador inyecta una directiva en el historial del agente, no ejecuta un comando shell. Por tanto el benchmark no necesita proporcionar un comando concreto al agente, sino:</p>
+<ul>
+<li>activar la capacidad poniendo <code>RobustAgentConfig.controller.tests_validation_enabled=True</code>,</li>
+<li>proporcionar la lista de tests prohibidos por instancia en <code>RobustAgentConfig.controller.forbidden_test_ids</code> (típicamente <code>fail_to_pass + pass_to_pass</code> de la <code>BenchmarkInstance</code>).</li>
+</ul>
+<p>Si la capacidad no se activa, la acción <code>RUN_VALIDATION(tests)</code> degrada limpiamente según la cadena de fallback del controlador (<code>especificacion_agente.md</code> EA.5.4), sin afectar a la evaluación funcional final.</p>
+<p>La separación entre la directiva de validación y la suite oficial del evaluador es un requisito metodológico para no contaminar la métrica <code>resolved</code>: el bloque <code>forbidden_test_ids</code> indica al agente, dentro de la propia directiva, que no debe ejecutar ni inspeccionar los tests oficiales. La política de población de <code>forbidden_test_ids</code> por instancia y el control de contaminación residual se cierran en <code>modulo_ejecucion.md</code>.</p>
+<h2 id="12-interfaz-con-el-bloque-3-analisis">12. Interfaz con el Bloque 3 (análisis)<a class="headerlink" href="#12-interfaz-con-el-bloque-3-analisis" title="Permanent link">&para;</a></h2>
+<p>El Bloque 3 consume la salida del Bloque 2 y, cuando necesita detalle del proceso robusto, las trazas.</p>
+<p><strong>Entrada principal (comparación entre agentes):</strong></p>
+<ul>
+<li>Escaneo de <code>instances/&lt;instance_id&gt;/&lt;agent_id&gt;/&lt;run_id&gt;/</code> o <code>BenchmarkExport</code> con rutas.</li>
+<li>Por run: <code>evaluation_result.json</code> (<code>functional</code> + <code>extended</code>), <code>run_record.json</code> (metadatos, <code>contamination_detected</code>).</li>
+</ul>
+<p><strong>Entrada para análisis del proceso robusto:</strong></p>
+<ul>
+<li><code>trajectory.traj.json</code> con bloque <code>robust_agent</code> (incertidumbre, riesgo, decisiones, validaciones, estabilidad).</li>
+</ul>
+<p><strong>No contractual:</strong> <code>results.jsonl</code> (eliminado del layout).</p>
+<p>El Bloque 3 agrega, correlaciona y visualiza; el Bloque 2 no precalcula medias ni series.</p>
+<h2 id="13-configuracion-experimental-del-lote-principal">13. Configuración experimental del lote principal<a class="headerlink" href="#13-configuracion-experimental-del-lote-principal" title="Permanent link">&para;</a></h2>
+<p>Esta sección documenta la configuración con la que se ejecutó el lote principal del benchmark, condicionada por el presupuesto disponible para el TFG. No forma parte del contrato arquitectónico (EB.4–EB.12): es la parametrización concreta de una tirada, no una restricción del diseño del bloque.</p>
+<ul>
+<li><strong>Presupuesto</strong>: ~100 EUR (~107 USD).</li>
+<li><strong>Modelo</strong>: Gemini 2.5 Flash vía <code>mini-SWE-agent</code> con <code>JsonBashModel</code> (modo JSON, sin tool-calls nativos). Configurado en <code>configs/mini/swebench_gemini_json.yaml</code> (y su variante <code>_robust.yaml</code> con <code>confidence</code> obligatorio). El workflow de edición/verificación/submit del prompt se ha reforzado iterativamente para reducir <code>EmptySubmission</code> espurios sin forzar parches artificiales. Coste estimado por instancia: ~0.05 USD (agentes no-permissive), ~0.09 USD (permissive, con StabilityMonitor activo).</li>
+<li><strong>Proveedor</strong>: Vertex AI como destino principal (requiere <code>VERTEXAI_PROJECT</code>), con fallback automático a AI Studio. La CLI lanza dos fases: <code>--evaluation-skip</code> primero (ejecuta agentes, no gasta cuota sb-cli) y <code>--evaluate</code> después (solo evaluación funcional sobre resultados ya en disco).</li>
+<li><strong>Subset</strong>: SWE-bench Lite, estratificado por repo (<code>slice_seed=42</code>).</li>
+<li><strong>Repeticiones</strong>: N=1 por combinación <code>(instance, agent_id, model, seed)</code>.</li>
+<li><strong>Backend funcional</strong>: <code>sb-cli</code> exclusivamente (EB.3 PB5).</li>
+</ul>
+<h3 id="matriz-experimental">Matriz experimental<a class="headerlink" href="#matriz-experimental" title="Permanent link">&para;</a></h3>
+<p>Se organiza en <strong>dos YAMLs</strong> principales. Las ablaciones usan menos instancias que los agentes principales; esto se gestiona con <code>AgentRunConfig.dataset_slice_size</code> dentro del mismo fichero (cada agente de ablación define un <code>dataset_slice_size</code> menor que el pool global).</p>
+<table>
+<thead>
+<tr>
+<th>Grupo</th>
+<th>Fichero YAML</th>
+<th>Instancias</th>
+<th>Agentes</th>
+<th>Runs</th>
+<th>Coste est.</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Principal + ablaciones</td>
+<td><code>experiment.full.yaml</code></td>
+<td>120 (main) / 40 (ablaciones, vía <code>dataset_slice_size</code>)</td>
+<td>default, robust_strict, robust_balanced, robust_permissive, robust_no_intervention, robust_v2</td>
+<td>560</td>
+<td>~$34</td>
+</tr>
+<tr>
+<td>Externos</td>
+<td>(fuera del pipeline)</td>
+<td>40</td>
+<td>SWE-agent, Agentless</td>
+<td>80</td>
+<td>~$8</td>
+</tr>
+<tr>
+<td><strong>Total</strong></td>
+<td></td>
+<td></td>
+<td><strong>8 agentes</strong></td>
+<td><strong>640 runs</strong></td>
+<td><strong>~$42 (~39€)</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Peor caso estimado (contextos largos, agentes que buclan): ~$83 (~77€), dentro del presupuesto.</p>
+<p><strong>Descripción de los agentes:</strong></p>
+<ul>
+<li><code>default</code>: <code>DefaultAgent</code> de mini-swe-agent (baseline propio).</li>
+<li><code>robust_strict</code>, <code>robust_balanced</code>, <code>robust_permissive</code>: <code>RobustAgent</code> con los tres perfiles de intervención del controlador.</li>
+<li><code>robust_no_intervention</code> (ablación 1): <code>RobustAgent</code> con <code>policy_matrix</code> = PROCEED en todas las celdas y <code>stability_window: 9999</code> (controlador calculado pero sin actuar). Responde a: <em>¿aporta el controlador o es overhead puro?</em></li>
+<li><code>robust_v2</code> (ablación 2): <code>RobustAgent</code> con <code>high_threshold: 0.80</code> en ambos módulos (intervención solo en casos extremos). Responde a: <em>¿unos umbrales más conservadores mejoran los resultados?</em></li>
+<li><code>SWE-agent</code> y <code>Agentless</code> (externos, referencias open-source): se ejecutan fuera del pipeline con sus propias herramientas; los parches se evalúan con <code>sb-cli</code> sobre las mismas instancias. Permiten comparación directa con el estado del arte open-source publicado.</li>
+</ul>
+<p>El campo <code>mini_agent_config</code> de <code>AgentRunConfig</code> (EB.7.2) permite que ablaciones y variantes usen ficheros de configuración de prompt distintos dentro del mismo YAML, sin necesidad de ficheros separados para los agentes que solo difieren en parámetros del controlador.</p>
+<h3 id="procedimiento-previo-al-lote-principal">Procedimiento previo al lote principal<a class="headerlink" href="#procedimiento-previo-al-lote-principal" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>Smoke run de integración</strong> (1 instancia × todos los agentes): <code>configs/experiment.smoke.yaml</code>. Valida el pipeline completo.</li>
+<li><strong>Smoke run de coste</strong> (5 instancias × todos los agentes del grupo principal): <code>configs/experiment.mini.yaml</code>. Mide el coste real por perfil. Si el coste real duplica la estimación, reducir <code>slice_size</code> antes del lote.</li>
+<li>Lanzar el lote completo en dos fases:</li>
+<li>Fase 1 (ejecución): <code>python -m benchmark.run --config configs/experiment.full.yaml</code> (el YAML tiene <code>evaluation_skip: true</code>).</li>
+<li>Fase 2 (evaluación): <code>python -m benchmark.run --config configs/experiment.full.yaml --evaluate</code> (fuerza <code>evaluation_skip: false</code>, solo evalúa lo ya en disco). <code>--evaluate</code> implica <em>evaluation-only</em>: no se ejecuta ningún agente ni se levanta Docker en esta pasada, solo se evalúan los <code>BenchmarkRunRecord</code> ya persistidos (ver <code>modulo_evaluacion.md</code>, sección 3). Con cuota <code>sb-cli</code> limitada, cada llamada <code>submit</code> corresponde a un grupo <code>agent_id×model_id</code> (un perfil/ablación), no a una instancia; para acotar el gasto por invocación puede añadirse <code>--evaluate-agents &lt;agent_id1&gt;,&lt;agent_id2&gt;</code> y repetir perfil a perfil, cerrando con una pasada final sin filtro. Si un grupo ya <code>evaluated</code> da un resultado sospechoso (p. ej. 100% "Failed runs" achacable a un fallo del backend de <code>sb-cli</code>, no del parche), <code>--force-reevaluate-agents &lt;agent_id1&gt;,&lt;agent_id2&gt;</code> permite reintentarlo deliberadamente bajo un <code>run_id</code> nuevo, gastando cuota de nuevo a propósito.</li>
+</ol>
+<h3 id="politica-de-fallos-y-limitaciones">Política de fallos y limitaciones<a class="headerlink" href="#politica-de-fallos-y-limitaciones" title="Permanent link">&para;</a></h3>
+<ul>
+<li><code>failed</code> y <code>precondition_failed</code> se cuentan en el denominador de <code>resolved_rate</code> (EB.8.4).</li>
+<li><code>failed</code> con <code>exit_status=LimitsExceeded</code> o <code>exit_status=EmptySubmission</code> no se reintenta en reanudaciones posteriores (resultado experimental válido). Re-ejecución selectiva de slots concretos solo con <code>--force-rerun</code> sobre el <code>run_id</code> — ver <code>modulo_resultados.md</code>, sección 4.</li>
+<li>Con N=1 y slice de 120 instancias para los agentes principales, el experimento permite comparaciones pareadas con detección de tamaños de efecto medios. Con 40 instancias para ablaciones y externos se detectan diferencias de ≥10 pp con significancia razonable.</li>
+<li>La potencia estadística es inferior a la del conjunto Lite completo (300 inst.); se documenta como restricción presupuestaria del experimento.</li>
+</ul>
+<p>Las decisiones aquí listadas se materializan en <code>manifest.json</code> cuando el lote se ejecuta, no en código del benchmark. El bloque sigue siendo configurable para subsets, modelos y repeticiones distintos en futuras tiradas.</p>
+<h2 id="14-referencias-tecnicas">14. Referencias técnicas<a class="headerlink" href="#14-referencias-tecnicas" title="Permanent link">&para;</a></h2>
+<ul>
+<li><code>especificacion_agente.md</code></li>
+<li><code>docs/especificaciones/agente/modulo_controlador.md</code></li>
+<li><code>docs/especificaciones/agente/modulo_metricas.md</code></li>
+<li><code>docs/especificaciones/agente/modulo_incertidumbre.md</code></li>
+<li><code>src/agent/mini-swe-agent/docs/usage/swebench.md</code></li>
+<li><code>src/agent/mini-swe-agent/src/minisweagent/run/benchmarks/swebench.py</code></li>
+<li><code>src/agent/mini-swe-agent/src/minisweagent/run/benchmarks/swebench_single.py</code></li>
+<li><code>src/agent/mini-swe-agent/src/minisweagent/config/benchmarks/swebench.yaml</code></li>
+<li>SWE-bench paper: https://arxiv.org/abs/2310.06770</li>
+<li>SWE-bench website: https://www.swebench.com/</li>
+<li>SWE-bench harness: https://github.com/SWE-bench/SWE-bench</li>
+<li>sb-cli: https://www.swebench.com/sb-cli/</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Volver al principio
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.top", "search.suggest", "search.highlight", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado al portapapeles", "clipboard.copy": "Copiar al portapapeles", "search.result.more.one": "1 m\u00e1s en esta p\u00e1gina", "search.result.more.other": "# m\u00e1s en esta p\u00e1gina", "search.result.none": "No se encontraron documentos", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Teclee para comenzar b\u00fasqueda", "search.result.term.missing": "Falta", "select.version": "Seleccionar versi\u00f3n"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,3581 @@
+
+<!doctype html>
+<html lang="es" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Agente robusto sobre mini-SWE-agent y benchmark extendido (TFG).">
+      
+      
+      
+        <link rel="canonical" href="https://jgbgdelta.github.io/robust-agents/especificaciones/analisis/especificacion_analisis/">
+      
+      
+        <link rel="prev" href="../../benchmark/ejemplo_evaluation_result/">
+      
+      
+        <link rel="next" href="../modulo_metricas_agentes_externos/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Visión general - Robust Agents TFG</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/_mkdocstrings.css">
+    
+      <link rel="stylesheet" href="../../../assets/custom.css">
+    
+      <link rel="stylesheet" href="../../../assets/mkdocstrings.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="deep-orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#fase-23-especificacion-del-sistema-de-analisis" class="md-skip">
+          Saltar a contenido
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabecera">
+    <a href="../../.." title="Robust Agents TFG" class="md-header__button md-logo" aria-label="Robust Agents TFG" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Robust Agents TFG
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Visión general
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="deep-orange"  aria-label="Modo claro"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Modo claro" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="deep-orange"  aria-label="Modo oscuro"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Modo oscuro" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Búsqueda" placeholder="Búsqueda" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Buscar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpiar" aria-label="Limpiar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando búsqueda
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/JgBGDelta/robust-agents" title="Ir al repositorio" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    JgBGDelta/robust-agents
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Pestañas" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../../manual-usuario/" class="md-tabs__link">
+          
+  
+  
+  Documentación
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../api/" class="md-tabs__link">
+          
+  
+  
+  Implementación
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navegación" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Robust Agents TFG" class="md-nav__button md-logo" aria-label="Robust Agents TFG" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Robust Agents TFG
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/JgBGDelta/robust-agents" title="Ir al repositorio" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    JgBGDelta/robust-agents
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Documentación
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Documentación
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../manual-usuario/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Manual de usuario
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../sobre-la-documentacion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sobre la documentación
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_3" id="__nav_1_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Especificaciones — Agente
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Especificaciones — Agente
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../agente/especificacion_agente/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Visión general
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../agente/modulo_incertidumbre/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Módulo incertidumbre
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../agente/modulo_metricas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Módulo métricas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../agente/modulo_controlador/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Módulo controlador
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../agente/tests/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tests
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_4" id="__nav_1_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Especificaciones — Benchmark
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Especificaciones — Benchmark
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../benchmark/especificacion_benchmark/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Visión general
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../benchmark/modulo_dataset/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Módulo dataset
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../benchmark/modulo_ejecucion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Módulo ejecución
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../benchmark/modulo_evaluacion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Módulo evaluación
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../benchmark/modulo_resultados/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Módulo resultados
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../benchmark/ejemplo_evaluation_result/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ejemplo evaluation result
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_1_5" id="__nav_1_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Especificaciones — Análisis
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_1_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Especificaciones — Análisis
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Visión general
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Visión general
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-objetivo-y-alcance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Objetivo y alcance
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Objetivo y alcance">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-documentos-hermanos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1 Documentos hermanos
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-contexto-en-el-diseno-experimental" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Contexto en el diseño experimental
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-precondiciones-y-dependencias-tecnicas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Precondiciones y dependencias técnicas
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-arquitectura-de-alto-nivel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Arquitectura de alto nivel
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Arquitectura de alto nivel">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-componentes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 Componentes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-flujo-logico" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 Flujo lógico
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-comunicacion-entre-modulos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 Comunicación entre módulos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-principios-de-diseno" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4 Principios de diseño
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-fuentes-de-datos-de-entrada" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Fuentes de datos de entrada
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-contrato-central-datos_consolidadoscsv" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Contrato central: datos_consolidados.csv
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Contrato central: datos_consolidados.csv">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61-aclaracion-de-campos-de-identificacion-de-configuracion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 Aclaración de campos de identificación de configuración
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-esquema-de-campos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 Esquema de campos
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.2 Esquema de campos">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#identificacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Identificación
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#estado-y-resultado" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Estado y resultado
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#coste-y-esfuerzo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Coste y esfuerzo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#incertidumbre-solo-own-y-solo-agentes-con-traza-robust_agent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Incertidumbre (solo own, y solo agentes con traza robust_agent)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#riesgo-estructural-solo-own-y-solo-agentes-con-traza-robust_agent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Riesgo estructural (solo own, y solo agentes con traza robust_agent)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#controlador-solo-own-y-solo-agentes-con-traza-robust_agent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Controlador (solo own, y solo agentes con traza robust_agent)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#parche-campos-calculados-de-forma-uniforme-para-own-y-external-via-patchmetricsextractor-extendido-san632" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parche (campos calculados de forma uniforme para own y external vía PatchMetricsExtractor extendido, SAN.6.3.2)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#comparacion-con-golden-patch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Comparación con golden patch
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#procedencia" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Procedencia
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63-notas-de-diseno" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3 Notas de diseño
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.3 Notas de diseño">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#631-seleccion-del-run-canonico-ante-reintentos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3.1 Selección del run canónico ante reintentos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#632-metricas-de-parche-uniformes-entre-fuentes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3.2 Métricas de parche uniformes entre fuentes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#633-tasa-de-resolucion-metrica-agregada-principal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3.3 Tasa de resolución (métrica agregada principal)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-contrato-secundario-datos_pasos_consolidadoscsv" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Contrato secundario: datos_pasos_consolidados.csv
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-diagramas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Diagramas
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. Diagramas">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#81-diagramas-minimos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.1 Diagramas mínimos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#82-diagramas-adicionales" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.2 Diagramas adicionales
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-organizacion-del-codigo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Organización del código
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-interfaz-con-el-bloque-2-benchmark" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Interfaz con el Bloque 2 (benchmark)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-interfaz-con-las-fuentes-externas-bloque-5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. Interfaz con las fuentes externas (Bloque 5)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-salidas-del-sistema-de-analisis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. Salidas del sistema de análisis
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-referencias-tecnicas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13. Referencias técnicas
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../modulo_metricas_agentes_externos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Módulo métricas de agentes externos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../modulo_consolidacion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Módulo consolidación
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../modulo_diagramas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Módulo diagramas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Implementación
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Implementación
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Visión general
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Agente
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Agente
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/agent/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Resumen
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/agent/robust_agent/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RobustAgent
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/agent/config/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuración
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/agent/episode_state/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Estado y traza
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/agent/structural_metrics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Métricas estructurales
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/agent/uncertainty/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Incertidumbre
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/agent/controller/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Controlador
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Benchmark
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Benchmark
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/benchmark/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Resumen
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/benchmark/benchmark_runner/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BenchmarkRunner
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/benchmark/config/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuración
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/benchmark/dataset/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dataset
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/benchmark/execution/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ejecución
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/benchmark/evaluation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Evaluación
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/benchmark/results/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Resultados
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_4" id="__nav_2_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Análisis
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Análisis
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/analysis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Resumen
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/analysis/consolidation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Consolidación
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/analysis/external_metrics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Métricas externas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/analysis/diagrams/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Diagramas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/analysis/run/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Punto de entrada CLI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-objetivo-y-alcance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Objetivo y alcance
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Objetivo y alcance">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-documentos-hermanos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1 Documentos hermanos
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-contexto-en-el-diseno-experimental" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Contexto en el diseño experimental
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-precondiciones-y-dependencias-tecnicas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Precondiciones y dependencias técnicas
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-arquitectura-de-alto-nivel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Arquitectura de alto nivel
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Arquitectura de alto nivel">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-componentes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 Componentes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-flujo-logico" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 Flujo lógico
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-comunicacion-entre-modulos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 Comunicación entre módulos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-principios-de-diseno" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4 Principios de diseño
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-fuentes-de-datos-de-entrada" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Fuentes de datos de entrada
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-contrato-central-datos_consolidadoscsv" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Contrato central: datos_consolidados.csv
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Contrato central: datos_consolidados.csv">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61-aclaracion-de-campos-de-identificacion-de-configuracion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 Aclaración de campos de identificación de configuración
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-esquema-de-campos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 Esquema de campos
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.2 Esquema de campos">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#identificacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Identificación
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#estado-y-resultado" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Estado y resultado
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#coste-y-esfuerzo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Coste y esfuerzo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#incertidumbre-solo-own-y-solo-agentes-con-traza-robust_agent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Incertidumbre (solo own, y solo agentes con traza robust_agent)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#riesgo-estructural-solo-own-y-solo-agentes-con-traza-robust_agent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Riesgo estructural (solo own, y solo agentes con traza robust_agent)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#controlador-solo-own-y-solo-agentes-con-traza-robust_agent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Controlador (solo own, y solo agentes con traza robust_agent)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#parche-campos-calculados-de-forma-uniforme-para-own-y-external-via-patchmetricsextractor-extendido-san632" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parche (campos calculados de forma uniforme para own y external vía PatchMetricsExtractor extendido, SAN.6.3.2)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#comparacion-con-golden-patch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Comparación con golden patch
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#procedencia" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Procedencia
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63-notas-de-diseno" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3 Notas de diseño
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.3 Notas de diseño">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#631-seleccion-del-run-canonico-ante-reintentos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3.1 Selección del run canónico ante reintentos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#632-metricas-de-parche-uniformes-entre-fuentes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3.2 Métricas de parche uniformes entre fuentes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#633-tasa-de-resolucion-metrica-agregada-principal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3.3 Tasa de resolución (métrica agregada principal)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-contrato-secundario-datos_pasos_consolidadoscsv" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Contrato secundario: datos_pasos_consolidados.csv
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-diagramas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Diagramas
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. Diagramas">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#81-diagramas-minimos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.1 Diagramas mínimos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#82-diagramas-adicionales" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.2 Diagramas adicionales
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-organizacion-del-codigo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Organización del código
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-interfaz-con-el-bloque-2-benchmark" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Interfaz con el Bloque 2 (benchmark)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-interfaz-con-las-fuentes-externas-bloque-5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. Interfaz con las fuentes externas (Bloque 5)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-salidas-del-sistema-de-analisis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. Salidas del sistema de análisis
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-referencias-tecnicas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13. Referencias técnicas
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="fase-23-especificacion-del-sistema-de-analisis">Fase 2.3 - Especificación del sistema de análisis<a class="headerlink" href="#fase-23-especificacion-del-sistema-de-analisis" title="Permanent link">&para;</a></h1>
+<h2 id="1-objetivo-y-alcance">1. Objetivo y alcance<a class="headerlink" href="#1-objetivo-y-alcance" title="Permanent link">&para;</a></h2>
+<p>Este documento especifica el <strong>Bloque 3: sistema de análisis</strong> del TFG a un nivel <strong>alto/medio</strong>: arquitectura general, responsabilidades, interacciones entre módulos, contratos de datos transversales (en particular el esquema de <code>datos_consolidados.csv</code> y <code>datos_pasos_consolidados.csv</code>) y catálogo de diagramas. El detalle de bajo nivel (firmas concretas de funciones, formato exacto de ficheros intermedios, estilo visual de cada figura) se desarrolla en los documentos de módulo.</p>
+<p>El alcance es exclusivamente el <strong>Bloque 3</strong> del diseño experimental del TFG. Quedan fuera el Bloque 1 (agente), ya especificado en <code>especificacion_agente.md</code>, y el Bloque 2 (benchmark ampliado), ya especificado en <code>especificacion_benchmark.md</code>. El Bloque 3 <strong>consume</strong> la salida de ambos sin modificarla.</p>
+<p>El sistema de análisis se diseña deliberadamente <strong>poco complejo</strong>: no reimplementa lógica de ejecución ni de evaluación funcional, no recalcula <code>resolved</code>, y no introduce nuevos contratos de agente o de benchmark. Su función es doble: (1) incorporar resultados de agentes externos precomputados sin ejecutarlos, y (2) consolidar en un único fichero tabular limpio los campos de todas las fuentes (ejecuciones propias + externas) para poder graficar las comparaciones que responden a los objetivos del TFG (métricas estructurales, relación éxito/coste/estructura, comparación frente a líneas base y compromisos coste/fiabilidad/control).</p>
+<h3 id="11-documentos-hermanos">1.1 Documentos hermanos<a class="headerlink" href="#11-documentos-hermanos" title="Permanent link">&para;</a></h3>
+<p>La especificación del sistema de análisis se reparte en varios documentos. <strong>Este documento describe el sistema general</strong>; cada módulo tiene su propio documento con interfaz pública, contratos de datos, política de fallos y detalle interno:</p>
+<ul>
+<li><code>docs/especificaciones/analisis/modulo_metricas_agentes_externos.md</code> - <code>ExternalMetricsModule</code>, contratos <code>ExternalPatchRecord</code> / <code>ExternalMetricsRecord</code>.</li>
+<li><code>docs/especificaciones/analisis/modulo_consolidacion.md</code> - <code>ConsolidationModule</code>, contratos <code>ConsolidatedRunRow</code> / <code>ConsolidatedStepRow</code>, algoritmo de escaneo y resolución de reintentos.</li>
+<li><code>docs/especificaciones/analisis/modulo_diagramas.md</code> - <code>DiagramsModule</code>, interfaz de generación de figuras y estilo visual común.</li>
+</ul>
+<h2 id="2-contexto-en-el-diseno-experimental">2. Contexto en el diseño experimental<a class="headerlink" href="#2-contexto-en-el-diseno-experimental" title="Permanent link">&para;</a></h2>
+<p>El Bloque 3 recibe los resultados estructurados producidos por el Bloque 2 (benchmark ampliado) y los combina con resultados públicos de agentes externos (Bloque 5) para producir tablas y gráficas comparativas. Su posición en el diseño general es la siguiente:</p>
+<pre class="mermaid"><code>flowchart TD
+    B1[Bloque 1: RobustAgent] -- traza, exit_status, parche --&gt; B2[Bloque 2: Benchmark ampliado]
+    B4[Bloque 4: mini-SWE-agent] -- baseline default --&gt; B2
+    B2 -- runs/instances/**: evaluation_result.json, run_record.json, trajectory.traj.json --&gt; B3[Bloque 3: Sistema de analisis]
+    B5[Bloque 5: Agentes externos] -- parches y resultados publicados --&gt; B3
+    B3 --&gt; OUT[datos_consolidados.csv, datos_pasos_consolidados.csv, figuras]</code></pre>
+<p>El análisis se organiza en torno a las cuatro dimensiones definidas metodológicamente: <strong>éxito funcional, coste, incertidumbre e impacto estructural del parche</strong>. Estas dimensiones determinan tanto los campos consolidados (SAN.6-SAN.7) como los diagramas (SAN.8), y responden a los objetivos del TFG en métricas estructurales, relación éxito/coste/estructura, comparación frente a líneas base y compromisos coste/fiabilidad/control.</p>
+<h2 id="3-precondiciones-y-dependencias-tecnicas">3. Precondiciones y dependencias técnicas<a class="headerlink" href="#3-precondiciones-y-dependencias-tecnicas" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>PA1. Árbol de resultados del Bloque 2 disponible.</strong> El sistema de análisis lee directamente el árbol <code>runs/&lt;experiment_id&gt;/instances/&lt;instance_id&gt;/&lt;agent_id&gt;/&lt;run_id&gt;/</code> (<code>evaluation_result.json</code>, <code>run_record.json</code>, <code>trajectory.traj.json</code>) tal como lo deja <code>BenchmarkResultsModule</code>. No requiere que el experimento esté <code>finalized</code>; puede ejecutarse sobre un <code>manifest.json</code> en estado <code>running</code> o <code>aborted</code> para análisis incrementales, siempre que existan runs <code>completed</code>.</li>
+<li><strong>PA2. Parches externos descargados localmente.</strong> El módulo de métricas de agentes externos requiere los ficheros JSONL de predicciones publicadas (<code>data/external_predictions/&lt;source_id&gt;/</code>) descargados previamente, según el procedimiento de <code>modulo_metricas_agentes_externos.md</code>.</li>
+<li><strong>PA3. <code>gold_patch</code> accesible por instancia.</strong> Tanto para runs propios como para externos, las métricas comparativas frente al <em>golden patch</em> (<code>jaccard_files</code>, <code>jaccard_lines</code>, etc.) requieren el parche de referencia de SWE-bench Lite, obtenido vía el mismo dataset que usa el Bloque 2 (<code>BenchmarkDatasetModule</code> / <code>datasets.load_dataset</code>).</li>
+<li><strong>PA4. Entorno Python con <code>pandas</code> y <code>matplotlib</code>.</strong> El sistema de análisis se ejecuta en el <strong>mismo <code>.venv</code></strong> que Bloque 1/2, no en un entorno aparte. Ambas librerías se declaran en el extra <code>dev</code> de <code>pyproject.toml</code> (<code>pip install -e ".[dev]"</code>), junto con el resto del sistema experimental del TFG. No se añaden frameworks de visualización adicionales (sin <code>seaborn</code>, <code>plotly</code>) para mantener el sistema simple.</li>
+<li><strong>PA5. Extractor de métricas de parche reutilizable.</strong> El Bloque 3 reutiliza <code>PatchMetricsExtractor</code> (<code>src/benchmark/evaluation_module/extractors/patch_metrics.py</code>) para calcular métricas de parche sobre <em>cualquier</em> diff - propio o externo - sin depender del agente que lo generó. Esta reutilización es la que hace viable la comparabilidad estructural con agentes externos.</li>
+<li><strong>PA6. Robustez ante experimento en curso o interrumpido.</strong> El árbol <code>runs/&lt;experiment_id&gt;/</code> puede estar incompleto (<code>manifest.json</code> en <code>running</code>/<code>aborted</code>, reintentos sin evaluar aún) en el momento de ejecutar el análisis. <code>ConsolidationModule</code> debe degradar limpiamente run a run: si <code>run_record.json</code> existe pero <code>evaluation_result.json</code> todavía no (evaluación pendiente o run en curso), la fila se incluye igualmente con los campos de identificación/estado/coste disponibles en <code>run_record.json</code> y los campos derivados de <code>evaluation_result.json</code> a <code>null</code>.</li>
+</ul>
+<p>La degradación limpia aplica igual que en Bloque 1/2: si una fuente de datos no está disponible para una fila (p. ej. incertidumbre para <code>default</code> o para un agente externo), el campo correspondiente queda a <code>null</code>/<code>NaN</code> en el CSV en lugar de omitir la fila o inventar un valor.</p>
+<h2 id="4-arquitectura-de-alto-nivel">4. Arquitectura de alto nivel<a class="headerlink" href="#4-arquitectura-de-alto-nivel" title="Permanent link">&para;</a></h2>
+<h3 id="41-componentes">4.1 Componentes<a class="headerlink" href="#41-componentes" title="Permanent link">&para;</a></h3>
+<p>El Bloque 3 se organiza en <strong>tres módulos</strong>, deliberadamente simples y de responsabilidad única:</p>
+<ul>
+<li><strong>Módulo de métricas de agentes externos (<code>ExternalMetricsModule</code>).</strong> Descarga (o localiza ya descargados) los parches publicados de agentes externos y les extrae las métricas comparables, sin ejecutar ningún agente ni consumir tokens. Es <strong>independiente</strong> del resto del sistema de análisis: no depende del árbol de resultados del Bloque 2 ni de <code>pandas</code>/<code>matplotlib</code>, y puede desarrollarse y ejecutarse en solitario. Por ello fue el <strong>primer módulo implementado</strong> del Bloque 3.</li>
+<li><strong>Módulo de consolidación (<code>ConsolidationModule</code>).</strong> Escanea el árbol de resultados del Bloque 2, combina esos datos con la salida del módulo anterior, y produce dos ficheros tabulares limpios: <code>datos_consolidados.csv</code> (una fila por <em>run</em>) y <code>datos_pasos_consolidados.csv</code> (una fila por paso, solo disponible para runs con traza <code>robust_agent</code>). Es el módulo que decide, de forma explícita y documentada, qué campos se consolidan (SAN.6-SAN.7).</li>
+<li><strong>Módulo de diagramas (<code>DiagramsModule</code>).</strong> Lee exclusivamente <code>datos_consolidados.csv</code> / <code>datos_pasos_consolidados.csv</code> y genera las figuras con <code>matplotlib</code> (SAN.8). No vuelve a tocar los ficheros de traza ni el árbol de <code>runs/</code>; su única entrada es el CSV consolidado, lo que hace que las figuras sean reproducibles a partir de un único artefacto versionable.</li>
+</ul>
+<p>Esta descomposición separa <strong>obtención</strong> (externos), <strong>consolidación</strong> (limpieza y unificación de esquema) y <strong>presentación</strong> (gráficas), de forma análoga a la separación dataset/ejecución/evaluación/resultados del Bloque 2, pero con muchos menos módulos porque el Bloque 3 no ejecuta nada: solo lee, transforma y grafica.</p>
+<h3 id="42-flujo-logico">4.2 Flujo lógico<a class="headerlink" href="#42-flujo-logico" title="Permanent link">&para;</a></h3>
+<pre class="mermaid"><code>flowchart TD
+    A[data/external_predictions/ - JSONL publicado] --&gt; B[ExternalMetricsModule]
+    B --&gt; C[extracted_metrics.jsonl por fuente externa]
+
+    D[runs/experiment_id/instances/** - evaluation_result.json, run_record.json, trajectory.traj.json] --&gt; E[ConsolidationModule]
+    C --&gt; E
+    E --&gt; F[datos_consolidados.csv]
+    E --&gt; G[datos_pasos_consolidados.csv]
+
+    F --&gt; H[DiagramsModule]
+    G --&gt; H
+    H --&gt; I[figuras .png]</code></pre>
+<p>El flujo es <strong>unidireccional y por lotes</strong>: no hay retroalimentación hacia el Bloque 1 o 2. El módulo de métricas externas puede ejecutarse en cualquier momento, incluso antes de que termine el experimento principal, porque no depende de sus resultados. El módulo de consolidación sí depende de ambas entradas, pero es <strong>idempotente</strong>: puede relanzarse tantas veces como se quiera sobre un árbol de <code>runs/</code> parcial o completo y siempre regenera el CSV desde cero a partir del estado actual en disco (sin fusión incremental con ejecuciones previas del propio script).</p>
+<h3 id="43-comunicacion-entre-modulos">4.3 Comunicación entre módulos<a class="headerlink" href="#43-comunicacion-entre-modulos" title="Permanent link">&para;</a></h3>
+<pre class="mermaid"><code>flowchart LR
+    EM[ExternalMetricsModule] -- ExternalMetricsRecord list --&gt; CM[ConsolidationModule]
+    CM -- ConsolidatedRunRow / ConsolidatedStepRow --&gt; CSV[(datos_consolidados.csv / datos_pasos_consolidados.csv)]
+    CSV -- pandas.read_csv --&gt; DM[DiagramsModule]
+    DM --&gt; FIG[(figuras .png)]
+
+    CM -.lee.-&gt; RUNS[(runs/experiment_id/instances/**)]
+    CM -.reutiliza.-&gt; PME[PatchMetricsExtractor]
+    EM -.reutiliza.-&gt; PME</code></pre>
+<p>Reglas de comunicación:</p>
+<ul>
+<li><strong>Acoplamiento por ficheros, no por objetos en memoria.</strong> La única interfaz de facto entre módulos es un artefacto persistido en disco: <code>extracted_metrics.jsonl</code> entre el módulo 1 y el módulo 2, y <code>datos_consolidados.csv</code> / <code>datos_pasos_consolidados.csv</code> entre el módulo 2 y el módulo 3. Esto permite ejecutar cada módulo por separado, versionar los artefactos intermedios y depurar el pipeline por etapas.</li>
+<li><strong>Sin dependencia del Bloque 1 ni del Bloque 2 en tiempo de ejecución.</strong> El Bloque 3 solo lee artefactos ya persistidos por el Bloque 2 (<code>evaluation_result.json</code>, <code>run_record.json</code>, <code>trajectory.traj.json</code>); no importa código de <code>src/agent</code> ni instancia agentes. Sí importa y reutiliza utilidades puras de <code>src/benchmark/evaluation_module/extractors/</code> (señaladamente <code>PatchMetricsExtractor</code>) porque son funciones sin estado sobre un diff, no acoplamiento al ciclo de ejecución.</li>
+<li><strong><code>datos_consolidados.csv</code> como fuente única de verdad para graficar.</strong> El módulo de diagramas no debe volver a leer <code>runs/</code> ni las trazas; toda la información necesaria para las figuras debe estar ya en el CSV. Si un diagrama nuevo necesita un campo no consolidado, el campo se añade al esquema de consolidación (SAN.6), no se lee ad-hoc desde el módulo de diagramas.</li>
+</ul>
+<h3 id="44-principios-de-diseno">4.4 Principios de diseño<a class="headerlink" href="#44-principios-de-diseno" title="Permanent link">&para;</a></h3>
+<p>El Bloque 3 evita deliberadamente cualquier motor de agregación genérico o almacén de datos adicional (base de datos, parquet particionado, etc.): un CSV plano es suficiente para la escala del experimento (cientos de runs) y facilita tanto la inspección manual como la reproducibilidad. <code>datos_consolidados.csv</code> usa las mismas columnas para runs propios y para agentes externos; los campos no disponibles para una fuente (por ejemplo <code>uncertainty_mean</code> para <code>default</code> o para <code>agentless_v1.5</code>) quedan a valor nulo, nunca se omiten ni se sustituyen por un valor por defecto no nulo.</p>
+<p>Las métricas de parche se calculan con la misma lógica (<code>PatchMetricsExtractor</code>) para runs propios y externos, lo que garantiza comparabilidad real y evita divergencias de fórmula entre fuentes. El módulo de métricas de agentes externos, en particular, no ejecuta ningún LLM: su coste es exclusivamente de red (descarga) y CPU (parseo y diffing), lo que permite iterar sobre él de forma independiente y adelantarlo respecto a la finalización del experimento principal. Tanto la extracción externa como la consolidación son deterministas dado el mismo estado de <code>runs/</code> y <code>data/external_predictions/</code>, de modo que relanzar el pipeline completo reproduce el mismo CSV salvo que haya cambiado el estado en disco.</p>
+<p>Un campo no disponible se serializa como nulo con causa documentada, nunca se omite la fila completa, en línea con la política de degradación de Bloque 1/2. Por último, el Bloque 3 no reevalúa runs propios: lee <code>resolved</code> y <code>evaluable</code> directamente de <code>runs/.../evaluation_result.json</code> (<code>functional.resolved</code>, <code>functional.status</code>). Para agentes externos, <code>resolved</code> se obtiene de los <code>results.json</code> publicados en el repositorio <code>SWE-bench/experiments</code> cuando la fuente declara <code>results_url</code> en <code>ExternalSourceConfig</code> (<code>modulo_metricas_agentes_externos.md</code>); si no hay URL publicada, el campo queda <code>null</code>. El Bloque 3 nunca recalcula el veredicto funcional por su cuenta.</p>
+<h2 id="5-fuentes-de-datos-de-entrada">5. Fuentes de datos de entrada<a class="headerlink" href="#5-fuentes-de-datos-de-entrada" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Fuente</th>
+<th>Ubicación</th>
+<th>Consumida por</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Resultados de ejecuciones propias</td>
+<td><code>runs/&lt;experiment_id&gt;/instances/&lt;instance_id&gt;/&lt;agent_id&gt;/&lt;run_id&gt;/{evaluation_result.json, run_record.json, trajectory.traj.json}</code></td>
+<td><code>ConsolidationModule</code></td>
+</tr>
+<tr>
+<td>Log de llamadas por run (respaldo)</td>
+<td><code>runs/&lt;experiment_id&gt;/instances/&lt;instance_id&gt;/&lt;agent_id&gt;/&lt;run_id&gt;/llm_debug.jsonl</code></td>
+<td><code>ConsolidationModule</code> (solo si <code>trajectory.traj.json</code> falta o está corrupta)</td>
+</tr>
+<tr>
+<td>Manifiesto del experimento</td>
+<td><code>runs/&lt;experiment_id&gt;/manifest.json</code>, <code>runs/&lt;experiment_id&gt;/dataset_summary.json</code></td>
+<td><code>ConsolidationModule</code> (metadatos globales del pool de 120 instancias; <strong>no</strong> basta para derivar <code>sample_group</code>, ver SAN.6.1)</td>
+</tr>
+<tr>
+<td>Parches externos publicados</td>
+<td><code>data/external_predictions/&lt;source_id&gt;/*.jsonl</code> (formato <code>{"instance_id", "model_patch", "model_name_or_path"}</code>)</td>
+<td><code>ExternalMetricsModule</code></td>
+</tr>
+<tr>
+<td>Resultados funcionales publicados del agente externo</td>
+<td><code>results.json</code> del release en <code>SWE-bench/experiments</code> (URL en <code>ExternalSourceConfig.results_url</code>; cache local <code>published_results.json</code>)</td>
+<td><code>ExternalMetricsModule</code></td>
+</tr>
+<tr>
+<td><code>gold_patch</code> por instancia</td>
+<td>Dataset <code>SWE-bench/SWE-bench_Lite</code> (mismo mecanismo que <code>BenchmarkDatasetModule</code>)</td>
+<td>Ambos módulos 1 y 2, para métricas comparativas</td>
+</tr>
+</tbody>
+</table>
+<p>Las fuentes externas incorporadas son <strong>cuatro</strong>, según la decisión documentada en esta sección y detallada en <code>modulo_metricas_agentes_externos.md</code>:</p>
+<table>
+<thead>
+<tr>
+<th><code>source_id</code></th>
+<th>Sistema</th>
+<th>Versión</th>
+<th>Modelo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>agentless_v1.5</code></td>
+<td>Agentless</td>
+<td>v1.5.0 (oct 2024)</td>
+<td>claude-3-5-sonnet-20241022</td>
+</tr>
+<tr>
+<td><code>aider_20240523</code></td>
+<td>Aider</td>
+<td>20240523</td>
+<td>gpt-4o + claude-3-opus</td>
+</tr>
+<tr>
+<td><code>moatless_claude35_20241117</code></td>
+<td>Moatless Tools</td>
+<td>20241117</td>
+<td>claude-3-5-sonnet-20241022</td>
+</tr>
+<tr>
+<td><code>openhands_claude35_20240725</code></td>
+<td>OpenHands</td>
+<td>20240725</td>
+<td>claude-3-5-sonnet@20240620</td>
+</tr>
+</tbody>
+</table>
+<p>AutoCodeRover se descartó porque no publica parches individuales en formato estándar SWE-bench en su release. El diseño del módulo no se acopla a estas fuentes concretas: cualquier fuente adicional se incorpora como un nuevo <code>source_id</code> bajo <code>data/external_predictions/</code>, siempre que publique parches en formato <code>instance_id</code> + <code>model_patch</code>.</p>
+<h2 id="6-contrato-central-datos_consolidadoscsv">6. Contrato central: <code>datos_consolidados.csv</code><a class="headerlink" href="#6-contrato-central-datos_consolidadoscsv" title="Permanent link">&para;</a></h2>
+<p>Fichero tabular con <strong>una fila por <em>run</em></strong> (ejecuciones propias del Bloque 2 + entradas de agentes externos emparejadas por instancia). Es el artefacto de entrada único para <code>DiagramsModule</code> y para cualquier análisis estadístico posterior.</p>
+<h3 id="61-aclaracion-de-campos-de-identificacion-de-configuracion">6.1 Aclaración de campos de identificación de configuración<a class="headerlink" href="#61-aclaracion-de-campos-de-identificacion-de-configuracion" title="Permanent link">&para;</a></h3>
+<p>Para mantener coherencia con la terminología ya fijada en <code>especificacion_benchmark.md</code> (SAN.5, SAN.7.2, SAN.8.3) se fijan las siguientes definiciones, que resuelven la relación entre <code>agent_id</code>, <code>configuration_id</code>, <code>source_type</code> y <code>sample_group</code>:</p>
+<ul>
+<li><strong><code>agent_id</code></strong>: mismo identificador estable que usa el Bloque 2 (<code>default</code>, <code>robust_strict</code>, <code>robust_balanced</code>, <code>robust_permissive</code>, <code>robust_no_intervention</code>, <code>robust_v2</code>). Para agentes externos, el <code>source_id</code> de cada fuente: <code>agentless_v1.5</code>, <code>aider_20240523</code>, <code>moatless_claude35_20241117</code>, <code>openhands_claude35_20240725</code>.</li>
+<li><strong><code>configuration_id</code></strong>: equivalente al <code>group_id</code> de Bloque 2 (<code>&lt;agent_id&gt;__&lt;model_id&gt;</code>, ver <code>especificacion_benchmark.md</code> EB.8.3), construido con el <code>model_id</code> <strong>normalizado</strong> (mismo criterio que <code>ResumeDetector._normalize_model_id</code> en <code>src/benchmark/results_module/resume.py</code>: se elimina el prefijo de proveedor LiteLLM). Esta normalización es necesaria porque runs de un mismo <code>agent_id</code> pueden tener <code>model_id</code> distinto entre intentos por el fallback automático Vertex AI ↔ AI Studio (<code>gemini/gemini-2.5-flash</code> vs <code>vertex_ai/gemini-2.5-flash</code> observado en la práctica sobre <code>runs/full-lite-120inst-6agents/</code>); sin normalizar, un mismo agente quedaría fragmentado en dos <code>configuration_id</code> distintos por una cuestión puramente operativa. <code>configuration_id</code> es la clave primaria recomendada para agrupar filas en los diagramas. <strong>Excepción para externos:</strong> <code>ConsolidationModule</code> asigna <code>configuration_id = agent_id</code> (sin sufijo de modelo) en filas <code>source_type == external</code>, para que cada agente externo aparezca como una sola barra en los diagramas que agrupan por configuración, dado que el <code>model_id</code> ya es homogéneo dentro de cada fuente publicada.</li>
+<li><strong><code>source_type</code></strong>: <code>own</code> (ejecutado dentro del entorno propio, Bloque 2) o <code>external</code> (parche precomputado, Bloque 5). Determina qué familias de campos pueden estar disponibles (columna "Disponibilidad" de SAN.6.2).</li>
+<li><strong><code>sample_group</code></strong>: cohorte de instancias a la que pertenece el run - <code>main</code>, <code>ablation</code> o <code>external</code>. Se deriva de forma directa y verificable: para runs propios, <code>ablation</code> si <code>run_record.json.agent_run_config.dataset_slice_size</code> no es <code>null</code> (los dos agentes de ablación, <code>robust_no_intervention</code> y <code>robust_v2</code>, son los únicos que declaran <code>dataset_slice_size: 40</code> en <code>configs/experiment.full.yaml</code>), <code>main</code> en caso contrario; para filas de <code>source_type == external</code>, siempre <code>external</code>. Es necesario para no mezclar denominadores distintos al calcular tasas agregadas (p. ej. no comparar directamente una tasa de resolución sobre 120 instancias con una sobre 40 sin dejarlo explícito). Nótese que <code>dataset_summary.json</code> por sí solo <strong>no</strong> basta para esta derivación: solo registra el pool global de 120 instancias, no qué subconjunto usó cada agente de ablación.</li>
+</ul>
+<h3 id="62-esquema-de-campos">6.2 Esquema de campos<a class="headerlink" href="#62-esquema-de-campos" title="Permanent link">&para;</a></h3>
+<p>Los campos se agrupan en las mismas familias usadas por el diseño experimental (identificación, estado/resultado, coste/esfuerzo, incertidumbre, riesgo estructural, controlador, parche, comparación con <em>golden patch</em>, procedencia). La columna <strong>Fuente</strong> indica el origen del dato; la columna <strong>Disponibilidad</strong> indica en qué <code>source_type</code> está poblado (<code>own</code>, <code>external</code>, <code>ambos</code>).</p>
+<h4 id="identificacion">Identificación<a class="headerlink" href="#identificacion" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Fuente</th>
+<th>Disponibilidad</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>run_id</code></td>
+<td><code>run_record.json</code> / sintético para externos (<code>ext-&lt;source_id&gt;-&lt;instance_id&gt;</code>)</td>
+<td>ambos</td>
+</tr>
+<tr>
+<td><code>instance_id</code></td>
+<td><code>evaluation_result.json</code> / JSONL externo</td>
+<td>ambos</td>
+</tr>
+<tr>
+<td><code>repository</code></td>
+<td>derivado de <code>instance_id</code> (prefijo <code>org/repo</code>)</td>
+<td>ambos</td>
+</tr>
+<tr>
+<td><code>agent_id</code></td>
+<td><code>evaluation_result.json</code> / definido por <code>source_id</code> externo</td>
+<td>ambos</td>
+</tr>
+<tr>
+<td><code>configuration_id</code></td>
+<td><code>&lt;agent_id&gt;__&lt;model_id&gt;</code> (SAN.6.1)</td>
+<td>ambos</td>
+</tr>
+<tr>
+<td><code>source_type</code></td>
+<td><code>own</code> | <code>external</code></td>
+<td>ambos</td>
+</tr>
+<tr>
+<td><code>model_id</code></td>
+<td><code>run_record.json.agent_run_config.model_id</code> / <code>model_name_or_path</code> del JSONL externo</td>
+<td>ambos</td>
+</tr>
+<tr>
+<td><code>sample_group</code></td>
+<td><code>run_record.json.agent_run_config.dataset_slice_size</code> (own, SAN.6.1) / fijo <code>external</code></td>
+<td>ambos</td>
+</tr>
+</tbody>
+</table>
+<h4 id="estado-y-resultado">Estado y resultado<a class="headerlink" href="#estado-y-resultado" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Fuente</th>
+<th>Disponibilidad</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>run_status</code></td>
+<td><code>run_record.json.status</code> (<code>completed</code>, <code>failed</code>, <code>precondition_failed</code>)</td>
+<td>own; externo fijo a <code>completed</code> si hay parche</td>
+</tr>
+<tr>
+<td><code>exit_status</code></td>
+<td><code>run_record.json.exit_status</code></td>
+<td>own</td>
+</tr>
+<tr>
+<td><code>termination</code></td>
+<td>traza <code>robust_agent.termination</code> si existe, si no <code>null</code></td>
+<td>own (parcial)</td>
+</tr>
+<tr>
+<td><code>failure_category</code></td>
+<td>derivado de <code>exit_status</code>/<code>status</code> (<code>limits_exceeded</code>, <code>empty_submission</code>, <code>precondition_failed</code>, <code>exception</code>, <code>none</code>)</td>
+<td>own</td>
+</tr>
+<tr>
+<td><code>patch_available</code></td>
+<td><code>bool(model_patch)</code></td>
+<td>ambos</td>
+</tr>
+<tr>
+<td><code>submitted</code></td>
+<td><code>exit_status == "Submitted"</code> (own) / <code>true</code> si hay <code>model_patch</code> (externo)</td>
+<td>ambos</td>
+</tr>
+<tr>
+<td><code>empty_submission</code></td>
+<td><code>exit_status == "EmptySubmission"</code></td>
+<td>own</td>
+</tr>
+<tr>
+<td><code>evaluable</code></td>
+<td><code>functional.status == "evaluated"</code></td>
+<td>ambos (según disponibilidad de evaluación)</td>
+</tr>
+<tr>
+<td><code>resolved</code></td>
+<td><code>runs/.../evaluation_result.json</code> → <code>functional.resolved</code> (own) / resultado publicado o reevaluado (externo)</td>
+<td>ambos</td>
+</tr>
+</tbody>
+</table>
+<p><code>retry_count</code> se documenta en la familia "Coste y esfuerzo" junto con <code>run_sequence</code>, porque ambos se derivan del mismo mecanismo (SAN.6.3.1).</p>
+<h4 id="coste-y-esfuerzo">Coste y esfuerzo<a class="headerlink" href="#coste-y-esfuerzo" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Fuente</th>
+<th>Disponibilidad</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>steps_used</code></td>
+<td><code>extended.run_metrics.steps_used</code> (<code>evaluation_result.json</code>); si no disponible, <code>info.model_stats.api_calls</code> de <code>trajectory.traj.json</code></td>
+<td>own</td>
+</tr>
+<tr>
+<td><code>cost_usd</code></td>
+<td><code>run_record.json.cost_usd</code></td>
+<td>own</td>
+</tr>
+<tr>
+<td><code>duration_seconds</code></td>
+<td><code>run_record.json.duration_seconds</code></td>
+<td>own</td>
+</tr>
+<tr>
+<td><code>prompt_tokens</code></td>
+<td>suma de <code>usage.prompt_tokens</code> sobre <code>trajectory.traj.json.messages[].extra.response.usage</code> (presente solo en mensajes <code>assistant</code>; ausente en runs sin traza, p. ej. fallos previos a la primera llamada)</td>
+<td>own</td>
+</tr>
+<tr>
+<td><code>completion_tokens</code></td>
+<td>suma de <code>usage.completion_tokens</code> sobre el mismo campo</td>
+<td>own</td>
+</tr>
+<tr>
+<td><code>total_tokens</code></td>
+<td>suma de <code>usage.total_tokens</code> sobre el mismo campo</td>
+<td>own</td>
+</tr>
+<tr>
+<td><code>run_sequence</code></td>
+<td>índice de intento del <code>run_id</code> <strong>canónico</strong> elegido para esta fila: <code>0</code> para el <code>run_id</code> base, <code>N</code> si es el <code>N</code>-ésimo reintento (sufijo <code>-rN</code>) - ver SAN.6.3.1</td>
+<td>own</td>
+</tr>
+<tr>
+<td><code>retry_count</code></td>
+<td>número total de intentos encontrados en la cadena de reintentos de ese <code>(instance_id, agent_id, model_id)</code> antes de llegar al canónico - ver SAN.6.3.1</td>
+<td>own</td>
+</tr>
+<tr>
+<td><code>started_at</code></td>
+<td><code>run_record.json.started_at</code> (epoch)</td>
+<td>own</td>
+</tr>
+<tr>
+<td><code>completed_at</code></td>
+<td><code>run_record.json.ended_at</code> (epoch)</td>
+<td>own</td>
+</tr>
+</tbody>
+</table>
+<p>No disponibles para <code>source_type == external</code>: no hay traza de ejecución para agentes externos precomputados. <code>llm_debug.jsonl</code> (log paralelo por llamada, con la misma información de <code>usage</code> y coste) se considera fuente de <strong>respaldo/validación cruzada</strong> si <code>trajectory.traj.json</code> estuviera dañado, no fuente primaria.</p>
+<h4 id="incertidumbre-solo-own-y-solo-agentes-con-traza-robust_agent">Incertidumbre <em>(solo <code>own</code>, y solo agentes con traza <code>robust_agent</code>)</em><a class="headerlink" href="#incertidumbre-solo-own-y-solo-agentes-con-traza-robust_agent" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Fuente</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>uncertainty_mean</code>, <code>uncertainty_max</code>, <code>uncertainty_final</code>, <code>uncertainty_std</code>, <code>uncertainty_p95</code></td>
+<td>agregados sobre <code>robust_agent.episode_state_final.signals_history[].uncertainty.score</code></td>
+</tr>
+<tr>
+<td><code>uncertainty_high_ratio</code></td>
+<td>proporción de pasos con <code>uncertainty.level == "high"</code></td>
+</tr>
+<tr>
+<td><code>cycle_mean</code>, <code>failure_rate_mean</code>, <code>hedging_mean</code>, <code>volatility_mean</code></td>
+<td>medias sobre <code>uncertainty.components.{cycle, failure_rate, hedging, volatility}</code></td>
+</tr>
+<tr>
+<td><code>uncertainty_missing_components</code></td>
+<td>conteo de componentes en <code>uncertainty.evidence.omitted_components</code></td>
+</tr>
+</tbody>
+</table>
+<h4 id="riesgo-estructural-solo-own-y-solo-agentes-con-traza-robust_agent">Riesgo estructural <em>(solo <code>own</code>, y solo agentes con traza <code>robust_agent</code>)</em><a class="headerlink" href="#riesgo-estructural-solo-own-y-solo-agentes-con-traza-robust_agent" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Fuente</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>structural_risk_mean</code>, <code>structural_risk_max</code>, <code>structural_risk_final</code>, <code>structural_risk_p95</code></td>
+<td>agregados sobre <code>signals_history[].structural_risk.score</code></td>
+</tr>
+<tr>
+<td><code>structural_risk_high_ratio</code></td>
+<td>proporción de pasos con <code>structural_risk.level == "high"</code></td>
+</tr>
+<tr>
+<td><code>files_changed_ratio</code>, <code>hunks_per_file</code>, <code>net_lines</code></td>
+<td>del último <code>structural_risk.metrics</code> del episodio</td>
+</tr>
+<tr>
+<td><code>cumulative_lines_changed</code></td>
+<td><code>structural_risk.diff_summary.cumulative_lines_changed</code> del último paso (suma de líneas del diff acumulado desde el inicio del episodio)</td>
+</tr>
+<tr>
+<td><code>surface_final_size</code></td>
+<td><code>len(structural_risk.diff_summary.files_touched)</code> del último paso (ficheros tocados <strong>en ese paso incremental</strong>, no acumulado; ver nota)</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Nota (campo descartado):</strong> <code>revert_count</code> figuraba en la lista de métricas propuesta inicialmente pero <strong>no existe como señal real</strong>: en la versión inicial del módulo (<code>d0e31c8</code>) era una constante <code>0</code> sin lógica de cálculo, y fue eliminada por completo del contrato en el commit <code>053a62f</code> (<code>src/agent/structural_metrics_module/computer.py</code>). Confirmado sobre datos: runs generados con el código vigente (p. ej. <code>matplotlib__matplotlib-18869/robust_strict/r-74944485-r1</code>) ya no incluyen la clave en <code>structural_risk.metrics</code>. Se elimina de <code>datos_consolidados.csv</code>.</p>
+<p><strong>Nota (<code>surface_*</code>):</strong> <code>structural_risk.diff_summary</code> no contiene tamaños, sino <strong>firmas hash</strong> (<code>surface_signature</code>, <code>cumulative_surface_signature</code>, cadenas de 16 caracteres usadas internamente por el <code>StabilityMonitor</code> para detectar convergencia, no aptas para análisis cuantitativo). Se descarta <code>surface_cumulative_size</code> (no hay un acumulado de "ficheros tocados" persistido; el proxy equivalente ya está cubierto por <code>cumulative_lines_changed</code>). <code>surface_final_size</code> se define como el nº de ficheros tocados en el <strong>último paso incremental</strong> (distinto de <code>files_modified_count</code>, que se calcula sobre el patch final completo vía <code>PatchMetricsExtractor</code>).</p>
+</blockquote>
+<h4 id="controlador-solo-own-y-solo-agentes-con-traza-robust_agent">Controlador <em>(solo <code>own</code>, y solo agentes con traza <code>robust_agent</code>)</em><a class="headerlink" href="#controlador-solo-own-y-solo-agentes-con-traza-robust_agent" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Fuente</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>controller_intervention_count</code></td>
+<td>conteo de entradas con <code>decision.action != "PROCEED"</code> en <code>decisions_history</code> (<strong>nota de anidamiento</strong>: cada entrada es <code>{"decision": {...}, "step_index": N}</code>; el campo <code>action</code> cuelga de <code>decision</code>, no del nivel superior)</td>
+</tr>
+<tr>
+<td><code>proceed_count</code>, <code>feedback_count</code>, <code>validation_count</code>, <code>abort_count</code></td>
+<td>conteo por <code>decision.action</code> (<code>PROCEED</code>, <code>INJECT_FEEDBACK</code>, <code>RUN_VALIDATION</code>, <code>FINALIZE</code> con <code>decision.subtype == "abort"</code>)</td>
+</tr>
+<tr>
+<td><code>first_intervention_step</code></td>
+<td><code>step_index</code> de la primera entrada con <code>decision.action != "PROCEED"</code></td>
+</tr>
+<tr>
+<td><code>controller_intervention_ratio</code></td>
+<td><code>controller_intervention_count / steps_used</code></td>
+</tr>
+<tr>
+<td><code>high_high_encounter_count</code></td>
+<td>conteo de pasos con <code>decision.policy_snapshot.uncertainty_level == "high"</code> y <code>decision.policy_snapshot.risk_level == "high"</code></td>
+</tr>
+<tr>
+<td><code>final_controller_action</code></td>
+<td><code>decision.action</code> de la última entrada de <code>decisions_history</code></td>
+</tr>
+<tr>
+<td><code>validation_success_count</code>, <code>validation_failure_count</code></td>
+<td>conteo sobre <code>StepTrace.validation_outcome.status</code> a lo largo de <code>robust_agent.steps</code> (cada paso trae <code>decision</code> y <code>validation_outcome</code> como hermanos directos, a diferencia de <code>episode_state_final.decisions_history</code>/<code>signals_history</code>, que los envuelven en <code>{campo: {...}, step_index}</code>; ambas fuentes son equivalentes, se documentan las dos porque conviven en la traza)</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Observación empírica (dataset parcial, no es un defecto de captura):</strong> sobre los ~460 runs con traza <code>robust_agent</code> completados hasta ahora, <code>decision.action</code> solo toma los valores <code>PROCEED</code> y <code>FINALIZE</code> (subtype <code>submit</code>); no se ha observado aún ningún <code>INJECT_FEEDBACK</code>, <code>RUN_VALIDATION</code> ni <code>FINALIZE(abort)</code>. Consistentemente, <code>structural_risk.level == "high"</code> no aparece nunca y <code>uncertainty.level == "high"</code> tampoco (solo <code>low</code>/<code>medium</code>, con <code>medium</code> en ~4 % de los pasos de incertidumbre y ~0.04 % de los de riesgo estructural). Esto implica que, con los datos actuales, todos los campos de intervención del controlador (<code>controller_intervention_count</code>, <code>feedback_count</code>, <code>validation_count</code>, <code>abort_count</code>, <code>high_high_encounter_count</code>, <code>validation_success_count</code>, <code>validation_failure_count</code>) serán <code>0</code> en prácticamente todas las filas. La captura es correcta; simplemente no hay todavía intervenciones no triviales registradas en la porción de instancias ya ejecutadas. Conviene tenerlo presente al interpretar gráficas relacionadas hasta disponer del dataset completo.</p>
+</blockquote>
+<h4 id="parche-campos-calculados-de-forma-uniforme-para-own-y-external-via-patchmetricsextractor-extendido-san632">Parche <em>(campos calculados de forma uniforme para <code>own</code> y <code>external</code> vía <code>PatchMetricsExtractor</code> extendido, SAN.6.3.2)</em><a class="headerlink" href="#parche-campos-calculados-de-forma-uniforme-para-own-y-external-via-patchmetricsextractor-extendido-san632" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Fuente</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>files_modified_count</code></td>
+<td><code>len(patch_metrics.files_modified)</code></td>
+</tr>
+<tr>
+<td><code>lines_added</code>, <code>lines_deleted</code></td>
+<td><code>patch_metrics.lines_added</code> / <code>lines_deleted</code></td>
+</tr>
+<tr>
+<td><code>churn_total</code></td>
+<td><code>lines_added + lines_deleted</code></td>
+</tr>
+<tr>
+<td><code>hunks_count</code></td>
+<td><code>patch_metrics.hunks_count</code></td>
+</tr>
+<tr>
+<td><code>dispersion_score</code>, <code>test_touch_ratio</code></td>
+<td>recalculados sobre el diff final (SAN.6.3.2), reutilizando la misma fórmula que <code>structural_metrics_module/computer.py</code></td>
+</tr>
+</tbody>
+</table>
+<h4 id="comparacion-con-golden-patch">Comparación con <em>golden patch</em><a class="headerlink" href="#comparacion-con-golden-patch" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Fuente</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>matching_files_count</code></td>
+<td><code>len(files_intersection_with_gold)</code></td>
+</tr>
+<tr>
+<td><code>unexpected_files_count</code></td>
+<td><code>len(files_unexpected)</code></td>
+</tr>
+<tr>
+<td><code>missing_files_count</code></td>
+<td><code>len(files_missing_vs_gold)</code></td>
+</tr>
+<tr>
+<td><code>jaccard_files</code>, <code>jaccard_lines</code></td>
+<td><code>patch_metrics.jaccard_files</code> / <code>jaccard_lines</code></td>
+</tr>
+</tbody>
+</table>
+<h4 id="procedencia">Procedencia<a class="headerlink" href="#procedencia" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Fuente</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>patch_path</code></td>
+<td><code>run_record.json.model_patch_path</code> / ruta del JSONL externo</td>
+</tr>
+<tr>
+<td><code>trajectory_path</code></td>
+<td><code>run_record.json.trajectory_path</code> (<code>null</code> para externos)</td>
+</tr>
+<tr>
+<td><code>evaluation_path</code></td>
+<td>ruta a <code>evaluation_result.json</code> (<code>null</code> para externos sin evaluación local)</td>
+</tr>
+<tr>
+<td><code>external_release</code></td>
+<td>versión del release externo (p. ej. <code>v1.5.0</code>, <code>v20240620</code>), solo <code>external</code></td>
+</tr>
+<tr>
+<td><code>external_source</code></td>
+<td>nombre del sistema externo (p. ej. <code>Agentless</code>, <code>AutoCodeRover</code>), solo <code>external</code></td>
+</tr>
+<tr>
+<td><code>external_model_id</code></td>
+<td><code>model_name_or_path</code> del JSONL externo (p. ej. <code>claude-3-5-sonnet-20241022</code>, <code>gpt-4o-2024-05-13</code>), solo <code>external</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="63-notas-de-diseno">6.3 Notas de diseño<a class="headerlink" href="#63-notas-de-diseno" title="Permanent link">&para;</a></h3>
+<h4 id="631-seleccion-del-run-canonico-ante-reintentos">6.3.1 Selección del run canónico ante reintentos<a class="headerlink" href="#631-seleccion-del-run-canonico-ante-reintentos" title="Permanent link">&para;</a></h4>
+<p><code>BenchmarkExecutionModule</code> genera un <code>run_id</code> determinista por <code>(instance_id, agent_id, model_id, seed)</code> (<code>BenchmarkExecutionModule.run_id</code>, hash de 8 caracteres). Cuando un intento falla de forma transitoria (429, timeout de Docker, Ctrl+C) y la política de reintentos decide reintentar, el nuevo intento recibe el <code>run_id</code> base con sufijo <code>-rN</code> y su <code>run_record.json</code> incluye <code>environment.retry_of</code> apuntando al <code>run_id</code> base (<code>src/benchmark/execution_module/execution_module.py::_run_with_retries</code>, <code>run_executor.py</code>). Esto significa que <strong>un mismo run lógico puede tener varios directorios en disco</strong> bajo <code>instances/&lt;instance_id&gt;/&lt;agent_id&gt;/</code> (<code>r-&lt;hash&gt;</code>, <code>r-&lt;hash&gt;-r1</code>, <code>r-&lt;hash&gt;-r2</code>, ...), cada uno con su propio <code>run_record.json</code> y, potencialmente, su propio <code>evaluation_result.json</code>.</p>
+<p><code>datos_consolidados.csv</code> debe contener <strong>una única fila por run lógico</strong>, no una fila por intento físico, para no distorsionar denominadores de tasas agregadas (<code>especificacion_benchmark.md</code> EB.8.4). La regla de selección es:</p>
+<ol>
+<li>Agrupar los directorios de run por <code>(instance_id, agent_id)</code> que comparten la misma raíz de hash (<code>r-&lt;hash&gt;</code> y todos sus <code>r-&lt;hash&gt;-rN</code>).</li>
+<li>El <strong>run canónico</strong> es el de mayor <code>N</code> para el que exista <code>run_record.json</code> en disco (el intento más reciente conocido), siguiendo la cadena <code>environment.retry_of</code> para reconstruirla si el orden en disco no fuese suficiente.</li>
+<li><code>retry_count</code> = número de directorios encontrados en la cadena menos uno (0 si no hubo reintentos).</li>
+<li><code>run_sequence</code> = <code>N</code> del run canónico elegido (0 si es el <code>run_id</code> base sin sufijo).</li>
+<li>Si el run canónico aún no tiene <code>evaluation_result.json</code> (experimento en curso, evaluación pendiente para ese intento concreto - situación observada en la práctica sobre <code>runs/full-lite-120inst-6agents/</code> durante una ejecución interrumpida y reanudada), los campos derivados de ese fichero quedan a <code>null</code> según PA6, sin bloquear la fila ni sustituir por el intento anterior.</li>
+</ol>
+<p>Los intentos no canónicos (fallidos y superados por un reintento posterior) no generan fila propia en <code>datos_consolidados.csv</code>; quedan documentados solo de forma agregada en <code>retry_count</code>. Si en el futuro interesara auditar intentos fallidos individualmente, se haría en un fichero aparte, no en el CSV de consolidación principal.</p>
+<h4 id="632-metricas-de-parche-uniformes-entre-fuentes">6.3.2 Métricas de parche uniformes entre fuentes<a class="headerlink" href="#632-metricas-de-parche-uniformes-entre-fuentes" title="Permanent link">&para;</a></h4>
+<p>Las métricas de incertidumbre, riesgo estructural y controlador <strong>solo existen para runs propios con traza <code>robust_agent</code></strong> (variantes <code>robust_*</code>); no existen para <code>default</code> (mini-SWE-agent puro) ni para agentes externos, porque dependen de la instrumentación específica del RobustAgent (<code>especificacion_agente.md</code> EA.7-8). En cambio, las <strong>métricas de parche</strong> (SAN.6 "Parche") sí deben ser comparables entre <code>default</code>, <code>robust_*</code> y externos, porque son propiedades del diff final, no del proceso que lo generó.</p>
+<p>Por ello, el módulo de consolidación no copia <code>dispersion_score</code>/<code>test_touch_ratio</code>/<code>hunks_per_file</code> desde <code>signals_history</code> (que solo existe para <code>robust_*</code>), sino que los recalcula de forma independiente sobre el <code>model_patch</code> final de cada run -propio o externo- reutilizando la misma fórmula de agregación que <code>structural_metrics_module/computer.py</code>, pero aplicada una única vez sobre el diff completo en lugar de paso a paso. Esta decisión es la que permite que la familia de "Estructura de los parches" de los diagramas (SAN.8) compare <code>default</code>, <code>robust_*</code> y <code>agentless_v1.5</code> en igualdad de condiciones.</p>
+<h4 id="633-tasa-de-resolucion-metrica-agregada-principal">6.3.3 Tasa de resolución (métrica agregada principal)<a class="headerlink" href="#633-tasa-de-resolucion-metrica-agregada-principal" title="Permanent link">&para;</a></h4>
+<p>La <strong>tasa de resolución</strong> reportada en diagramas y tablas del Bloque 3 sigue la política de <code>especificacion_benchmark.md</code> EB.8.4:</p>
+<p>[
+\text{resolution_rate} = \dfrac{#{\text{filas con } \texttt{resolved == true}}}{#{\text{filas del grupo}}}
+]</p>
+<ul>
+<li><strong>Numerador</strong>: únicamente instancias con <code>resolved == true</code>. Cualquier otro valor (<code>false</code>, <code>null</code>, ausente) no incrementa el numerador.</li>
+<li><strong>Denominador</strong>: <strong>todas</strong> las filas del grupo analizado (configuración, repositorio, cohorte externa, etc.), sin excluir límites agotados, excepciones, precondición fallida ni filas sin evaluación funcional.</li>
+<li><strong>No se modifica</strong> el campo <code>resolved</code> en <code>datos_consolidados.csv</code>: la conversión implícita «ausente = no resuelto» ocurre solo en la lógica de agregación (<code>resolution_metrics.py</code>).</li>
+<li><strong><code>evaluable</code></strong>: métrica descriptiva secundaria (conteo de filas con <code>functional.status == "evaluated"</code> o equivalente externo). <strong>No</strong> es el denominador de la tasa principal y no debe etiquetarse como «tasa de resolución».</li>
+<li>Para agentes externos con 120 filas consolidadas pero sin predicción en una instancia (p. ej. Moatless y <code>pytest-dev__pytest-7168</code>), esa fila permanece en el denominador y cuenta como no resuelta.</li>
+</ul>
+<p>Implementación: función centralizada <code>resolution_rate_pct()</code> / <code>resolution_rate_stats()</code> en <code>diagrams_module/resolution_metrics.py</code>; todas las figuras que muestran tasas de resolución deben usarla.</p>
+<h2 id="7-contrato-secundario-datos_pasos_consolidadoscsv">7. Contrato secundario: <code>datos_pasos_consolidados.csv</code><a class="headerlink" href="#7-contrato-secundario-datos_pasos_consolidadoscsv" title="Permanent link">&para;</a></h2>
+<p>Fichero tabular con <strong>una fila por paso</strong>, exclusivamente para runs propios con traza <code>robust_agent</code> (<code>source_type == own</code> y <code>trace_format == robust-agent-1.0</code>). No existe para <code>default</code> ni para agentes externos. Es la entrada de los diagramas que necesitan resolución temporal dentro del run (mapa incertidumbre × riesgo × acción, series de intervención).</p>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Fuente</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>run_id</code></td>
+<td>igual que en <code>datos_consolidados.csv</code></td>
+</tr>
+<tr>
+<td><code>instance_id</code></td>
+<td>igual que en <code>datos_consolidados.csv</code></td>
+</tr>
+<tr>
+<td><code>configuration_id</code></td>
+<td>igual que en <code>datos_consolidados.csv</code></td>
+</tr>
+<tr>
+<td><code>step_index</code></td>
+<td><code>StepTrace.step_id</code> / índice de la entrada en <code>signals_history</code></td>
+</tr>
+<tr>
+<td><code>uncertainty_score</code></td>
+<td><code>signals_history[].uncertainty.score</code></td>
+</tr>
+<tr>
+<td><code>uncertainty_level</code></td>
+<td><code>signals_history[].uncertainty.level</code></td>
+</tr>
+<tr>
+<td><code>structural_risk_score</code></td>
+<td><code>signals_history[].structural_risk.score</code></td>
+</tr>
+<tr>
+<td><code>structural_risk_level</code></td>
+<td><code>signals_history[].structural_risk.level</code></td>
+</tr>
+<tr>
+<td><code>controller_action</code></td>
+<td><code>decisions_history[].decision.action</code> (<code>null</code> si el paso no tuvo decisión, p. ej. paso final por <code>Submitted</code>)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="8-diagramas">8. Diagramas<a class="headerlink" href="#8-diagramas" title="Permanent link">&para;</a></h2>
+<p>Los diagramas se generan exclusivamente a partir de <code>datos_consolidados.csv</code> y <code>datos_pasos_consolidados.csv</code> (SAN.4.3). Se agrupan en un conjunto <strong>mínimo</strong>, necesario para cubrir las cuatro dimensiones de análisis (SAN.2), y un conjunto <strong>adicional</strong>, que profundiza en relaciones específicas de interés para la discusión de resultados. Las convenciones de estilo visual (etiquetas cortas, anotaciones numéricas, rejilla, symlog, leyendas) están detalladas en <code>modulo_diagramas.md</code> MDI.5 y MDI.5.1.</p>
+<h3 id="81-diagramas-minimos">8.1 Diagramas mínimos<a class="headerlink" href="#81-diagramas-minimos" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>Tasa de resolución por configuración</strong> - porcentaje de instancias resueltas sobre el <strong>total de filas</strong> por <code>agent_id</code> (<code>resolved == true</code> / total de instancias de la configuración), respetando <code>sample_group</code> (SAN.6.1/SAN.6.3.3) para no mezclar denominadores de 120 y 40 instancias sin indicarlo. El <code>n</code> mostrado en etiquetas es el total de instancias, no el subconjunto evaluable. Etiqueta <code>0.0%</code> visible cuando la tasa es cero real.</li>
+<li><strong>Estados finales</strong> - distribución de éxitos, fallos, parches vacíos y errores (<code>run_status</code>, <code>failure_category</code>, <code>empty_submission</code>) por configuración; valor numérico en cada segmento de la barra apilada.</li>
+<li><strong>Coste y esfuerzo</strong> - coste (<code>cost_usd</code>), pasos (<code>steps_used</code>), duración (<code>duration_seconds</code>) y tokens (<code>total_tokens</code>) por configuración (solo <code>own</code>).</li>
+<li><strong>Estructura de los parches</strong> - archivos modificados, <em>churn</em>, <em>hunks</em> y dispersión (<code>files_modified_count</code>, <code>churn_total</code>, <code>hunks_count</code>, <code>dispersion_score</code>) por configuración, incluyendo externos. Panel 2×2 con etiquetas de agente en los cuatro subpaneles; <em>churn</em> en escala symlog si el rango lo exige.</li>
+<li><strong>Estructura de parches resueltos</strong> - igual que el anterior, filtrado a <code>resolved == true</code>, para comparar solo entre soluciones correctas.</li>
+<li><strong>Incertidumbre y resultado</strong> - relación de <code>uncertainty_mean</code> con <code>resolved</code>, <code>cost_usd</code> y <code>structural_risk_mean</code> (solo <code>robust_*</code>). Títulos «A / B»; leyendas bajo los paneles de barras y de dispersión incertidumbre–riesgo con fórmulas en lenguaje natural.</li>
+<li><strong>Intervenciones del controlador</strong> - frecuencia de cada acción (<code>proceed_count</code>, <code>feedback_count</code>, <code>validation_count</code>, <code>abort_count</code>) por perfil; valores sobre cada barra agrupada.</li>
+<li><strong>Baseline frente a RobustAgent</strong> - comparación de <code>default (mini-swe-agent)</code> con los tres perfiles robustos (<code>robust_strict</code>, <code>robust_balanced</code>, <code>robust_permissive</code>) en resolución, coste y churn.</li>
+<li><strong>Ablaciones</strong> - comparación de <code>robust_balanced</code> con <code>robust_no_intervention</code> y <code>robust_v2</code> (<code>sample_group == ablation</code>).</li>
+<li><strong>Agentes externos</strong> - resolución y churn comparables frente a <code>default</code> y perfiles robustos principales; <code>resolved</code> de externos desde resultados publicados; nota de modelos distintos por agente.</li>
+<li><strong>Compromiso coste-rendimiento</strong> - resolución frente a coste (<code>cost_usd</code>) y frente a riesgo estructural (<code>structural_risk_mean</code>), por configuración.</li>
+</ol>
+<h3 id="82-diagramas-adicionales">8.2 Diagramas adicionales<a class="headerlink" href="#82-diagramas-adicionales" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Mapa incertidumbre × riesgo × acción</strong> - a partir de <code>datos_pasos_consolidados.csv</code>, comprueba la aplicación real de la matriz de decisión (<code>uncertainty_level</code> × <code>structural_risk_level</code> → <code>controller_action</code>) frente a la matriz teórica de <code>especificacion_agente.md</code> EA.5.1. Texto de celda con color adaptativo al fondo.</li>
+<li><strong>Coste o tokens por solución resuelta</strong> - <code>cost_usd</code>/<code>total_tokens</code> normalizado sobre instancias con <code>resolved == true</code>; tokens en miles en el eje Y.</li>
+<li><strong>Resolución acumulada frente a coste</strong> - curva de instancias resueltas acumuladas a medida que aumenta el gasto, por configuración; origen en (0, 0).</li>
+<li><strong>Resultados por repositorio</strong> - tasa de resolución (SAN.6.3.3: todas las filas del repositorio en el denominador) y coste desglosados por <code>repository</code>, para detectar diferencias entre proyectos.</li>
+<li><strong>Motivos de terminación</strong> - desglose de <code>termination</code> por configuración (<code>robust_*</code>); valor numérico en cada segmento apilado.</li>
+</ul>
+<h2 id="9-organizacion-del-codigo">9. Organización del código<a class="headerlink" href="#9-organizacion-del-codigo" title="Permanent link">&para;</a></h2>
+<p>Siguiendo la misma convención que Bloque 1 y Bloque 2 (una carpeta por módulo sufijada <code>_module/</code>, archivo principal homónimo, contratos junto a su productor):</p>
+<div class="highlight"><pre><span></span><code>src/analysis/
+├── __init__.py                                  # exporta API publica del bloque
+│
+├── external_metrics_module/
+│   ├── __init__.py                              # re-exporta ExternalMetricsModule, contratos
+│   ├── external_metrics_module.py               # ExternalMetricsModule (clase principal)
+│   ├── external_patch_record.py                 # ExternalPatchRecord (contrato de entrada)
+│   ├── external_metrics_record.py               # ExternalMetricsRecord (contrato de salida)
+│   ├── external_source_config.py                # ExternalSourceConfig (parametros por fuente)
+│   ├── external_metrics_config.py               # ExternalMetricsConfig (parametros operativos)
+│   ├── downloader.py                            # Downloader (descarga + extraccion ZIP)
+│   ├── jsonl_loader.py                          # JsonlLoader (parseo del JSONL de origen)
+│   ├── matcher.py                               # Matcher (emparejamiento por instance_id)
+│   └── published_results_loader.py              # PublishedResultsLoader (results.json publicados)
+│
+├── consolidation_module/
+│   ├── __init__.py                              # re-exporta ConsolidationModule, contratos
+│   ├── consolidation_module.py                  # ConsolidationModule (clase principal)
+│   ├── consolidated_run_row.py                  # ConsolidatedRunRow (esquema S6.2)
+│   ├── consolidated_step_row.py                 # ConsolidatedStepRow (esquema S7)
+│   ├── runs_scanner.py                          # RunsScanner (escaneo + seleccion canonica)
+│   ├── trajectory_reader.py                     # TrajectoryReader (parseo de trazas robust_agent)
+│   └── row_builder.py                           # RowBuilder + dispersion_score/test_touch_ratio (S7)
+│
+└── diagrams_module/
+    ├── __init__.py                              # re-exporta DiagramsModule, AnalysisFrames, etc.
+    ├── diagrams_module.py                       # DiagramsModule + FIGURE_REGISTRY (clase principal)
+    ├── analysis_frames.py                       # AnalysisFrames (carga y tipado de CSV)
+    ├── style.py                                 # COLOR_MAP, figsize, DPI, helpers (S5)
+    └── figures/                                 # funciones puras plot_&lt;nombre&gt;, una por diagrama
+        ├── resolution_rate.py                   # 8.1.1
+        ├── final_states.py                      # 8.1.2
+        ├── cost_effort.py                       # 8.1.3
+        ├── patch_structure.py                   # 8.1.4
+        ├── patch_structure_resolved.py          # 8.1.5
+        ├── uncertainty_outcome.py               # 8.1.6
+        ├── controller_interventions.py          # 8.1.7
+        ├── baseline_vs_robust.py                # 8.1.8
+        ├── ablations.py                         # 8.1.9
+        ├── external_agents.py                   # 8.1.10
+        ├── cost_performance_tradeoff.py         # 8.1.11
+        └── additional/                          # diagramas de S8.2
+</code></pre></div>
+<p>La orquestacion del pipeline completo (consolidar + graficar) se expone via <code>src/analysis/run.py</code>, ejecutable como <code>python -m analysis.run</code>, siguiendo el mismo patron que <code>python -m benchmark.run</code> y <code>python -m agent.cli</code>. A diferencia del benchmark (que gestiona Docker, workers, reintentos y señales durante horas), el análisis es una transformación de datos pura que no requiere gestión de estado en ejecución: ~130 líneas son suficientes y el módulo puede importarse también desde notebooks. Véase <code>src/analysis/run.py</code> para el uso típico. Exit code <code>0</code> si no hay errores inesperados en figuras; <code>2</code> solo si alguna figura falla con excepción distinta de <code>FigureDataError</code> (las omisiones por datos insuficientes van a <code>DiagramsReport.skipped</code> y no alteran el exit code).</p>
+<p>Reglas adicionales:</p>
+<ul>
+<li><strong>Sin dependencia de Bloque 1.</strong> El paquete <code>src/analysis</code> no importa <code>src/agent</code>; toda la información de <code>robust_agent</code> se obtiene parseando el JSON de la traza, no instanciando clases del agente.</li>
+<li><strong>Dependencia mínima de Bloque 2.</strong> <code>src/analysis</code> puede reutilizar utilidades puras sin estado de <code>src/benchmark/evaluation_module/extractors/</code> (señaladamente <code>PatchMetricsExtractor</code>), pero no instancia <code>BenchmarkRunner</code> ni ningún componente con efectos de ejecución.</li>
+<li><strong>Contratos junto a su productor</strong>, igual que en Bloque 1/2: <code>ExternalPatchRecord</code>/<code>ExternalMetricsRecord</code> viven en <code>external_metrics_module/</code>; <code>ConsolidatedRunRow</code>/<code>ConsolidatedStepRow</code> viven en <code>consolidation_module/</code>.</li>
+</ul>
+<h2 id="10-interfaz-con-el-bloque-2-benchmark">10. Interfaz con el Bloque 2 (benchmark)<a class="headerlink" href="#10-interfaz-con-el-bloque-2-benchmark" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Entrada.</strong> El Bloque 3 escanea el árbol <code>runs/&lt;experiment_id&gt;/instances/**</code> producido por <code>BenchmarkResultsModule</code> (SAN.8.1 de <code>especificacion_benchmark.md</code>), leyendo <code>evaluation_result.json</code>, <code>run_record.json</code> y, cuando existe, <code>trajectory.traj.json</code>. No usa <code>BenchmarkExport</code> en memoria porque el análisis se ejecuta como proceso separado, después de que el benchmark ha terminado de escribir a disco.</li>
+<li><strong>Sin modificación de artefactos.</strong> El Bloque 3 es estrictamente de lectura sobre <code>runs/</code>; nunca escribe dentro del árbol del experimento. Toda su salida vive en una ubicación propia (SAN.11).</li>
+<li><strong>Sin acoplamiento de código.</strong> El único acoplamiento de código permitido es la reutilización de extractores puros de métricas de parche (SAN.4.4, SAN.9); el resto del pipeline de análisis no importa clases de <code>src/benchmark</code>.</li>
+</ul>
+<h2 id="11-interfaz-con-las-fuentes-externas-bloque-5">11. Interfaz con las fuentes externas (Bloque 5)<a class="headerlink" href="#11-interfaz-con-las-fuentes-externas-bloque-5" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Entrada.</strong> JSONL de predicciones publicadas en <code>data/external_predictions/&lt;source_id&gt;/</code>, siguiendo el formato estándar SWE-bench (<code>instance_id</code>, <code>model_patch</code>, <code>model_name_or_path</code>), según <code>modulo_metricas_agentes_externos.md</code>.</li>
+<li><strong>Salida del módulo 1.</strong> <code>data/external_predictions/&lt;source_id&gt;/extracted_metrics.jsonl</code>, con un <code>ExternalMetricsRecord</code> por instancia emparejada con el conjunto de instancias del experimento (matching por <code>instance_id</code>, garantizado para el subconjunto de 120 instancias por ser un subconjunto de SWE-bench Lite completo).</li>
+<li><strong>Sin ejecución.</strong> El módulo 1 nunca invoca un LLM ni un agente; su única actividad es red (descarga), IO (lectura de JSONL) y CPU (diffing contra <code>gold_patch</code>).</li>
+</ul>
+<h2 id="12-salidas-del-sistema-de-analisis">12. Salidas del sistema de análisis<a class="headerlink" href="#12-salidas-del-sistema-de-analisis" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>data/&lt;experiment_id&gt;/
+├── datos_consolidados.csv
+├── datos_pasos_consolidados.csv
+└── figures/
+    ├── resolution_rate.png
+    ├── final_states.png
+    ├── cost_effort.png
+    ├── patch_structure.png
+    ├── patch_structure_resolved.png
+    ├── uncertainty_outcome.png
+    ├── controller_interventions.png
+    ├── baseline_vs_robust.png
+    ├── ablations.png
+    ├── external_agents.png
+    ├── cost_performance_tradeoff.png
+    └── additional/
+        ├── uncertainty_risk_action_map.png
+        ├── cost_per_solved.png
+        ├── cumulative_resolution_vs_cost.png
+        ├── results_by_repository.png
+        └── termination_reasons.png
+</code></pre></div>
+<p>El directorio <code>data/</code> en su totalidad (descargas de terceros en <code>data/external_predictions/</code> y salidas del pipeline en <code>data/&lt;experiment_id&gt;/</code>) está en <code>.gitignore</code>; su política de versionado está cerrada en <code>modulo_consolidacion.md</code> MCO.8.</p>
+<h2 id="13-referencias-tecnicas">13. Referencias técnicas<a class="headerlink" href="#13-referencias-tecnicas" title="Permanent link">&para;</a></h2>
+<ul>
+<li><code>docs/especificaciones/analisis/modulo_metricas_agentes_externos.md</code></li>
+<li><code>docs/especificaciones/analisis/modulo_consolidacion.md</code></li>
+<li><code>docs/especificaciones/analisis/modulo_diagramas.md</code></li>
+<li><code>especificacion_agente.md</code></li>
+<li><code>especificacion_benchmark.md</code></li>
+<li><code>docs/especificaciones/benchmark/modulo_resultados.md</code></li>
+<li><code>src/benchmark/evaluation_module/extractors/patch_metrics.py</code></li>
+<li><code>src/benchmark/evaluation_module/extractors/run_metrics.py</code></li>
+<li><code>src/agent/structural_metrics_module/computer.py</code></li>
+<li><code>configs/experiment.full.yaml</code></li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Volver al principio
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.top", "search.suggest", "search.highlight", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado al portapapeles", "clipboard.copy": "Copiar al portapapeles", "search.result.more.one": "1 m\u00e1s en esta p\u00e1gina", "search.result.more.other": "# m\u00e1s en esta p\u00e1gina", "search.result.none": "No se encontraron documentos", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Teclee para comenzar b\u00fasqueda", "search.result.term.missing": "Falta", "select.version": "Seleccionar versi\u00f3n"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

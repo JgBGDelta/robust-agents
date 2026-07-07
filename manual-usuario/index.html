@@ -1,0 +1,3297 @@
+
+<!doctype html>
+<html lang="es" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Agente robusto sobre mini-SWE-agent y benchmark extendido (TFG).">
+      
+      
+      
+        <link rel="canonical" href="https://jgbgdelta.github.io/robust-agents/manual-usuario/">
+      
+      
+      
+        <link rel="next" href="../sobre-la-documentacion/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Manual de usuario - Robust Agents TFG</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/_mkdocstrings.css">
+    
+      <link rel="stylesheet" href="../assets/custom.css">
+    
+      <link rel="stylesheet" href="../assets/mkdocstrings.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="deep-orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#manual-del-usuario-tfg-gii-jorge-barroso-garcia" class="md-skip">
+          Saltar a contenido
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabecera">
+    <a href=".." title="Robust Agents TFG" class="md-header__button md-logo" aria-label="Robust Agents TFG" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Robust Agents TFG
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Manual de usuario
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="deep-orange"  aria-label="Modo claro"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Modo claro" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="deep-orange"  aria-label="Modo oscuro"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Modo oscuro" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Búsqueda" placeholder="Búsqueda" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Buscar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpiar" aria-label="Limpiar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando búsqueda
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/JgBGDelta/robust-agents" title="Ir al repositorio" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    JgBGDelta/robust-agents
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Pestañas" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="./" class="md-tabs__link">
+          
+  
+  
+  Documentación
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../api/" class="md-tabs__link">
+          
+  
+  
+  Implementación
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navegación" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Robust Agents TFG" class="md-nav__button md-logo" aria-label="Robust Agents TFG" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Robust Agents TFG
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/JgBGDelta/robust-agents" title="Ir al repositorio" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    JgBGDelta/robust-agents
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Documentación
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Documentación
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Manual de usuario
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Manual de usuario
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-requisitos-previos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Requisitos previos
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-instalacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Instalación
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Instalación">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-clonar-el-repositorio" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 Clonar el repositorio
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-crear-el-entorno-virtual" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 Crear el entorno virtual
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-instalar-dependencias" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 Instalar dependencias
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-configuracion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Configuración
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Configuración">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-api-keys-env" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 API keys (.env)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-verificar-las-claves" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 Verificar las claves
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-ficheros-de-experimento-configs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 Ficheros de experimento (configs/)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34-defaults-en-codigo-capa-c" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.4 Defaults en código (capa C)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#35-que-modificar-segun-el-objetivo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.5 Qué modificar según el objetivo
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-ejecutar-el-benchmark-swe-bench" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Ejecutar el benchmark (SWE-bench)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Ejecutar el benchmark (SWE-bench)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-requisito-docker-activo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 Requisito: Docker activo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-smoke-run-validacion-minima" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 Smoke run (validación mínima)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-experimento-completo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 Experimento completo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-opciones-de-linea-de-comandos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4 Opciones de línea de comandos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#45-resultados" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.5 Resultados
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-ejecutar-el-agente-manualmente-desarrollo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Ejecutar el agente manualmente (desarrollo)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Ejecutar el agente manualmente (desarrollo)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-smoke-test-sin-llm-modelo-determinista" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 Smoke test sin LLM (modelo determinista)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-con-modelo-llm-real" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 Con modelo LLM real
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53-opciones-del-cli" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3 Opciones del CLI
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#54-ejemplo-tarea-sobre-un-repo-propio" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.4 Ejemplo: tarea sobre un repo propio
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-ejecutar-el-pipeline-de-analisis-bloque-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Ejecutar el pipeline de análisis (Bloque 3)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Ejecutar el pipeline de análisis (Bloque 3)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61-prerequisito-experimento-completado" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 Prerequisito: experimento completado
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-ejecucion-basica-solo-runs-propios" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 Ejecución básica (solo runs propios)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63-ejecucion-completa-runs-propios-4-agentes-externos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3 Ejecución completa (runs propios + 4 agentes externos)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#64-opciones-del-cli" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.4 Opciones del CLI
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#65-artefactos-de-salida" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.5 Artefactos de salida
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Tests
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-referencia-rapida" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Referencia rápida
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sobre-la-documentacion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sobre la documentación
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_3" id="__nav_1_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Especificaciones — Agente
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Especificaciones — Agente
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../especificaciones/agente/especificacion_agente/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Visión general
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../especificaciones/agente/modulo_incertidumbre/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Módulo incertidumbre
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../especificaciones/agente/modulo_metricas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Módulo métricas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../especificaciones/agente/modulo_controlador/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Módulo controlador
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../especificaciones/agente/tests/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tests
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_4" id="__nav_1_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Especificaciones — Benchmark
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Especificaciones — Benchmark
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../especificaciones/benchmark/especificacion_benchmark/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Visión general
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../especificaciones/benchmark/modulo_dataset/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Módulo dataset
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../especificaciones/benchmark/modulo_ejecucion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Módulo ejecución
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../especificaciones/benchmark/modulo_evaluacion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Módulo evaluación
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../especificaciones/benchmark/modulo_resultados/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Módulo resultados
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../especificaciones/benchmark/ejemplo_evaluation_result/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ejemplo evaluation result
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_5" id="__nav_1_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Especificaciones — Análisis
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Especificaciones — Análisis
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../especificaciones/analisis/especificacion_analisis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Visión general
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../especificaciones/analisis/modulo_metricas_agentes_externos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Módulo métricas de agentes externos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../especificaciones/analisis/modulo_consolidacion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Módulo consolidación
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../especificaciones/analisis/modulo_diagramas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Módulo diagramas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Implementación
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Implementación
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Visión general
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Agente
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Agente
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/agent/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Resumen
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/agent/robust_agent/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RobustAgent
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/agent/config/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuración
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/agent/episode_state/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Estado y traza
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/agent/structural_metrics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Métricas estructurales
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/agent/uncertainty/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Incertidumbre
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/agent/controller/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Controlador
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Benchmark
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Benchmark
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/benchmark/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Resumen
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/benchmark/benchmark_runner/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BenchmarkRunner
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/benchmark/config/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuración
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/benchmark/dataset/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dataset
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/benchmark/execution/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ejecución
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/benchmark/evaluation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Evaluación
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/benchmark/results/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Resultados
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_4" id="__nav_2_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Análisis
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Análisis
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/analysis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Resumen
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/analysis/consolidation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Consolidación
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/analysis/external_metrics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Métricas externas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/analysis/diagrams/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Diagramas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/analysis/run/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Punto de entrada CLI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-requisitos-previos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Requisitos previos
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-instalacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Instalación
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Instalación">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-clonar-el-repositorio" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 Clonar el repositorio
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-crear-el-entorno-virtual" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 Crear el entorno virtual
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-instalar-dependencias" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 Instalar dependencias
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-configuracion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Configuración
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Configuración">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-api-keys-env" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 API keys (.env)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-verificar-las-claves" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 Verificar las claves
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-ficheros-de-experimento-configs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 Ficheros de experimento (configs/)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34-defaults-en-codigo-capa-c" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.4 Defaults en código (capa C)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#35-que-modificar-segun-el-objetivo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.5 Qué modificar según el objetivo
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-ejecutar-el-benchmark-swe-bench" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Ejecutar el benchmark (SWE-bench)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Ejecutar el benchmark (SWE-bench)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-requisito-docker-activo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 Requisito: Docker activo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-smoke-run-validacion-minima" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 Smoke run (validación mínima)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-experimento-completo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 Experimento completo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-opciones-de-linea-de-comandos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4 Opciones de línea de comandos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#45-resultados" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.5 Resultados
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-ejecutar-el-agente-manualmente-desarrollo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Ejecutar el agente manualmente (desarrollo)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Ejecutar el agente manualmente (desarrollo)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-smoke-test-sin-llm-modelo-determinista" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 Smoke test sin LLM (modelo determinista)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-con-modelo-llm-real" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 Con modelo LLM real
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53-opciones-del-cli" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3 Opciones del CLI
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#54-ejemplo-tarea-sobre-un-repo-propio" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.4 Ejemplo: tarea sobre un repo propio
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-ejecutar-el-pipeline-de-analisis-bloque-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Ejecutar el pipeline de análisis (Bloque 3)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Ejecutar el pipeline de análisis (Bloque 3)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61-prerequisito-experimento-completado" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 Prerequisito: experimento completado
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-ejecucion-basica-solo-runs-propios" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 Ejecución básica (solo runs propios)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63-ejecucion-completa-runs-propios-4-agentes-externos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3 Ejecución completa (runs propios + 4 agentes externos)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#64-opciones-del-cli" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.4 Opciones del CLI
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#65-artefactos-de-salida" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.5 Artefactos de salida
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Tests
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-referencia-rapida" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Referencia rápida
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="manual-del-usuario-tfg-gii-jorge-barroso-garcia">Manual del usuario - TFG GII Jorge Barroso García<a class="headerlink" href="#manual-del-usuario-tfg-gii-jorge-barroso-garcia" title="Permanent link">&para;</a></h1>
+<p>Agente robusto sobre <a href="src/agent/mini-swe-agent/">mini-SWE-agent</a> y benchmark extendido para SWE-bench (TFG).</p>
+<p>Documentación ampliada (especificaciones e implementación):
+<a href="https://jgbgdelta.github.io/robust-agents/">https://jgbgdelta.github.io/robust-agents/</a></p>
+<p>Guía paso a paso para instalar el proyecto, configurarlo y ejecutar cada uno de sus
+tres bloques principales si fuera necesario:</p>
+<ul>
+<li><strong>Bloque 1 - Agente robusto</strong> (<code>python -m agent.cli</code>): ejecución manual sobre repositorios locales.</li>
+<li><strong>Bloque 2 - Benchmark</strong> (<code>python -m benchmark.run</code>): experimento completo sobre SWE-bench Lite.</li>
+<li><strong>Bloque 3 - Análisis</strong> (<code>python -m analysis.run</code>): consolidación de resultados y generación de figuras.</li>
+</ul>
+<hr />
+<h2 id="1-requisitos-previos">1. Requisitos previos<a class="headerlink" href="#1-requisitos-previos" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Requisito</th>
+<th>Versión mínima</th>
+<th>Notas</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Python</td>
+<td>3.10</td>
+<td>Comprueba con <code>python --version</code></td>
+</tr>
+<tr>
+<td>Git</td>
+<td>-</td>
+<td>Necesario para clonar y para las métricas estructurales del agente</td>
+</tr>
+<tr>
+<td>Docker</td>
+<td>-</td>
+<td>Solo para el benchmark (ver sección 4.1)</td>
+</tr>
+<tr>
+<td>Cuenta en proveedor LLM</td>
+<td>-</td>
+<td>Gemini, OpenAI, Anthropic, etc.</td>
+</tr>
+<tr>
+<td>Cuenta SWE-bench (<code>sb-cli</code>)</td>
+<td>-</td>
+<td>Solo para evaluación funcional del benchmark; <a href="https://www.swebench.com">registro gratuito</a></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="2-instalacion">2. Instalación<a class="headerlink" href="#2-instalacion" title="Permanent link">&para;</a></h2>
+<h3 id="21-clonar-el-repositorio">2.1 Clonar el repositorio<a class="headerlink" href="#21-clonar-el-repositorio" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">://</span><span class="n">github</span><span class="p">.</span><span class="n">com</span><span class="p">/</span><span class="n">JgBGDelta</span><span class="p">/</span><span class="n">robust-agents</span><span class="p">.</span><span class="n">git</span>
+<span class="nb">cd </span><span class="n">robust-agents</span>
+</code></pre></div>
+<h3 id="22-crear-el-entorno-virtual">2.2 Crear el entorno virtual<a class="headerlink" href="#22-crear-el-entorno-virtual" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">python</span> <span class="n">-m</span> <span class="n">venv</span> <span class="p">.</span><span class="n">venv</span>
+</code></pre></div>
+<p>Activa el entorno. <strong>Repite este paso cada vez que abras un terminal nuevo:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="p">.\.</span><span class="n">venv</span><span class="p">\</span><span class="n">Scripts</span><span class="p">\</span><span class="n">Activate</span><span class="p">.</span><span class="n">ps1</span>   <span class="c"># Windows PowerShell</span>
+<span class="c"># source .venv/bin/activate    # Linux / macOS</span>
+</code></pre></div>
+<h3 id="23-instalar-dependencias">2.3 Instalar dependencias<a class="headerlink" href="#23-instalar-dependencias" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">pip</span> <span class="n">install</span> <span class="n">-e</span> <span class="s2">&quot;.[dev]&quot;</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="n">-e</span> <span class="n">src</span><span class="p">/</span><span class="n">agent</span><span class="p">/</span><span class="n">mini-swe-agent</span>
+</code></pre></div>
+<p><code>mini-swe-agent</code> se instala por separado porque está incluido en el repositorio en
+<code>src/agent/mini-swe-agent/</code> (copia local del upstream, no un paquete PyPI aparte).</p>
+<p>Comprueba que la instalación es correcta:</p>
+<div class="highlight"><pre><span></span><code><span class="n">python</span> <span class="n">-c</span> <span class="s2">&quot;import agent; import benchmark; import analysis; print(&#39;OK&#39;)&quot;</span>
+</code></pre></div>
+<hr />
+<h2 id="3-configuracion">3. Configuración<a class="headerlink" href="#3-configuracion" title="Permanent link">&para;</a></h2>
+<p>El proyecto usa tres capas de configuración:</p>
+<table>
+<thead>
+<tr>
+<th>Capa</th>
+<th>Archivo</th>
+<th>Contenido</th>
+<th>Versionado</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A - Secretos</td>
+<td><code>.env</code></td>
+<td>API keys, variables de entorno</td>
+<td>No (gitignored)</td>
+</tr>
+<tr>
+<td>B - Experimento</td>
+<td><code>configs/*.yaml</code></td>
+<td>dataset, agentes, <code>model_id</code>, overrides</td>
+<td>Sí</td>
+</tr>
+<tr>
+<td>C - Defaults</td>
+<td><code>src/agent/config.py</code>, <code>src/benchmark/config.py</code></td>
+<td>valores por defecto en código</td>
+<td>Sí</td>
+</tr>
+</tbody>
+</table>
+<h3 id="31-api-keys-env">3.1 API keys (<code>.env</code>)<a class="headerlink" href="#31-api-keys-env" title="Permanent link">&para;</a></h3>
+<p>Copia la plantilla y rellena las claves del proveedor LLM que vayas a usar:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">copy </span><span class="p">.</span><span class="n">env</span><span class="p">.</span><span class="n">example</span> <span class="p">.</span><span class="n">env</span>
+</code></pre></div>
+<p>Abre <code>.env</code> con cualquier editor y añade los valores correspondientes:</p>
+<div class="highlight"><pre><span></span><code># Gemini / Google (usa solo una de las dos)
+GOOGLE_API_KEY=AIza...
+GEMINI_API_KEY=
+
+# OpenAI
+OPENAI_API_KEY=sk-...
+
+# Anthropic
+ANTHROPIC_API_KEY=sk-ant-...
+
+# SWE-bench (solo necesaria para la evaluación funcional del benchmark)
+SWEBENCH_API_KEY=swe-...
+</code></pre></div>
+<blockquote>
+<p><strong>Seguridad:</strong> Nunca incluyas el fichero <code>.env</code> en un commit. Está en <code>.gitignore</code>
+por defecto. Nunca copies claves en ficheros <code>.yaml</code> ni en <code>config.py</code>.</p>
+</blockquote>
+<p>El proyecto carga <code>.env</code> automáticamente al arrancar tanto el agente manual como el
+benchmark; no es necesario exportar variables ni configurar el entorno del sistema.</p>
+<h3 id="32-verificar-las-claves">3.2 Verificar las claves<a class="headerlink" href="#32-verificar-las-claves" title="Permanent link">&para;</a></h3>
+<p>Para comprobar que una clave se lee correctamente:</p>
+<div class="highlight"><pre><span></span><code><span class="n">python</span> <span class="n">-c</span> <span class="s2">&quot;from common.env import load_project_env; load_project_env(); import os; print(os.getenv(&#39;GOOGLE_API_KEY&#39;, &#39;NO ENCONTRADA&#39;))&quot;</span>
+</code></pre></div>
+<p>Para comprobar la cuota de SWE-bench disponible:</p>
+<div class="highlight"><pre><span></span><code><span class="n">python</span> <span class="n">-c</span> <span class="s2">&quot;from common.env import load_project_env; load_project_env(); import subprocess, sys; raise SystemExit(subprocess.call([&#39;sb-cli&#39;,&#39;get-quotas&#39;]))&quot;</span>
+</code></pre></div>
+<h3 id="33-ficheros-de-experimento-configs">3.3 Ficheros de experimento (<code>configs/</code>)<a class="headerlink" href="#33-ficheros-de-experimento-configs" title="Permanent link">&para;</a></h3>
+<p>Los experimentos del benchmark se definen en YAML bajo <code>configs/</code>. No existe un fichero
+<code>.example</code> aparte: el repositorio ya incluye las configuraciones preparadas para el TFG.</p>
+<table>
+<thead>
+<tr>
+<th>Fichero</th>
+<th>Propósito</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>configs/experiment.smoke.yaml</code></td>
+<td>Validación mínima: <strong>1 instancia</strong> × 6 agentes (smoke de integración)</td>
+</tr>
+<tr>
+<td><code>configs/experiment.mini.yaml</code></td>
+<td>Pre-full: <strong>5 instancias</strong> estratificadas × 6 agentes (<strong>24 runs</strong>)</td>
+</tr>
+<tr>
+<td><code>configs/experiment.full.yaml</code></td>
+<td><strong>Experimento por defecto del TFG</strong>: <strong>120 instancias</strong> Lite × 6 agentes (<strong>560 runs</strong>)</td>
+</tr>
+</tbody>
+</table>
+<p>El experimento <strong>por defecto</strong> del trabajo es <code>configs/experiment.full.yaml</code>
+(<code>experiment_id_explicit: full-lite-120inst-6agents</code>). Los ficheros <code>smoke</code> y <code>mini</code>
+sirven para comprobar el pipeline antes de lanzar el experimento principal o tras cambios de
+configuración.</p>
+<p>Los prompts y parámetros de mini-SWE-agent para cada agente viven en <code>configs/mini/</code>
+(p. ej. <code>swebench_gemini_json.yaml</code> para el baseline y <code>swebench_gemini_json_robust.yaml</code>
+para las variantes robustas).</p>
+<p><strong>Para modificar un experimento</strong>, edita el YAML correspondiente
+(o duplícalo con otro nombre). Los campos más habituales son:</p>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Qué controla</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>dataset.instance_ids</code></td>
+<td>Lista fija de instancias (como en smoke)</td>
+</tr>
+<tr>
+<td><code>dataset.slice_size</code>, <code>slice_strategy</code>, <code>slice_seed</code></td>
+<td>Tamaño y muestreo del pool Lite (como en mini/full)</td>
+</tr>
+<tr>
+<td><code>agents[].model_id</code></td>
+<td>Modelo LLM de cada variante</td>
+</tr>
+<tr>
+<td><code>agents[].config_overrides</code></td>
+<td>Perfil robusto, umbrales, matriz del controlador</td>
+</tr>
+<tr>
+<td><code>benchmark.runs_root</code></td>
+<td>Carpeta de salida (por defecto <code>runs</code>)</td>
+</tr>
+<tr>
+<td><code>benchmark.workers</code></td>
+<td>Paralelismo de ejecución</td>
+</tr>
+<tr>
+<td><code>benchmark.evaluation_skip</code></td>
+<td>Si <code>true</code>, no llama a <code>sb-cli</code> (no consume cuota)</td>
+</tr>
+<tr>
+<td><code>benchmark.mini_agent_config</code></td>
+<td>YAML de prompts por defecto del benchmark</td>
+</tr>
+<tr>
+<td>Bloques <code>x-gemini-agent</code> / <code>x-robust-base</code></td>
+<td>Parámetros compartidos vía anchors YAML (<code>model_id</code>, límites, clase del agente)</td>
+</tr>
+</tbody>
+</table>
+<p>Los campos omitidos toman los defaults de <code>src/benchmark/config.py</code>.</p>
+<p>Variable opcional por agente: <code>api_key_env</code> - nombre de la variable de entorno con la
+clave (no el valor). Si se omite, LiteLLM infiere la convención del proveedor desde
+<code>model_id</code>.</p>
+<h3 id="34-defaults-en-codigo-capa-c">3.4 Defaults en código (capa C)<a class="headerlink" href="#34-defaults-en-codigo-capa-c" title="Permanent link">&para;</a></h3>
+<p><strong>Agente</strong> (<code>src/agent/config.py</code>): pesos de métricas, incertidumbre, matriz del
+controlador, perfil <code>balanced</code>, etc. No edites este fichero para un experimento concreto;
+usa <code>config_overrides</code> en el YAML o argumentos del CLI.</p>
+<p><strong>Benchmark</strong> (<code>src/benchmark/config.py</code>): <code>runs_root</code>, <code>workers</code>, timeouts de <code>sb-cli</code>,
+etc. El YAML del experimento los sobreescribe.</p>
+<p><strong>Prompts SWE-bench:</strong> en experimentos reales configura
+<code>benchmark.mini_agent_config</code> apuntando a
+<code>src/agent/mini-swe-agent/src/minisweagent/config/benchmarks/swebench.yaml</code>
+(pide <code>git diff</code> y envío del parche). Si es <code>null</code>, se usa <code>mini.yaml</code> del paquete
+(no apto para evaluar parches en SWE-bench).</p>
+<h3 id="35-que-modificar-segun-el-objetivo">3.5 Qué modificar según el objetivo<a class="headerlink" href="#35-que-modificar-segun-el-objetivo" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Objetivo</th>
+<th>Dónde</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>API keys</td>
+<td><code>.env</code></td>
+</tr>
+<tr>
+<td>Modelo por celda del benchmark</td>
+<td><code>configs/*.yaml</code> → <code>agents[].model_id</code></td>
+</tr>
+<tr>
+<td>Dataset, workers, slice</td>
+<td><code>configs/*.yaml</code> → <code>dataset</code>, <code>benchmark</code></td>
+</tr>
+<tr>
+<td>Perfil robusto, umbrales, pesos</td>
+<td><code>configs/*.yaml</code> → <code>agents[].config_overrides</code></td>
+</tr>
+<tr>
+<td>Plantillas de prompt al LLM</td>
+<td><code>swebench.yaml</code> vía <code>benchmark.mini_agent_config</code></td>
+</tr>
+<tr>
+<td>Cambiar defaults globales del producto</td>
+<td><code>src/agent/config.py</code> o <code>src/benchmark/config.py</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="4-ejecutar-el-benchmark-swe-bench">4. Ejecutar el benchmark (SWE-bench)<a class="headerlink" href="#4-ejecutar-el-benchmark-swe-bench" title="Permanent link">&para;</a></h2>
+<h3 id="41-requisito-docker-activo">4.1 Requisito: Docker activo<a class="headerlink" href="#41-requisito-docker-activo" title="Permanent link">&para;</a></h3>
+<p>El benchmark ejecuta cada agente dentro de un contenedor Linux con la imagen oficial
+de la instancia SWE-bench. Docker debe estar corriendo antes de lanzar el benchmark.</p>
+<p><strong>Windows:</strong> abre Docker Desktop y espera a que aparezca "Docker Desktop is running".</p>
+<p><strong>Linux:</strong> comprueba que el daemon está activo:</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>systemctl<span class="w"> </span>status<span class="w"> </span>docker
+</code></pre></div>
+<p>Verifica que Docker responde correctamente:</p>
+<div class="highlight"><pre><span></span><code><span class="n">docker</span> <span class="n">info</span>
+</code></pre></div>
+<p>La sección <strong>Server</strong> debe aparecer sin errores. Si aparece
+<code>The system cannot find the file specified</code>, el daemon de Docker no está en ejecución.</p>
+<blockquote>
+<p><strong>Primera ejecución:</strong> la primera vez que se ejecuta una instancia concreta, Docker
+descarga su imagen (varios GB). Por ejemplo, para el smoke run:</p>
+<div class="highlight"><pre><span></span><code><span class="n">docker</span> <span class="n">pull</span> <span class="n">docker</span><span class="p">.</span><span class="n">io</span><span class="p">/</span><span class="n">swebench</span><span class="p">/</span><span class="n">sweb</span><span class="p">.</span><span class="n">eval</span><span class="p">.</span><span class="n">x86_64</span><span class="p">.</span><span class="n">astropy_1776_astropy</span><span class="p">-</span><span class="n">12907</span><span class="p">:</span><span class="n">latest</span>
+</code></pre></div>
+</blockquote>
+<h3 id="42-smoke-run-validacion-minima">4.2 Smoke run (validación mínima)<a class="headerlink" href="#42-smoke-run-validacion-minima" title="Permanent link">&para;</a></h3>
+<p>Antes de lanzar un experimento completo, ejecuta el smoke run para verificar que
+el pipeline funciona de extremo a extremo. Usa 1 instancia × 6 agentes (ejecución
+real, no simulada):</p>
+<div class="highlight"><pre><span></span><code><span class="n">python</span> <span class="n">-m</span> <span class="n">benchmark</span><span class="p">.</span><span class="n">run</span> <span class="p">-</span><span class="n">-config</span> <span class="n">configs</span><span class="p">/</span><span class="n">experiment</span><span class="p">.</span><span class="n">smoke</span><span class="p">.</span><span class="n">yaml</span> <span class="p">-</span><span class="n">-force-rerun</span>
+</code></pre></div>
+<p>El smoke run tiene <code>evaluation_skip: true</code> por defecto para no consumir cuota
+<code>sb-cli</code>. Los resultados se guardan en <code>runs/</code>.</p>
+<h3 id="43-experimento-completo">4.3 Experimento completo<a class="headerlink" href="#43-experimento-completo" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">python</span> <span class="n">-m</span> <span class="n">benchmark</span><span class="p">.</span><span class="n">run</span> <span class="p">-</span><span class="n">-config</span> <span class="n">configs</span><span class="p">/</span><span class="n">experiment</span><span class="p">.</span><span class="n">full</span><span class="p">.</span><span class="n">yaml</span>
+</code></pre></div>
+<p>El benchmark es <strong>resumible</strong>: si se interrumpe, al relanzar sin <code>--force-rerun</code>
+retoma desde el último run completado. Usa <code>--force-rerun</code> solo cuando se requiera
+reiniciar desde cero:</p>
+<div class="highlight"><pre><span></span><code><span class="n">python</span> <span class="n">-m</span> <span class="n">benchmark</span><span class="p">.</span><span class="n">run</span> <span class="p">-</span><span class="n">-config</span> <span class="n">configs</span><span class="p">/</span><span class="n">experiment</span><span class="p">.</span><span class="n">full</span><span class="p">.</span><span class="n">yaml</span> <span class="p">-</span><span class="n">-force-rerun</span>
+</code></pre></div>
+<h3 id="44-opciones-de-linea-de-comandos">4.4 Opciones de línea de comandos<a class="headerlink" href="#44-opciones-de-linea-de-comandos" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Flag</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--config PATH</code></td>
+<td>Ruta al YAML del experimento (obligatorio)</td>
+</tr>
+<tr>
+<td><code>--force-rerun</code></td>
+<td>Descarta runs anteriores y recomienza desde cero</td>
+</tr>
+<tr>
+<td><code>--experiment-id ID</code></td>
+<td>Sobreescribe <code>experiment_id_explicit</code></td>
+</tr>
+<tr>
+<td><code>--runs-root PATH</code></td>
+<td>Sobreescribe <code>benchmark.runs_root</code></td>
+</tr>
+<tr>
+<td><code>--evaluation-skip</code></td>
+<td>Omite la llamada a <code>sb-cli</code> (no consume cuota)</td>
+</tr>
+<tr>
+<td><code>--evaluate</code></td>
+<td>Fuerza la evaluación <code>sb-cli</code> aunque el YAML tenga <code>evaluation_skip: true</code> (fase 2 sobre runs ya en disco). No ejecuta ningún agente ni levanta Docker: es solo lectura respecto a la ejecución</td>
+</tr>
+<tr>
+<td><code>--evaluate-agents ID1,ID2</code></td>
+<td>Junto con <code>--evaluate</code>, limita la evaluación de esta invocación a esos <code>agent_id</code> (un perfil/ablación a la vez, para consumir cuota de <code>sb-cli</code> de forma controlada)</td>
+</tr>
+<tr>
+<td><code>--force-reevaluate-agents ID1,ID2</code></td>
+<td>Uso excepcional: junto con <code>--evaluate</code>, vuelve a someter a <code>sb-cli</code> esos <code>agent_id</code> aunque ya tengan <code>functional.status=evaluated</code> cacheado, bajo un <code>run_id</code> nuevo. Consume cuota adicional de forma deliberada; solo procede si se sospecha que el resultado previo es erróneo por un fallo del backend de <code>sb-cli</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="45-resultados">4.5 Resultados<a class="headerlink" href="#45-resultados" title="Permanent link">&para;</a></h3>
+<p>Los artefactos de cada run se guardan en:</p>
+<div class="highlight"><pre><span></span><code>runs/&lt;experiment_id&gt;/&lt;instance_id&gt;/&lt;agent_id&gt;/&lt;run_id&gt;/
+  run_record.json        # Metadatos del run: modelo, config, resultado
+  trajectory.traj.json   # Traza completa del agente (pasos, decisiones, métricas)
+  model.patch            # Parche git generado por el agente (si lo produjo)
+  llm_debug.jsonl        # Intercambios LLM (si debug habilitado)
+</code></pre></div>
+<hr />
+<h2 id="5-ejecutar-el-agente-manualmente-desarrollo">5. Ejecutar el agente manualmente (desarrollo)<a class="headerlink" href="#5-ejecutar-el-agente-manualmente-desarrollo" title="Permanent link">&para;</a></h2>
+<p>El agente puede ejecutarse sobre cualquier repositorio git local sin necesidad de Docker
+ni SWE-bench. Resulta útil para desarrollo, depuración y pruebas locales.</p>
+<h3 id="51-smoke-test-sin-llm-modelo-determinista">5.1 Smoke test sin LLM (modelo determinista)<a class="headerlink" href="#51-smoke-test-sin-llm-modelo-determinista" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">python</span> <span class="n">-m</span> <span class="n">agent</span><span class="p">.</span><span class="nb">cli</span>
+</code></pre></div>
+<p>Usa el modelo <code>deterministic</code> (respuestas fijas, sin API) sobre el repositorio de prueba
+<code>tests/test_repo/</code>. La ejecución es inmediata y no requiere claves de API.</p>
+<h3 id="52-con-modelo-llm-real">5.2 Con modelo LLM real<a class="headerlink" href="#52-con-modelo-llm-real" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">python</span> <span class="n">-m</span> <span class="n">agent</span><span class="p">.</span><span class="nb">cli </span><span class="p">-</span><span class="n">-model</span> <span class="n">gemini</span><span class="p">/</span><span class="n">gemini</span><span class="p">-</span><span class="n">2</span><span class="p">.</span><span class="n">0-flash</span> <span class="p">-</span><span class="n">-task</span> <span class="s2">&quot;Fix add() in calc.py&quot;</span>
+</code></pre></div>
+<p>Requiere que la clave del proveedor esté en <code>.env</code>.</p>
+<h3 id="53-opciones-del-cli">5.3 Opciones del CLI<a class="headerlink" href="#53-opciones-del-cli" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Flag</th>
+<th>Por defecto</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--model</code></td>
+<td><code>deterministic</code></td>
+<td>Modelo LiteLLM (p. ej. <code>gemini/gemini-2.0-flash</code>, <code>gpt-4o</code>, <code>anthropic/claude-3-5-sonnet</code>) o <code>deterministic</code></td>
+</tr>
+<tr>
+<td><code>--profile</code></td>
+<td><code>balanced</code></td>
+<td>Perfil del agente: <code>strict</code>, <code>balanced</code> o <code>permissive</code></td>
+</tr>
+<tr>
+<td><code>--task</code></td>
+<td><code>"Find and solve the error"</code></td>
+<td>Enunciado de la tarea</td>
+</tr>
+<tr>
+<td><code>--repo</code></td>
+<td><code>tests/test_repo/</code></td>
+<td>Ruta al repositorio git donde trabaja el agente</td>
+</tr>
+<tr>
+<td><code>--output</code></td>
+<td><code>tests/agent/tmp/robust_agent_cli.traj.json</code></td>
+<td>Fichero de salida con la traza</td>
+</tr>
+<tr>
+<td><code>--step-limit</code></td>
+<td><code>15</code></td>
+<td>Número máximo de pasos del agente</td>
+</tr>
+<tr>
+<td><code>--cost-limit</code></td>
+<td><code>1.0</code></td>
+<td>Coste máximo acumulado en USD</td>
+</tr>
+<tr>
+<td><code>--shell</code></td>
+<td><code>auto</code></td>
+<td>Intérprete de comandos: <code>auto</code>, <code>bash</code> o <code>cmd</code></td>
+</tr>
+<tr>
+<td><code>--config</code></td>
+<td><code>mini.yaml</code> del paquete</td>
+<td>YAML de configuración de mini-swe-agent</td>
+</tr>
+<tr>
+<td><code>--api-key-env</code></td>
+<td>-</td>
+<td>Nombre de la variable de entorno con la API key (opcional)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="54-ejemplo-tarea-sobre-un-repo-propio">5.4 Ejemplo: tarea sobre un repo propio<a class="headerlink" href="#54-ejemplo-tarea-sobre-un-repo-propio" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">python</span> <span class="n">-m</span> <span class="n">agent</span><span class="p">.</span><span class="nb">cli </span><span class="p">`</span>
+    <span class="p">-</span><span class="n">-repo</span> <span class="n">C</span><span class="p">:\</span><span class="n">ruta</span><span class="p">\</span><span class="n">a</span><span class="p">\</span><span class="n">mi</span><span class="p">\</span><span class="n">repo</span> <span class="p">`</span>
+    <span class="p">-</span><span class="n">-model</span> <span class="n">gpt</span><span class="p">-</span><span class="n">4o</span> <span class="p">`</span>
+    <span class="p">-</span><span class="n">-profile</span> <span class="n">strict</span> <span class="p">`</span>
+    <span class="p">-</span><span class="n">-task</span> <span class="s2">&quot;Refactoriza la función parse_csv para que maneje encoding UTF-8&quot;</span> <span class="p">`</span>
+    <span class="p">-</span><span class="n">-step-limit</span> <span class="n">20</span>
+</code></pre></div>
+<p>El resultado (traza JSON) se guarda en <code>--output</code> y el agente imprime un resumen
+al terminar.</p>
+<hr />
+<h2 id="6-ejecutar-el-pipeline-de-analisis-bloque-3">6. Ejecutar el pipeline de análisis (Bloque 3)<a class="headerlink" href="#6-ejecutar-el-pipeline-de-analisis-bloque-3" title="Permanent link">&para;</a></h2>
+<p>El sistema de análisis consume los resultados de un experimento completado y produce:</p>
+<ul>
+<li><code>datos_consolidados.csv</code> - una fila por run (propios y externos).</li>
+<li><code>datos_pasos_consolidados.csv</code> - una fila por paso de traza.</li>
+<li><code>figures/*.png</code> - catálogo de figuras comparativas.</li>
+</ul>
+<h3 id="61-prerequisito-experimento-completado">6.1 Prerequisito: experimento completado<a class="headerlink" href="#61-prerequisito-experimento-completado" title="Permanent link">&para;</a></h3>
+<p>Se requiere un árbol <code>runs/&lt;experiment_id&gt;/</code> producido por el benchmark (sección 4)
+y, opcionalmente, los ficheros <code>extracted_metrics.jsonl</code> de los agentes externos
+en <code>data/external_predictions/&lt;source_id&gt;/</code>.</p>
+<h3 id="62-ejecucion-basica-solo-runs-propios">6.2 Ejecución básica (solo runs propios)<a class="headerlink" href="#62-ejecucion-basica-solo-runs-propios" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">python</span> <span class="n">-m</span> <span class="n">analysis</span><span class="p">.</span><span class="n">run</span> <span class="p">`</span>
+    <span class="p">-</span><span class="n">-runs-root</span> <span class="n">runs</span><span class="p">/</span><span class="n">full-lite</span><span class="p">-</span><span class="n">120inst</span><span class="p">-</span><span class="n">6agents</span> <span class="p">`</span>
+    <span class="p">-</span><span class="n">-output-dir</span> <span class="n">data</span><span class="p">/</span><span class="n">full-lite</span><span class="p">-</span><span class="n">120inst</span><span class="p">-</span><span class="n">6agents</span>
+</code></pre></div>
+<h3 id="63-ejecucion-completa-runs-propios-4-agentes-externos">6.3 Ejecución completa (runs propios + 4 agentes externos)<a class="headerlink" href="#63-ejecucion-completa-runs-propios-4-agentes-externos" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">python</span> <span class="n">-m</span> <span class="n">analysis</span><span class="p">.</span><span class="n">run</span> <span class="p">`</span>
+    <span class="p">-</span><span class="n">-runs-root</span> <span class="n">runs</span><span class="p">/</span><span class="n">full-lite</span><span class="p">-</span><span class="n">120inst</span><span class="p">-</span><span class="n">6agents</span> <span class="p">`</span>
+    <span class="p">-</span><span class="n">-output-dir</span> <span class="n">data</span><span class="p">/</span><span class="n">full-lite</span><span class="p">-</span><span class="n">120inst</span><span class="p">-</span><span class="n">6agents</span> <span class="p">`</span>
+    <span class="p">-</span><span class="n">-external</span> <span class="n">data</span><span class="p">/</span><span class="n">external_predictions</span><span class="p">/</span><span class="n">agentless_v1</span><span class="p">.</span><span class="n">5</span><span class="p">/</span><span class="n">extracted_metrics</span><span class="p">.</span><span class="n">jsonl</span> <span class="p">`</span>
+    <span class="p">-</span><span class="n">-external</span> <span class="n">data</span><span class="p">/</span><span class="n">external_predictions</span><span class="p">/</span><span class="n">aider_20240523</span><span class="p">/</span><span class="n">extracted_metrics</span><span class="p">.</span><span class="n">jsonl</span> <span class="p">`</span>
+    <span class="p">-</span><span class="n">-external</span> <span class="n">data</span><span class="p">/</span><span class="n">external_predictions</span><span class="p">/</span><span class="n">moatless_claude35_20241117</span><span class="p">/</span><span class="n">extracted_metrics</span><span class="p">.</span><span class="n">jsonl</span> <span class="p">`</span>
+    <span class="p">-</span><span class="n">-external</span> <span class="n">data</span><span class="p">/</span><span class="n">external_predictions</span><span class="p">/</span><span class="n">openhands_claude35_20240725</span><span class="p">/</span><span class="n">extracted_metrics</span><span class="p">.</span><span class="n">jsonl</span>
+</code></pre></div>
+<p>El pipeline es <strong>idempotente</strong>: relanzarlo regenera los CSV y figuras desde cero.</p>
+<h3 id="64-opciones-del-cli">6.4 Opciones del CLI<a class="headerlink" href="#64-opciones-del-cli" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Flag</th>
+<th>Por defecto</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--runs-root PATH</code></td>
+<td>-</td>
+<td>Árbol de resultados del benchmark (obligatorio)</td>
+</tr>
+<tr>
+<td><code>--output-dir PATH</code></td>
+<td>-</td>
+<td>Directorio de salida para CSV y figuras (obligatorio)</td>
+</tr>
+<tr>
+<td><code>--external PATH</code></td>
+<td>-</td>
+<td><code>extracted_metrics.jsonl</code> de una fuente externa; repetible</td>
+</tr>
+<tr>
+<td><code>--no-diagrams</code></td>
+<td>desactivado</td>
+<td>Solo produce los CSV, omite la generación de figuras</td>
+</tr>
+<tr>
+<td><code>--minimal-only</code></td>
+<td>desactivado</td>
+<td>Genera solo el catálogo mínimo de figuras (S8.1)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="65-artefactos-de-salida">6.5 Artefactos de salida<a class="headerlink" href="#65-artefactos-de-salida" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>data/&lt;experiment_id&gt;/
+├── datos_consolidados.csv          # una fila por run (propios + externos)
+├── datos_pasos_consolidados.csv    # una fila por paso de traza robust_agent
+└── figures/
+    ├── resolution_rate.png
+    ├── cost_effort.png
+    ├── patch_structure.png
+    ├── external_agents.png
+    └── ...                         # ~16 figuras en total
+</code></pre></div>
+<p>El directorio <code>data/</code> está en <code>.gitignore</code>; todo su contenido son artefactos
+derivados o descargas de terceros reproducibles.</p>
+<hr />
+<h2 id="7-tests">7. Tests<a class="headerlink" href="#7-tests" title="Permanent link">&para;</a></h2>
+<p>Ejecuta la suite completa de tests (agente, benchmark y análisis):</p>
+<div class="highlight"><pre><span></span><code><span class="n">python</span> <span class="n">-m</span> <span class="n">pytest</span> <span class="n">tests</span> <span class="n">-q</span>
+</code></pre></div>
+<p>Para ejecutar solo un bloque concreto:</p>
+<div class="highlight"><pre><span></span><code><span class="n">python</span> <span class="n">-m</span> <span class="n">pytest</span> <span class="n">tests</span><span class="p">/</span><span class="n">agent</span><span class="p">/</span> <span class="n">-q</span>
+<span class="n">python</span> <span class="n">-m</span> <span class="n">pytest</span> <span class="n">tests</span><span class="p">/</span><span class="n">benchmark</span><span class="p">/</span> <span class="n">-q</span>
+<span class="n">python</span> <span class="n">-m</span> <span class="n">pytest</span> <span class="n">tests</span><span class="p">/</span><span class="n">analysis</span><span class="p">/</span> <span class="n">-q</span>
+</code></pre></div>
+<p>Para tests con salida detallada:</p>
+<div class="highlight"><pre><span></span><code><span class="n">python</span> <span class="n">-m</span> <span class="n">pytest</span> <span class="n">tests</span> <span class="n">-v</span>
+</code></pre></div>
+<hr />
+<h2 id="8-referencia-rapida">8. Referencia rápida<a class="headerlink" href="#8-referencia-rapida" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Objetivo</th>
+<th>Comando</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Activar entorno virtual</td>
+<td><code>.\.venv\Scripts\Activate.ps1</code></td>
+</tr>
+<tr>
+<td>Instalar dependencias (agente, benchmark y análisis)</td>
+<td><code>pip install -e ".[dev]"</code> + <code>pip install -e src/agent/mini-swe-agent</code></td>
+</tr>
+<tr>
+<td>Smoke test sin API (agente manual)</td>
+<td><code>python -m agent.cli</code></td>
+</tr>
+<tr>
+<td>Agente con LLM real</td>
+<td><code>python -m agent.cli --model gemini/gemini-2.0-flash --task "..."</code></td>
+</tr>
+<tr>
+<td>Smoke run benchmark</td>
+<td><code>python -m benchmark.run --config configs/experiment.smoke.yaml --force-rerun</code></td>
+</tr>
+<tr>
+<td>Benchmark completo (TFG)</td>
+<td><code>python -m benchmark.run --config configs/experiment.full.yaml</code></td>
+</tr>
+<tr>
+<td>Pipeline de análisis (básico)</td>
+<td><code>python -m analysis.run --runs-root runs/exp --output-dir data/exp</code></td>
+</tr>
+<tr>
+<td>Pipeline de análisis (con externos)</td>
+<td><code>python -m analysis.run --runs-root runs/exp --output-dir data/exp --external data/external_predictions/agentless_v1.5/extracted_metrics.jsonl</code></td>
+</tr>
+<tr>
+<td>Tests completos</td>
+<td><code>python -m pytest tests -q</code></td>
+</tr>
+<tr>
+<td>Tests de un bloque</td>
+<td><code>python -m pytest tests/analysis/ -q</code></td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Volver al principio
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.top", "search.suggest", "search.highlight", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado al portapapeles", "clipboard.copy": "Copiar al portapapeles", "search.result.more.one": "1 m\u00e1s en esta p\u00e1gina", "search.result.more.other": "# m\u00e1s en esta p\u00e1gina", "search.result.none": "No se encontraron documentos", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Teclee para comenzar b\u00fasqueda", "search.result.term.missing": "Falta", "select.version": "Seleccionar versi\u00f3n"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

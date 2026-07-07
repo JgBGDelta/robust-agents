@@ -1,0 +1,42 @@
+/* Tema oscuro tipo mini-SWE-agent: fondo casi negro y texto claro con buen contraste. */
+
+[data-md-color-scheme="default"] {
+  --md-default-bg-color: #fff7ec;
+  --md-primary-fg-color: #000000;
+  --md-typeset-a-color: #0099ff;
+  --md-code-bg-color: #e7e7e7;
+}
+
+[data-md-color-scheme="slate"] {
+  --md-primary-fg-color: #000000;
+  --md-default-fg-color: #fff7ec;
+  --md-default-bg-color: #111111;
+  --md-code-bg-color: #1a1a1a;
+  --md-typeset-a-color: #4db8ff;
+  --md-typeset-color: #e8e4dc;
+  --md-typeset-table-color: #e8e4dc;
+  --md-admonition-bg-color: #1a1a1a;
+  --md-footer-bg-color: #0a0a0a;
+  --md-header-bg-color: #0a0a0a;
+}
+
+.md-typeset h1,
+.md-typeset h2,
+.md-typeset h3 {
+  font-weight: 400;
+}
+
+[data-md-color-scheme="slate"] .md-typeset h1,
+[data-md-color-scheme="slate"] .md-typeset h2,
+[data-md-color-scheme="slate"] .md-typeset h3 {
+  color: #ffffff;
+}
+
+/* Unico cambio respecto a mini-SWE-agent: inline azul en vez de dorado */
+[data-md-color-scheme="slate"] .md-typeset code {
+  color: #4db8ff;
+}
+
+[data-md-color-scheme="slate"] .md-typeset a code {
+  color: #4db8ff;
+}

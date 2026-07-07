@@ -1,0 +1,2939 @@
+
+<!doctype html>
+<html lang="es" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Agente robusto sobre mini-SWE-agent y benchmark extendido (TFG).">
+      
+      
+      
+        <link rel="canonical" href="https://jgbgdelta.github.io/robust-agents/especificaciones/agente/especificacion_agente/">
+      
+      
+        <link rel="prev" href="../../../sobre-la-documentacion/">
+      
+      
+        <link rel="next" href="../modulo_incertidumbre/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Visión general - Robust Agents TFG</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/_mkdocstrings.css">
+    
+      <link rel="stylesheet" href="../../../assets/custom.css">
+    
+      <link rel="stylesheet" href="../../../assets/mkdocstrings.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="deep-orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#fase-21-especificacion-del-bloque-del-agente" class="md-skip">
+          Saltar a contenido
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabecera">
+    <a href="../../.." title="Robust Agents TFG" class="md-header__button md-logo" aria-label="Robust Agents TFG" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Robust Agents TFG
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Visión general
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="deep-orange"  aria-label="Modo claro"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Modo claro" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="deep-orange"  aria-label="Modo oscuro"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Modo oscuro" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Búsqueda" placeholder="Búsqueda" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Buscar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpiar" aria-label="Limpiar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando búsqueda
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/JgBGDelta/robust-agents" title="Ir al repositorio" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    JgBGDelta/robust-agents
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Pestañas" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../../manual-usuario/" class="md-tabs__link">
+          
+  
+  
+  Documentación
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../api/" class="md-tabs__link">
+          
+  
+  
+  Implementación
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navegación" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Robust Agents TFG" class="md-nav__button md-logo" aria-label="Robust Agents TFG" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Robust Agents TFG
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/JgBGDelta/robust-agents" title="Ir al repositorio" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    JgBGDelta/robust-agents
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Documentación
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Documentación
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../manual-usuario/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Manual de usuario
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../sobre-la-documentacion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sobre la documentación
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_1_3" id="__nav_1_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Especificaciones — Agente
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_1_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Especificaciones — Agente
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Visión general
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Visión general
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-objetivo-y-alcance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Objetivo y alcance
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Objetivo y alcance">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-documentos-hermanos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1 Documentos hermanos
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-agente-base-y-motivacion-de-la-eleccion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Agente base y motivación de la elección
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-precondiciones-del-entorno-y-dependencias-tecnicas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Precondiciones del entorno y dependencias técnicas
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Precondiciones del entorno y dependencias técnicas">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-gestion-de-secretos-y-variables-de-entorno" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 Gestión de secretos y variables de entorno
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-arquitectura-de-alto-nivel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Arquitectura de alto nivel
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Arquitectura de alto nivel">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-componentes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 Componentes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-flujo-logico" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 Flujo lógico
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-comunicacion-entre-modulos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 Comunicación entre módulos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-principios-de-diseno" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4 Principios de diseño
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-perfiles-de-robustez-del-repositorio" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Perfiles de robustez del repositorio
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Perfiles de robustez del repositorio">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-perfiles-base" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 Perfiles base
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-parametros-que-cada-perfil-modula" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 Parámetros que cada perfil modula
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53-seleccion-y-trazabilidad-del-perfil" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3 Selección y trazabilidad del perfil
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#54-capacidad-de-validacion-segun-perfil" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.4 Capacidad de validación según perfil
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-interaccion-detallada-por-iteracion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Interacción detallada por iteración
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-estado-del-episodio" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Estado del episodio
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-contratos-de-datos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Contratos de datos
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. Contratos de datos">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#81-steptrace" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.1 StepTrace
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-trazabilidad-y-formato-de-traza" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Trazabilidad y formato de traza
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-modificaciones-sobre-mini-swe-agent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Modificaciones sobre mini-SWE-agent
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-organizacion-del-codigo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. Organización del código
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-interfaz-con-el-bloque-2-benchmark-extendido" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. Interfaz con el Bloque 2 (benchmark extendido)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-referencias-tecnicas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13. Referencias técnicas
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../modulo_incertidumbre/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Módulo incertidumbre
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../modulo_metricas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Módulo métricas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../modulo_controlador/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Módulo controlador
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tests/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tests
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_4" id="__nav_1_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Especificaciones — Benchmark
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Especificaciones — Benchmark
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../benchmark/especificacion_benchmark/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Visión general
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../benchmark/modulo_dataset/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Módulo dataset
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../benchmark/modulo_ejecucion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Módulo ejecución
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../benchmark/modulo_evaluacion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Módulo evaluación
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../benchmark/modulo_resultados/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Módulo resultados
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../benchmark/ejemplo_evaluation_result/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ejemplo evaluation result
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_5" id="__nav_1_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Especificaciones — Análisis
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Especificaciones — Análisis
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../analisis/especificacion_analisis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Visión general
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../analisis/modulo_metricas_agentes_externos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Módulo métricas de agentes externos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../analisis/modulo_consolidacion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Módulo consolidación
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../analisis/modulo_diagramas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Módulo diagramas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Implementación
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Implementación
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Visión general
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Agente
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Agente
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/agent/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Resumen
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/agent/robust_agent/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RobustAgent
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/agent/config/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuración
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/agent/episode_state/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Estado y traza
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/agent/structural_metrics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Métricas estructurales
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/agent/uncertainty/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Incertidumbre
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/agent/controller/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Controlador
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Benchmark
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Benchmark
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/benchmark/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Resumen
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/benchmark/benchmark_runner/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BenchmarkRunner
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/benchmark/config/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuración
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/benchmark/dataset/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dataset
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/benchmark/execution/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ejecución
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/benchmark/evaluation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Evaluación
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/benchmark/results/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Resultados
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_4" id="__nav_2_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Análisis
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Análisis
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/analysis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Resumen
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/analysis/consolidation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Consolidación
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/analysis/external_metrics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Métricas externas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/analysis/diagrams/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Diagramas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/analysis/run/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Punto de entrada CLI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-objetivo-y-alcance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Objetivo y alcance
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Objetivo y alcance">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-documentos-hermanos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1 Documentos hermanos
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-agente-base-y-motivacion-de-la-eleccion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Agente base y motivación de la elección
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-precondiciones-del-entorno-y-dependencias-tecnicas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Precondiciones del entorno y dependencias técnicas
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Precondiciones del entorno y dependencias técnicas">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-gestion-de-secretos-y-variables-de-entorno" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 Gestión de secretos y variables de entorno
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-arquitectura-de-alto-nivel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Arquitectura de alto nivel
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Arquitectura de alto nivel">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-componentes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 Componentes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-flujo-logico" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 Flujo lógico
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-comunicacion-entre-modulos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 Comunicación entre módulos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-principios-de-diseno" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4 Principios de diseño
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-perfiles-de-robustez-del-repositorio" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Perfiles de robustez del repositorio
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Perfiles de robustez del repositorio">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-perfiles-base" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 Perfiles base
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-parametros-que-cada-perfil-modula" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 Parámetros que cada perfil modula
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53-seleccion-y-trazabilidad-del-perfil" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3 Selección y trazabilidad del perfil
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#54-capacidad-de-validacion-segun-perfil" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.4 Capacidad de validación según perfil
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-interaccion-detallada-por-iteracion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Interacción detallada por iteración
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-estado-del-episodio" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Estado del episodio
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-contratos-de-datos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Contratos de datos
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. Contratos de datos">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#81-steptrace" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.1 StepTrace
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-trazabilidad-y-formato-de-traza" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Trazabilidad y formato de traza
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-modificaciones-sobre-mini-swe-agent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Modificaciones sobre mini-SWE-agent
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-organizacion-del-codigo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. Organización del código
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-interfaz-con-el-bloque-2-benchmark-extendido" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. Interfaz con el Bloque 2 (benchmark extendido)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-referencias-tecnicas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13. Referencias técnicas
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="fase-21-especificacion-del-bloque-del-agente">Fase 2.1 - Especificación del bloque del agente<a class="headerlink" href="#fase-21-especificacion-del-bloque-del-agente" title="Permanent link">&para;</a></h1>
+<h2 id="1-objetivo-y-alcance">1. Objetivo y alcance<a class="headerlink" href="#1-objetivo-y-alcance" title="Permanent link">&para;</a></h2>
+<p>Este documento especifica el bloque del agente del TFG a un nivel <strong>alto/medio</strong>: arquitectura general, responsabilidades, interacciones entre módulos, contratos de datos transversales y modificaciones requeridas sobre el agente base. El detalle de bajo nivel (clases concretas, atributos, esquemas de almacenamiento, fórmulas finales) se desarrolla en los documentos de módulo y en el código.</p>
+<p>El alcance es exclusivamente el <strong>Bloque 1</strong> del diseño del TFG. Quedan fuera el Bloque 2 (benchmark extendido) y el Bloque 3 (análisis de resultados), aunque se especifica la <strong>interfaz</strong> que el agente expone hacia ambos.</p>
+<h3 id="11-documentos-hermanos">1.1 Documentos hermanos<a class="headerlink" href="#11-documentos-hermanos" title="Permanent link">&para;</a></h3>
+<p>La especificación del bloque del agente está repartida en cuatro documentos. <strong>Este documento describe el sistema general</strong>; cada módulo tiene su propio documento con su interfaz pública, submódulos internos y política de fallos.</p>
+<ul>
+<li><code>docs/especificaciones/agente/modulo_incertidumbre.md</code> - clase <code>UncertaintyModule</code>, contrato <code>UncertaintyResult</code>; catálogo y selección de métodos de UQ.</li>
+<li><code>docs/especificaciones/agente/modulo_metricas.md</code> - clase <code>StructuralMetricsModule</code>, contrato <code>StructuralRiskResult</code>.</li>
+<li><code>docs/especificaciones/agente/modulo_controlador.md</code> - clase <code>ControllerModule</code>, subservicio <code>BudgetGuard</code>, contrato <code>ControllerDecision</code>.</li>
+<li><code>src/agent/mini-swe-agent/README.md</code> - descripción del bucle base del agente seleccionado (<code>DefaultAgent</code>: <code>run → step → query → execute_actions</code>).</li>
+</ul>
+<h2 id="2-agente-base-y-motivacion-de-la-eleccion">2. Agente base y motivación de la elección<a class="headerlink" href="#2-agente-base-y-motivacion-de-la-eleccion" title="Permanent link">&para;</a></h2>
+<p>El agente base es <strong><code>mini-SWE-agent</code></strong> (copia local en <code>src/agent/mini-swe-agent/</code>). Se ha elegido por tres motivos alineados con los objetivos del TFG:</p>
+<ol>
+<li><strong>Diseño minimalista y lineal</strong> del bucle de ejecución (<code>run → step → query → execute_actions</code>), lo que permite insertar instrumentación con cambios localizados y reproducibles.</li>
+<li><strong>Separación explícita</strong> entre agente, modelo y entorno mediante protocolos (<code>Agent</code>, <code>Model</code>, <code>Environment</code> en <code>minisweagent.__init__</code>), lo que permite reutilizar la base sin acoplamientos rígidos.</li>
+<li><strong>Trazabilidad nativa</strong> mediante <code>serialize()</code>/<code>save()</code> con un formato de trayectoria versionado (<code>mini-swe-agent-1.1</code>), reutilizable y extensible para los nuevos campos del TFG.</li>
+</ol>
+<p>Componentes nucleares reutilizados:</p>
+<ul>
+<li><code>minisweagent.agents.default.AgentConfig</code> y <code>DefaultAgent</code>.</li>
+<li><code>minisweagent.models.litellm_model.LitellmModelConfig</code> y <code>LitellmModel</code>.</li>
+<li><code>minisweagent.environments.local.LocalEnvironmentConfig</code> y <code>LocalEnvironment</code> (o entorno equivalente sandbox para experimentación).</li>
+</ul>
+<h2 id="3-precondiciones-del-entorno-y-dependencias-tecnicas">3. Precondiciones del entorno y dependencias técnicas<a class="headerlink" href="#3-precondiciones-del-entorno-y-dependencias-tecnicas" title="Permanent link">&para;</a></h2>
+<p>El bloque del agente impone las siguientes precondiciones al contexto en el que se ejecuta. Estas precondiciones son responsabilidad del Bloque 2 (benchmark) garantizarlas.</p>
+<ul>
+<li><strong>PR1. Workspace bajo control de git.</strong> El directorio sobre el que opera el agente debe ser un repositorio git válido al inicio del run. La verificación se realiza en el preámbulo de <code>RobustAgent.run()</code> mediante <code>git rev-parse --is-inside-work-tree</code>. <strong>Esta precondición no admite degradación limpia</strong> (a diferencia del principio general de EA.4.3): si el directorio no es un repositorio git, el run termina inmediatamente con un <code>exit_status</code> específico de precondición incumplida, antes de cualquier llamada al modelo. Si el repositorio tiene cambios no commiteados al inicio (p. ej. imágenes SWE-bench con ficheros pre-modificados por el entorno de evaluación), el módulo de métricas materializa la referencia base con <code>git stash create</code>, de modo que los diffs de cada paso reflejan exclusivamente los cambios introducidos por el agente y no los pre-existentes.</li>
+<li><strong>PR2. Acceso a un modelo LLM compatible con tool-calling.</strong> Por defecto vía <code>LitellmModel</code>; cualquier modelo que satisfaga el protocolo <code>Model</code> es admisible.</li>
+<li><strong>PR3. Soporte opcional de logprobs.</strong> El módulo de incertidumbre se beneficia de <code>logprobs=True</code> en la API del modelo cuando esté disponible (capa L1.b en <code>modulo_incertidumbre.md</code>, sección 5). Si no lo está, el módulo degrada limpiamente sin abortar.</li>
+</ul>
+<p>La capacidad de validación adicional (suite de tests u otros mecanismos consumidos por <code>RUN_VALIDATION</code>) <strong>no es una precondición</strong>; es una capacidad condicional al perfil y se especifica en EA.5.4.</p>
+<h3 id="31-gestion-de-secretos-y-variables-de-entorno">3.1 Gestión de secretos y variables de entorno<a class="headerlink" href="#31-gestion-de-secretos-y-variables-de-entorno" title="Permanent link">&para;</a></h3>
+<p>PR2 exige acceso a un modelo LLM, lo que a su vez requiere que la API key correspondiente esté disponible en el entorno del proceso <strong>antes</strong> de instanciar el modelo. El <code>RobustAgent</code> no gestiona la carga de secretos por sí mismo: es responsabilidad del punto de entrada que lo instancia (el CLI propio del bloque, <code>src/agent/cli.py</code>, o el benchmark en el Bloque 2).</p>
+<p>El mecanismo es común a ambos bloques y vive en <code>common.env</code> (fuera de <code>src/agent/</code> y <code>src/benchmark/</code>, compartido como utilidad transversal):</p>
+<ul>
+<li><code>common.env.load_project_env()</code> carga variables de entorno desde <code>.env</code> en la raíz del repositorio y, a continuación, desde el <code>.env</code> global de <code>mini-swe-agent</code> (<code>%APPDATA%/mini-swe-agent/.env</code> en Windows), sin sobrescribir variables ya definidas en el proceso salvo <code>override=True</code>. Es idempotente: llamadas repetidas no recargan salvo que se fuerce.</li>
+<li><code>common.env.api_key_error_for_model(model_id, api_key_env=None)</code> valida, antes de la primera llamada al modelo, que la variable de entorno adecuada esté definida (<code>api_key_env</code> explícito si se proporciona; si no, la convención por proveedor inferida de <code>model_id</code> - Gemini, OpenAI, Anthropic). Devuelve un mensaje de error explicativo si falta, en lugar de dejar fallar la llamada HTTP con un error genérico.</li>
+</ul>
+<p><code>src/agent/cli.py</code> invoca <code>load_project_env()</code> en su <code>main()</code> antes de construir el modelo, y usa <code>api_key_error_for_model()</code> para abortar con un mensaje claro si falta la key (salvo con el modelo <code>deterministic</code> de pruebas, que no requiere API key). El Bloque 2 aplica el mismo mecanismo por su cuenta para sus propios puntos de entrada (ver <code>especificacion_benchmark.md</code> EB.3.1); el <code>RobustAgent</code> en sí no depende de <code>common.env</code> en su lógica interna.</p>
+<p>Las API keys nunca se escriben en configuración versionada (YAML, código): solo en <code>.env</code> (gitignored) o en el entorno del proceso. Ver <code>README.md</code> (sección 3) para el procedimiento de configuración de secretos.</p>
+<h2 id="4-arquitectura-de-alto-nivel">4. Arquitectura de alto nivel<a class="headerlink" href="#4-arquitectura-de-alto-nivel" title="Permanent link">&para;</a></h2>
+<h3 id="41-componentes">4.1 Componentes<a class="headerlink" href="#41-componentes" title="Permanent link">&para;</a></h3>
+<p>Sobre el bucle base de <code>DefaultAgent</code>, el bloque del agente añade tres módulos y una estructura de estado compartido:</p>
+<ul>
+<li><strong>Módulo de incertidumbre.</strong> Estima la confianza del paso actual del agente. Detalle en <code>modulo_incertidumbre.md</code>.</li>
+<li><strong>Módulo de métricas estructurales.</strong> Cuantifica el impacto sobre el código del cambio del paso actual y acumulado. Detalle en <code>modulo_metricas.md</code>.</li>
+<li><strong>Módulo controlador.</strong> Decide la acción de control del siguiente paso a partir de las dos señales anteriores y del estado del presupuesto. Aloja también el subservicio <code>BudgetGuard</code>, autoridad única sobre el coste del run. Detalle en <code>modulo_controlador.md</code>.</li>
+<li><strong>Estado del episodio (<code>EpisodeState</code>).</strong> Estructura única que mantiene presupuesto, perfil, traza y señales acumuladas. Compartida por los tres módulos (EA.7).</li>
+</ul>
+<h3 id="42-flujo-logico">4.2 Flujo lógico<a class="headerlink" href="#42-flujo-logico" title="Permanent link">&para;</a></h3>
+<p>El flujo del agente robusto extiende el ciclo de <code>DefaultAgent</code> con tres puntos de control. Las acciones internas de <code>DefaultAgent</code> (consultar al modelo, parsear acciones, ejecutarlas, formatear observaciones) se conservan; la lógica nueva <em>envuelve</em>, no sustituye.</p>
+<pre class="mermaid"><code>flowchart TD
+    A[run task] --&gt; B[Inicializar EpisodeState con perfil]
+    B --&gt; C[query: llamada al modelo]
+    C --&gt; D[Modulo de incertidumbre]
+    D --&gt; E[execute_actions]
+    E --&gt; F[Modulo de metricas estructurales]
+    F --&gt; G[Modulo controlador]
+    G --&gt; H{decision}
+    H --&gt;|PROCEED| C
+    H --&gt;|INJECT_FEEDBACK| I[Inyectar mensaje de refinamiento]
+    I --&gt; C
+    H --&gt;|RUN_VALIDATION| J[Ejecutar validacion segun perfil]
+    J --&gt; C
+    H --&gt;|FINALIZE submit| K[salida con submission]
+    H --&gt;|FINALIZE abort| L[salida con abort]</code></pre>
+<p>El diagrama representa la <strong>lógica de control de alto nivel</strong>. La política interna de cada módulo queda encapsulada y se especifica en su documento correspondiente.</p>
+<h3 id="43-comunicacion-entre-modulos">4.3 Comunicación entre módulos<a class="headerlink" href="#43-comunicacion-entre-modulos" title="Permanent link">&para;</a></h3>
+<p>Los tres módulos se comunican exclusivamente mediante <strong>contratos de datos</strong> explícitos y a través de la lectura/escritura del <code>EpisodeState</code>. No comparten otro estado mutable.</p>
+<pre class="mermaid"><code>flowchart LR
+    subgraph Bloque1[Bloque 1: Agente]
+        UM[UncertaintyModule]
+        SM[StructuralMetricsModule]
+        OM[ControllerModule]
+        BG[BudgetGuard]
+        ES[(EpisodeState)]
+    end
+
+    UM -- UncertaintyResult --&gt; OM
+    SM -- StructuralRiskResult --&gt; OM
+    OM -- ControllerDecision --&gt; RA[RobustAgent aplica]
+
+    UM -.lee/escribe.-&gt; ES
+    SM -.lee/escribe.-&gt; ES
+    OM -.lee/escribe.-&gt; ES
+    BG --- OM
+    BG -.opera sobre.-&gt; ES
+
+    RA -.invoca por paso.-&gt; UM
+    RA -.invoca por paso.-&gt; SM
+    RA -.invoca por paso.-&gt; OM
+    OTHER[Otros componentes con coste extra] -.consultan.-&gt; BG</code></pre>
+<p>Reglas de la comunicación:</p>
+<ul>
+<li><strong>Acoplamiento por interfaz.</strong> Cada módulo define una clase con método público de evaluación (<code>UncertaintyModule.evaluate</code>, <code>StructuralMetricsModule.evaluate</code>, <code>ControllerModule.decide</code>) que recibe inputs explícitos y devuelve un contrato de datos serializable. Ninguna llamada cruzada directa entre módulos productores y consumidores fuera de esos contratos.</li>
+<li><strong><code>EpisodeState</code> como estado compartido.</strong> Los módulos leen y escriben en él para datos que naturalmente atraviesan pasos: historial de señales, decisiones, presupuesto, referencias git, errores no fatales. Es el <strong>almacén único</strong> del run; ningún módulo mantiene estado paralelo. Excepción de implementación: la señal de incertidumbre la persiste <code>RobustAgent.query()</code> tras invocar al módulo (en lugar del módulo mismo), por simetría con la gestión del coste en el mismo punto del bucle.</li>
+<li><strong><code>BudgetGuard</code> como servicio.</strong> Vive dentro del controlador (<code>MC.5</code> de <code>modulo_controlador.md</code>) pero su interfaz (<code>can_afford</code>, <code>notify_cost</code>) es consultable por cualquier componente que pueda incurrir en coste fuera del bucle estándar <code>RobustAgent.query()</code> (señaladamente <code>RUN_VALIDATION</code> con <code>self_review</code> o tests, y, en futuras extensiones, una eventual reincorporación de self-consistency en el módulo de incertidumbre).</li>
+<li><strong>El <code>RobustAgent</code> orquesta el flujo, no la decisión.</strong> Invoca a los tres módulos en el orden establecido (EA.6) y aplica la decisión devuelta por el controlador, pero no decide acciones de control por su cuenta.</li>
+</ul>
+<h3 id="44-principios-de-diseno">4.4 Principios de diseño<a class="headerlink" href="#44-principios-de-diseno" title="Permanent link">&para;</a></h3>
+<p>El núcleo de <code>mini-SWE-agent</code> queda intacto: las extensiones se enganchan como hooks alrededor de <code>query()</code>, <code>execute_actions()</code> y la transición entre pasos, en lugar de sustituir el bucle base. Cada módulo encapsula una responsabilidad concreta tras una interfaz pública mínima, de modo que su detalle interno puede cambiar sin afectar al resto del sistema.</p>
+<p>Toda decisión del controlador se calcula a partir de señales explícitas y queda registrada con su justificación (<code>rationale</code>) y el snapshot de la política aplicada, de forma que el comportamiento sea determinista y auditable a partir del mismo historial. Un módulo que falle internamente (por ejemplo, incertidumbre sin logprobs o una captura de diff inestable) produce un valor neutro documentado en lugar de abortar el run, y registra el fallo en la traza; la única excepción es PR1, por tratarse de una precondición dura. El estado del episodio se persiste de forma incremental, conservando suficiente información para reconstruir la decisión de cada paso. El presupuesto de tokens, llamadas y pasos no actúa como un guard externo sino como una entrada más del controlador, que modula sus decisiones hacia opciones más conservadoras cuando el presupuesto disponible no alcanza para la acción ideal.</p>
+<h2 id="5-perfiles-de-robustez-del-repositorio">5. Perfiles de robustez del repositorio<a class="headerlink" href="#5-perfiles-de-robustez-del-repositorio" title="Permanent link">&para;</a></h2>
+<p>El diseño del TFG plantea como objetivo central que el agente se adapte al nivel de robustez requerido por el repositorio sobre el que trabaja. Esta especificación lo materializa mediante <strong>perfiles discretos</strong> que parametrizan el comportamiento del módulo de incertidumbre y del controlador. La selección del perfil es manual al iniciar el run (parte de <code>RobustAgentConfig</code>); la posible derivación automática del perfil desde características del repositorio queda como extensión opcional fuera del alcance principal.</p>
+<h3 id="51-perfiles-base">5.1 Perfiles base<a class="headerlink" href="#51-perfiles-base" title="Permanent link">&para;</a></h3>
+<p>Se definen tres perfiles base. Cada perfil es un conjunto coherente de parámetros que pueden sobrescribirse individualmente si fuese necesario para experimentos específicos.</p>
+<table>
+<thead>
+<tr>
+<th>Perfil</th>
+<th>Política de validación</th>
+<th>Celda <code>(high,high)</code></th>
+<th>Fallback entradas degradadas</th>
+<th>Uso de tokens</th>
+<th>Uso típico</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>strict</code></td>
+<td><code>combined</code> (tests + auto-revisión)</td>
+<td><code>FINALIZE(abort)</code></td>
+<td><code>RUN_VALIDATION</code></td>
+<td>Alto</td>
+<td>Repos críticos, mantenibilidad alta</td>
+</tr>
+<tr>
+<td><code>balanced</code></td>
+<td><code>tests</code> (directiva dirigida)</td>
+<td><code>FINALIZE(abort)</code></td>
+<td><code>INJECT_FEEDBACK</code></td>
+<td>Medio</td>
+<td>Caso por defecto</td>
+</tr>
+<tr>
+<td><code>permissive</code></td>
+<td><code>none</code></td>
+<td><code>RUN_VALIDATION</code></td>
+<td><code>PROCEED</code></td>
+<td>Bajo</td>
+<td>Prototipos, repos pequeños</td>
+</tr>
+</tbody>
+</table>
+<p>Los umbrales de señales y pesos de agregación son idénticos entre perfiles y se calibran vía sobreescritura en el YAML de experimento. El uso de tokens estimado refleja la frecuencia esperada de iteraciones extra por <code>INJECT_FEEDBACK</code>/<code>RUN_VALIDATION</code> y el coste de la auto-revisión cuando está activa.</p>
+<h3 id="52-parametros-que-cada-perfil-modula">5.2 Parámetros que cada perfil modula<a class="headerlink" href="#52-parametros-que-cada-perfil-modula" title="Permanent link">&para;</a></h3>
+<p>Los perfiles modulan directamente los parámetros del controlador; los umbrales de señales y pesos de agregación son iguales entre perfiles y se calibran vía YAML de experimento.</p>
+<p>Parámetros del controlador ajustados por perfil (<code>modulo_controlador.md</code> MC.4.1):</p>
+<ul>
+<li>Permisividad de la celda <code>(high, high)</code> de la matriz política, vía <code>high_high_per_profile</code>.</li>
+<li>Política de validación adicional (<code>tests</code> / <code>self_review</code> / <code>combined</code> / <code>none</code>), vía <code>validation_per_profile</code>.</li>
+<li>Acción conservadora ante entradas de incertidumbre degradadas, vía <code>degraded_per_profile</code>.</li>
+</ul>
+<h3 id="53-seleccion-y-trazabilidad-del-perfil">5.3 Selección y trazabilidad del perfil<a class="headerlink" href="#53-seleccion-y-trazabilidad-del-perfil" title="Permanent link">&para;</a></h3>
+<ul>
+<li>El perfil se fija al inicio del run y no cambia durante la ejecución.</li>
+<li>El nombre del perfil aplicado se serializa en la traza (<code>robust_agent.profile.name</code>) para reproducibilidad. Los parámetros efectivos del controlador quedan en <code>episode_state_final</code> (budget, decisions_history, signals_history).</li>
+</ul>
+<h3 id="54-capacidad-de-validacion-segun-perfil">5.4 Capacidad de validación según perfil<a class="headerlink" href="#54-capacidad-de-validacion-segun-perfil" title="Permanent link">&para;</a></h3>
+<p>El perfil determina si la acción <code>RUN_VALIDATION</code> (ver <code>modulo_controlador.md</code> MC.4) está activa y de qué tipo. Esta capacidad <strong>no es una precondición del agente</strong> (un perfil <code>permissive</code> puede operar sin ningún tipo de validación adicional); es un parámetro condicional cuyo cumplimiento depende del entorno y del propio agente.</p>
+<p><strong>Tipos de validación posibles:</strong></p>
+<ul>
+<li><code>tests</code>: <strong>validación dirigida</strong>. El controlador inyecta una <em>directiva</em> en el historial del agente que le pide validar el cambio actual ejecutando tests. El agente decide si ejecutar tests existentes del repositorio (cuando los haya y cubran el cambio) o crear y ejecutar tests propios (cuando no los haya). La directiva incluye opcionalmente una lista de <em>identificadores de test prohibidos</em> que el agente no debe ejecutar (típicamente la suite oficial del benchmark, para evitar contaminación de la métrica funcional).</li>
+<li><code>self_review</code>: solicitud al modelo de una auto-revisión del parche actual mediante un prompt directo. El controlador realiza una llamada extra al modelo y registra su respuesta en el historial.</li>
+<li><code>combined</code>: directiva de <code>tests</code> (sin query) seguida de <code>self_review</code> (con query). La directiva sirve de contexto adicional para el self-review.</li>
+<li><code>none</code>: sin validación adicional (la acción degenera a <code>PROCEED</code>).</li>
+</ul>
+<p><strong>Modelo operativo de <code>tests</code> (validación dirigida).</strong> Cuando el controlador decide <code>RUN_VALIDATION(tests)</code>:</p>
+<ol>
+<li>El controlador renderiza la directiva con: archivos modificados del paso, niveles y scores de incertidumbre/riesgo, y bloque opcional de tests prohibidos.</li>
+<li>El <code>RobustAgent</code> añade la directiva como mensaje de usuario al historial. <strong>No invoca al modelo ni ejecuta acciones durante este paso</strong>: el coste imputado a <code>validation.tests</code> es 0.</li>
+<li>El <code>validation_outcome</code> del paso queda con <code>subtype=tests</code> y <code>status=directive_issued</code>, y su <code>evidence</code> contiene la directiva renderizada y la lista de tests prohibidos.</li>
+<li>En el siguiente paso natural del bucle, el agente lee la directiva y decide su forma de validar. Las llamadas al modelo y las ejecuciones derivadas se contabilizan como <code>agent.query</code> (la auditoría de qué se ejecutó vive en la trayectoria de pasos posteriores).</li>
+</ol>
+<p><strong>Habilitación de las capacidades.</strong> <code>tests</code> está disponible cuando <code>RobustAgentConfig.controller.tests_validation_enabled</code> es <code>True</code>; <code>self_review</code> cuando <code>RobustAgentConfig.controller.self_review_enabled</code> es <code>True</code>. El <code>AgentFactory</code> activa ambas banderas según el perfil al construir el agente para el benchmark:</p>
+<ul>
+<li>Perfil <code>strict</code>: <code>tests_validation_enabled = True</code> y <code>self_review_enabled = True</code> → validación <code>combined</code> efectiva.</li>
+<li>Perfil <code>balanced</code>: solo <code>tests_validation_enabled = True</code> → validación <code>tests</code> efectiva.</li>
+<li>Perfil <code>permissive</code>: ninguna bandera → validación <code>none</code>, la acción degenera a <code>PROCEED</code>.</li>
+</ul>
+<p>La lista de tests prohibidos vive en <code>RobustAgentConfig.controller.forbidden_test_ids</code> y la rellena, cuando proceda, el <code>AgentFactory</code> por instancia con <code>fail_to_pass + pass_to_pass</code>.</p>
+<p><strong>Política de fallback</strong> cuando la fuente requerida por el perfil no está disponible:</p>
+<ul>
+<li><code>combined</code> → degrada a <code>tests</code> si no hay self-review configurado, o a <code>self_review</code> si no hay capacidad de tests.</li>
+<li><code>tests</code> → degrada a <code>self_review</code>.</li>
+<li><code>self_review</code> → degrada a <code>none</code>.</li>
+<li><code>none</code> → equivalente a <code>PROCEED</code>.</li>
+</ul>
+<p>Cualquier degradación queda registrada en <code>ControllerDecision.overrides</code> y, agregada, en el bloque <code>robust_agent</code> de la traza para análisis posterior.</p>
+<h2 id="6-interaccion-detallada-por-iteracion">6. Interacción detallada por iteración<a class="headerlink" href="#6-interaccion-detallada-por-iteracion" title="Permanent link">&para;</a></h2>
+<p>Para cada paso del agente, el flujo es:</p>
+<ol>
+<li><strong>Pre-query:</strong> el agente lee <code>EpisodeState</code> y prepara el contexto.</li>
+<li><strong>Query al modelo:</strong> <code>RobustAgent.query()</code> consulta al modelo. Tras la respuesta, el mensaje se añade al historial. Si en este punto se supera <code>cost_limit</code> o <code>step_limit</code>, el bucle termina por <code>LimitsExceeded</code> sin entrar en los pasos siguientes.</li>
+<li><strong>Módulo de incertidumbre:</strong> <code>UncertaintyModule.evaluate(...)</code> produce un <code>UncertaintyResult</code>. En la versión inicial el módulo no realiza llamadas adicionales al modelo: solo agrega señales single-shot (que viajan en la respuesta del propio paso) y señales de proceso (calculadas sobre la traza). Detalle en <code>modulo_incertidumbre.md</code>.</li>
+<li><strong>Ejecución de acciones:</strong> <code>RobustAgent.execute_actions()</code> ejecuta los tool-calls en el entorno y obtiene observaciones, idéntico a <code>DefaultAgent</code>. Si el entorno detecta el patrón de envío final del modelo (<code>Submitted</code>), el bucle termina aquí sin paso del controlador.</li>
+<li><strong>Captura de diff y módulo de métricas estructurales:</strong> <code>StructuralMetricsModule.evaluate(...)</code> materializa la referencia git del paso, calcula diffs incremental y acumulado, y emite un <code>StructuralRiskResult</code>. Detalle en <code>modulo_metricas.md</code>.</li>
+<li><strong>Módulo controlador:</strong> <code>ControllerModule.decide(uncertainty, structural_risk)</code> combina los dos resultados anteriores con <code>EpisodeState.budget</code> y emite un <code>ControllerDecision</code>. Detalle en <code>modulo_controlador.md</code>.</li>
+<li><strong>Aplicación de la decisión</strong> por parte del <code>RobustAgent</code>:<ul>
+<li><code>PROCEED</code>: continúa el bucle.</li>
+<li><code>INJECT_FEEDBACK</code>: añade un mensaje de sistema/usuario al historial con el contenido decidido por el controlador.</li>
+<li><code>RUN_VALIDATION</code>: ejecuta la política de validación del perfil; el resultado se añade como observación para el siguiente paso, se persiste paso a paso como <code>StepTrace.validation_outcome</code> (EA.8.1) y se cachea como <code>EpisodeState.validation_state</code> (EA.7) para conveniencia del bucle. Las llamadas que incurran coste (tests, self-review) se notifican al <code>BudgetGuard</code> con la atribución correspondiente.</li>
+<li><code>FINALIZE submit | abort</code>: termina el bucle con el <code>exit_status</code> correspondiente.</li>
+</ul>
+</li>
+<li><strong>Persistencia:</strong> se actualiza <code>EpisodeState</code>, se construye <code>StepTrace</code> (EA.8.4) y se persiste mediante la función de guardado extendida (EA.9). Si el paso ha terminado por <code>Submitted</code> o <code>LimitsExceeded</code>, el <code>StepTrace</code> final no contiene <code>ControllerDecision</code>; el <code>exit_status</code> se registra a nivel de traza global (EA.9).</li>
+</ol>
+<h2 id="7-estado-del-episodio">7. Estado del episodio<a class="headerlink" href="#7-estado-del-episodio" title="Permanent link">&para;</a></h2>
+<p><code>EpisodeState</code> es la estructura central que mantiene la información viva del run. Su esquema completo se cierra en bajo nivel; los campos mínimos comprometidos por esta especificación son:</p>
+<ul>
+<li><code>profile</code>: nombre del perfil activo (<code>strict</code>, <code>balanced</code>, <code>permissive</code>).</li>
+<li><code>step_index</code>: índice del paso actual.</li>
+<li><code>budget</code>: <code>cost_used</code>, <code>cost_limit</code>, <code>steps_used</code>, <code>step_limit</code>, y desglose por atribución (<code>cost_by_attribution: dict[str, float]</code> con entradas como <code>"agent.query"</code>, <code>"validation.tests"</code>, <code>"validation.self_review"</code>). Es el <strong>almacén único</strong> sobre el que opera <code>BudgetGuard</code> (<code>modulo_controlador.md</code> MC.5); ningún otro componente debe mantener contadores paralelos del presupuesto.</li>
+<li><code>signals_history</code>: secuencia de entradas intercaladas con formato <code>{"uncertainty": UncertaintyResult_dict, "step_index": int}</code> y <code>{"structural_risk": StructuralRiskResult_dict, "step_index": int}</code>. La incertidumbre la agrega <code>RobustAgent.query()</code> tras evaluar el módulo; el riesgo estructural lo agrega <code>StructuralMetricsModule.evaluate()</code>.</li>
+<li><code>decisions_history</code>: secuencia de <code>{"decision": ControllerDecision_dict, "step_index": int}</code>.</li>
+<li><code>git_refs</code>: referencias git auxiliares (inicial del run, paso anterior, paso actual).</li>
+<li><code>validation_state</code>: caché del <strong>último</strong> resultado de validación adicional, si la hubo. Es estado de conveniencia para el bucle. <strong>El histórico canónico paso a paso vive en <code>StepTrace.validation_outcome</code> (EA.8.1)</strong>, no aquí; este campo se sobrescribe en cada nueva validación y nunca debe usarse como única fuente de verdad para análisis posteriores.</li>
+<li><code>errors</code>: incidencias no fatales registradas por los módulos.</li>
+</ul>
+<p><code>EpisodeState</code> se serializa como parte del <code>StepTrace</code> y permite reconstruir la decisión de cada paso.</p>
+<h2 id="8-contratos-de-datos">8. Contratos de datos<a class="headerlink" href="#8-contratos-de-datos" title="Permanent link">&para;</a></h2>
+<p>Los contratos quedan fijados a nivel estructural; los tipos exactos (e.g. <code>dataclass</code> vs <code>pydantic.BaseModel</code>) y validaciones se cierran en bajo nivel. Todos los contratos son serializables a JSON.</p>
+<p>Los tres contratos producidos por los módulos se especifican en sus documentos correspondientes:</p>
+<ul>
+<li><code>UncertaintyResult</code> → <code>docs/especificaciones/agente/modulo_incertidumbre.md</code> MI.6.</li>
+<li><code>StructuralRiskResult</code> → <code>docs/especificaciones/agente/modulo_metricas.md</code> MM.7.</li>
+<li><code>ControllerDecision</code> → <code>docs/especificaciones/agente/modulo_controlador.md</code> MC.8.</li>
+</ul>
+<p>A nivel general, el bloque del agente publica además un contrato transversal: el <code>StepTrace</code>, que agrega los tres anteriores y constituye la unidad de persistencia por paso.</p>
+<h3 id="81-steptrace">8.1 <code>StepTrace</code><a class="headerlink" href="#81-steptrace" title="Permanent link">&para;</a></h3>
+<ul>
+<li><code>step_id: int</code>.</li>
+<li><code>timestamp: float</code>.</li>
+<li><code>uncertainty: UncertaintyResult</code>.</li>
+<li><code>structural_risk: StructuralRiskResult</code>.</li>
+<li><code>decision: ControllerDecision</code> (opcional cuando el paso termina por <code>Submitted</code> o <code>LimitsExceeded</code>).</li>
+<li><code>validation_outcome: dict | None</code> - resultado de la validación adicional aplicada <strong>en este paso</strong>, presente solo si la decisión del paso fue <code>RUN_VALIDATION</code> con un subtipo efectivo distinto de <code>none</code>. Estructura comprometida:</li>
+<li><code>subtype: str</code> ∈ <code>{tests, self_review, combined}</code>.</li>
+<li><code>status: str</code> ∈ <code>{directive_issued, directive_issued_with_review, passed, failed, error, skipped}</code>. Para <code>tests</code> el valor canónico es <code>directive_issued</code> (la validación se materializa como inyección de directiva, no como ejecución inmediata; ver EA.5.4). Para <code>combined</code>, cuando la directiva de tests se inyecta y el self-review se completa, el valor es <code>directive_issued_with_review</code>.</li>
+<li><code>summary: str</code> con un resumen textual breve (p. ej. <code>"tests directive issued (forbidden=2); self-review completed; status=directive_issued_with_review"</code>).</li>
+<li><code>cost: float</code> con el coste imputable a esta validación (consistente con lo notificado al <code>BudgetGuard</code>). Para <code>tests</code> puro este coste es <code>0.0</code>.</li>
+<li><code>evidence: dict</code> con metadatos de auditoría. Para <code>tests</code>/<code>combined</code>: la directiva renderizada y la lista de <code>forbidden_test_ids</code> aplicada. Para <code>self_review</code>/<code>combined</code>: prompt usado, indicador de respuesta recibida y coste imputado. El detalle exacto se cierra en bajo nivel.</li>
+</ul>
+<p>Esta es la <strong>fuente de verdad</strong> del histórico de validaciones del run; el campo <code>EpisodeState.validation_state</code> (EA.7) es solo una caché del último resultado. La presencia o ausencia de este campo permite al Bloque 3 reconstruir la línea de tiempo de validaciones sin ambigüedad y responder preguntas como las de EA.4 R3/R7 del draft de resultados. El veredicto efectivo de los tests inyectados por la directiva no vive aquí: vive en los pasos posteriores del run, donde el agente ejecuta la validación dentro de su flujo natural.
+- <code>budget_state: dict</code> con <code>cost_used</code>, <code>cost_remaining</code>, <code>steps_used</code>, <code>steps_remaining</code>, y <code>cost_by_attribution</code> (snapshot del desglose definido en EA.7).
+- <code>git_refs: dict</code> con referencias del paso (inicial, anterior, actual).
+- <code>errors: list[dict]</code> con incidencias no fatales del paso.</p>
+<h2 id="9-trazabilidad-y-formato-de-traza">9. Trazabilidad y formato de traza<a class="headerlink" href="#9-trazabilidad-y-formato-de-traza" title="Permanent link">&para;</a></h2>
+<p>La traza producida es un superconjunto compatible del formato base.</p>
+<ul>
+<li>Se mantiene el bloque <code>info</code>/<code>messages</code>/<code>trajectory_format: "mini-swe-agent-1.1"</code> que produce <code>DefaultAgent.serialize()</code>.</li>
+<li>Se añade un bloque nuevo bajo la clave <code>robust_agent</code> con:</li>
+<li><code>format_version: "robust-agent-1.0"</code>,</li>
+<li><code>profile</code>: <code>{"name": "&lt;nombre_perfil&gt;"}</code> - identificador del perfil aplicado,</li>
+<li><code>episode_state_final</code>: snapshot final del <code>EpisodeState</code>,</li>
+<li><code>steps</code>: lista ordenada de <code>StepTrace</code>,</li>
+<li><code>termination</code>: vía de terminación del run, con valores <code>{controller_finalize, model_submitted, limits_exceeded, precondition_failed, exception}</code>. El primer valor coexiste con un <code>ControllerDecision</code> final dentro del último <code>StepTrace</code>; los restantes implican que el último <code>StepTrace</code> puede no tener decisión final (EA.6).</li>
+</ul>
+<p>Esta estrategia permite que cualquier consumidor que lea el formato <code>mini-swe-agent-1.1</code> lo siga haciendo, mientras que el Bloque 2 (benchmark) lee adicionalmente la sección <code>robust_agent</code> con su propio versionado.</p>
+<h2 id="10-modificaciones-sobre-mini-swe-agent">10. Modificaciones sobre <code>mini-SWE-agent</code><a class="headerlink" href="#10-modificaciones-sobre-mini-swe-agent" title="Permanent link">&para;</a></h2>
+<p>Las modificaciones quedan acotadas a las siguientes piezas. La intención es <strong>no tocar <code>DefaultAgent</code> directamente</strong>, sino subclasificarlo.</p>
+<ol>
+<li><strong>Configuración extendida:</strong> <code>RobustAgentConfig(AgentConfig)</code> añade campos de perfil, umbrales, pesos y rutas de salida ampliadas. La lectura de YAML ya soportada por <code>AgentConfig</code> se mantiene.</li>
+<li><strong>Subclase de agente:</strong> <code>RobustAgent(DefaultAgent)</code> sobreescribe el bucle:</li>
+<li>el <code>step()</code> se reorganiza para insertar los hooks descritos en EA.6,</li>
+<li>la <code>query()</code> se envuelve para invocar al módulo de incertidumbre tras la respuesta del modelo,</li>
+<li>la <code>execute_actions()</code> se envuelve para capturar diff e invocar el módulo estructural a su salida, preservando el manejo nativo de <code>Submitted</code> por el entorno,</li>
+<li>el preámbulo de <code>run()</code> verifica las precondiciones declaradas en EA.3 (señaladamente PR1) y aborta el run con <code>exit_status</code> específico si no se cumplen.</li>
+<li><strong>Módulos nuevos:</strong> <code>UncertaintyModule</code>, <code>StructuralMetricsModule</code>, <code>ControllerModule</code>, junto con <code>EpisodeState</code> y <code>StepTrace</code>. Se exponen como clases independientes inyectables al <code>RobustAgent</code> para facilitar testeo y experimentación. Su especificación detallada está en los documentos por módulo.</li>
+<li><strong>Persistencia ampliada:</strong> se sobrescribe <code>serialize()</code>/<code>save()</code> del agente para incluir los nuevos campos preservando el formato base (EA.9).</li>
+<li><strong>Punto de entrada:</strong> se añade un CLI propio del TFG en <code>src/agent/cli.py</code>, ejecutable como <code>python -m agent.cli</code> (coherente con <code>python -m benchmark.run</code>), que instancia <code>RobustAgent</code> con un perfil dado. El CLI carga secretos con <code>common.env.load_project_env()</code> y valida la API key del modelo antes de arrancar (EA.3.1).</li>
+</ol>
+<p>No se modifica ningún archivo del upstream de <code>mini-swe-agent</code> en <code>src/agent/mini-swe-agent/</code>. Todas las extensiones residen en <code>src/agent/</code> del proyecto del TFG y consumen <code>mini-swe-agent</code> como dependencia.</p>
+<h2 id="11-organizacion-del-codigo">11. Organización del código<a class="headerlink" href="#11-organizacion-del-codigo" title="Permanent link">&para;</a></h2>
+<p>El bloque del agente se organiza siguiendo dos convenciones explícitas que reflejan los principios de EA.4.4 (bajo acoplamiento, alta cohesión, una clase por archivo cuando aporta separación útil):</p>
+<ul>
+<li><strong>Una carpeta por módulo</strong>, sufijada con <code>_module/</code> para que el nombre revele su rol en cualquier referencia (<code>from agent.uncertainty_module import ...</code>).</li>
+<li><strong>El archivo principal del módulo lleva el mismo nombre que la carpeta</strong> (<code>uncertainty_module.py</code> dentro de <code>uncertainty_module/</code>), para que cualquier mención a un archivo de código sea inequívoca y no haya múltiples <code>module.py</code> en el árbol.</li>
+</ul>
+<p>Vista completa del paquete:</p>
+<div class="highlight"><pre><span></span><code>src/agent/
+├── __init__.py                              # exporta API pública completa del bloque
+├── robust_agent.py                          # RobustAgent (subclase de DefaultAgent)
+├── config.py                                # RobustAgentConfig, configs de módulo
+├── episode_state.py                         # EpisodeState, Profile, Budget
+├── step_trace.py                            # StepTrace
+│
+├── uncertainty_module/
+│   ├── __init__.py                          # re-exporta UncertaintyModule, UncertaintyResult
+│   ├── uncertainty_module.py                # UncertaintyModule (clase principal)
+│   ├── uncertainty_result.py                # UncertaintyResult (contrato)
+│   ├── single_shot.py                       # SingleShotSignals (Capa 1)
+│   ├── process.py                           # ProcessSignals (Capa 2)
+│   └── aggregator.py                        # UncertaintyAggregator
+│
+├── structural_metrics_module/
+│   ├── __init__.py                          # re-exporta StructuralMetricsModule, StructuralRiskResult
+│   ├── structural_metrics_module.py         # StructuralMetricsModule (clase principal)
+│   ├── structural_risk_result.py            # StructuralRiskResult (contrato)
+│   ├── diff_collector.py                    # DiffCollector
+│   ├── computer.py                          # StructuralMetricsComputer
+│   └── aggregator.py                        # RiskAggregator
+│
+├── controller_module/
+│   ├── __init__.py                          # re-exporta ControllerModule, ControllerDecision, BudgetGuard
+│   ├── controller_module.py                 # ControllerModule (clase principal)
+│   ├── controller_decision.py              # ControllerDecision (contrato)
+│   ├── policy.py                            # PolicyEngine
+│   ├── budget_guard.py                      # BudgetGuard
+│   ├── stability.py                         # StabilityMonitor
+│   └── logger.py                            # DecisionLogger
+│
+├── environments/
+│   ├── __init__.py                          # build_local_environment, resolve_bash
+│   └── local_factory.py                     # BashLocalEnvironment (soporte bash en Windows)
+│
+└── models/
+    ├── __init__.py
+    └── json_bash_model.py                   # JsonBashModel (tool-calling vía JSON para Gemini)
+</code></pre></div>
+<p>Reglas adicionales:</p>
+<ul>
+<li><strong>Superficie pública por módulo:</strong> cada <code>__init__.py</code> de módulo reexporta la clase principal y los contratos de datos que produce. Los submódulos internos (<code>SingleShotSignals</code>, <code>DiffCollector</code>, <code>PolicyEngine</code>, etc.) son importables para tests pero no aparecen en la API por defecto. El <code>__init__.py</code> raíz del paquete reexporta la API de experimentación completa: <code>RobustAgent</code>, <code>RobustAgentConfig</code>, los tres módulos, sus contratos, <code>EpisodeState</code>, <code>Budget</code>, <code>Profile</code>, <code>StepTrace</code> y <code>BudgetGuard</code>.</li>
+<li><strong>Contratos junto a su productor.</strong> Cada archivo de contrato (<code>uncertainty_result.py</code>, <code>structural_risk_result.py</code>, <code>controller_decision.py</code>) vive dentro de la carpeta del módulo que lo emite y lleva el mismo nombre que la clase que define, en <code>snake_case</code>. <code>StepTrace</code>, que agrega los tres contratos anteriores, vive en el core del agente (<code>src/agent/step_trace.py</code>). La dirección de dependencia es siempre del core hacia los módulos, no entre módulos.</li>
+<li><strong><code>BudgetGuard</code> se reexporta desde <code>controller_module</code></strong> porque es un servicio público consultable por otros componentes del agente (señaladamente cuando se incurra en coste fuera del bucle estándar). Su implementación vive en <code>controller_module/budget_guard.py</code>.</li>
+<li><strong><code>environments/</code></strong> contiene adaptadores de entorno específicos de la plataforma (<code>BashLocalEnvironment</code> para soporte bash en Windows) y no forma parte del núcleo del bloque del agente.</li>
+<li><strong><code>models/</code></strong> contiene adaptadores de modelo (<code>JsonBashModel</code> para Gemini sin tool-calling nativo) y tampoco forma parte del núcleo.</li>
+</ul>
+<p>El detalle por módulo (qué clases viven en qué archivo y qué expone su <code>__init__.py</code>) se reproduce en el documento de cada módulo, junto a su interfaz pública.</p>
+<h2 id="12-interfaz-con-el-bloque-2-benchmark-extendido">12. Interfaz con el Bloque 2 (benchmark extendido)<a class="headerlink" href="#12-interfaz-con-el-bloque-2-benchmark-extendido" title="Permanent link">&para;</a></h2>
+<p>El acoplamiento agente ↔ benchmark queda fijado por dos puntos:</p>
+<ul>
+<li><strong>Entrada:</strong> el agente expone una interfaz programática estable (<code>RobustAgent.run(task, **kwargs)</code>) compatible con el protocolo <code>Agent</code> del paquete base. El benchmark instancia el agente con el <code>RobustAgentConfig</code> adecuado y lanza la tarea.</li>
+<li><strong>Salida:</strong> el benchmark consume exclusivamente el archivo de traza extendida (<code>robust-agent-1.0</code>) producido por <code>save()</code>. Toda la información necesaria para evaluar corrección, coste, riesgo estructural e incertidumbre está contenida en ese archivo. El benchmark no inspecciona el estado interno del agente en tiempo de ejecución.</li>
+</ul>
+<p>Esto permite desarrollar Bloque 1 y Bloque 2 en paralelo una vez fijado este contrato.</p>
+<h2 id="13-referencias-tecnicas">13. Referencias técnicas<a class="headerlink" href="#13-referencias-tecnicas" title="Permanent link">&para;</a></h2>
+<ul>
+<li><code>src/agent/mini-swe-agent/README.md</code></li>
+<li><code>src/agent/mini-swe-agent/src/minisweagent/__init__.py</code></li>
+<li><code>src/agent/mini-swe-agent/src/minisweagent/agents/default.py</code></li>
+<li><code>src/agent/mini-swe-agent/src/minisweagent/models/litellm_model.py</code></li>
+<li><code>src/agent/mini-swe-agent/src/minisweagent/environments/local.py</code></li>
+<li><code>docs/especificaciones/agente/modulo_incertidumbre.md</code></li>
+<li><code>docs/especificaciones/agente/modulo_metricas.md</code></li>
+<li><code>docs/especificaciones/agente/modulo_controlador.md</code></li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Volver al principio
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.top", "search.suggest", "search.highlight", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado al portapapeles", "clipboard.copy": "Copiar al portapapeles", "search.result.more.one": "1 m\u00e1s en esta p\u00e1gina", "search.result.more.other": "# m\u00e1s en esta p\u00e1gina", "search.result.none": "No se encontraron documentos", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Teclee para comenzar b\u00fasqueda", "search.result.term.missing": "Falta", "select.version": "Seleccionar versi\u00f3n"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

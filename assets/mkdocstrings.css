@@ -1,0 +1,33 @@
+/* Etiquetas de tipo en mkdocstrings (clase, método, atributo, etc.). */
+
+[data-md-color-scheme="default"] {
+  --doc-symbol-parameter-fg-color: #df50af;
+  --doc-symbol-attribute-fg-color: #0079ff;
+  --doc-symbol-function-fg-color: #00dfa2;
+  --doc-symbol-method-fg-color: #00dfa2;
+  --doc-symbol-class-fg-color: #d1b619;
+  --doc-symbol-module-fg-color: #ff0060;
+
+  --doc-symbol-parameter-bg-color: #df50af1a;
+  --doc-symbol-attribute-bg-color: #0079ff1a;
+  --doc-symbol-function-bg-color: #00dfa21a;
+  --doc-symbol-method-bg-color: #00dfa21a;
+  --doc-symbol-class-bg-color: #d1b6191a;
+  --doc-symbol-module-bg-color: #ff00601a;
+}
+
+[data-md-color-scheme="slate"] {
+  --doc-symbol-parameter-fg-color: #ff7ad9;
+  --doc-symbol-attribute-fg-color: #5cb3ff;
+  --doc-symbol-function-fg-color: #3dffb8;
+  --doc-symbol-method-fg-color: #3dffb8;
+  --doc-symbol-class-fg-color: #ffd84d;
+  --doc-symbol-module-fg-color: #ff5c8a;
+
+  --doc-symbol-parameter-bg-color: #ff7ad926;
+  --doc-symbol-attribute-bg-color: #5cb3ff26;
+  --doc-symbol-function-bg-color: #3dffb826;
+  --doc-symbol-method-bg-color: #3dffb826;
+  --doc-symbol-class-bg-color: #ffd84d26;
+  --doc-symbol-module-bg-color: #ff5c8a26;
+}

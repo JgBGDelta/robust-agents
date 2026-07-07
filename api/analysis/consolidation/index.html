@@ -1,0 +1,4198 @@
+
+<!doctype html>
+<html lang="es" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Agente robusto sobre mini-SWE-agent y benchmark extendido (TFG).">
+      
+      
+      
+        <link rel="canonical" href="https://jgbgdelta.github.io/robust-agents/api/analysis/consolidation/">
+      
+      
+        <link rel="prev" href="../">
+      
+      
+        <link rel="next" href="../external_metrics/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Consolidación - Robust Agents TFG</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/_mkdocstrings.css">
+    
+      <link rel="stylesheet" href="../../../assets/custom.css">
+    
+      <link rel="stylesheet" href="../../../assets/mkdocstrings.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="deep-orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#consolidacion" class="md-skip">
+          Saltar a contenido
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabecera">
+    <a href="../../.." title="Robust Agents TFG" class="md-header__button md-logo" aria-label="Robust Agents TFG" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Robust Agents TFG
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Consolidación
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="deep-orange"  aria-label="Modo claro"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Modo claro" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="deep-orange"  aria-label="Modo oscuro"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Modo oscuro" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Búsqueda" placeholder="Búsqueda" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Buscar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpiar" aria-label="Limpiar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando búsqueda
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/JgBGDelta/robust-agents" title="Ir al repositorio" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    JgBGDelta/robust-agents
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Pestañas" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../manual-usuario/" class="md-tabs__link">
+          
+  
+  
+  Documentación
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../" class="md-tabs__link">
+          
+  
+  
+  Implementación
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navegación" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Robust Agents TFG" class="md-nav__button md-logo" aria-label="Robust Agents TFG" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Robust Agents TFG
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/JgBGDelta/robust-agents" title="Ir al repositorio" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    JgBGDelta/robust-agents
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Documentación
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Documentación
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../manual-usuario/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Manual de usuario
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../sobre-la-documentacion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sobre la documentación
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_3" id="__nav_1_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Especificaciones — Agente
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Especificaciones — Agente
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../especificaciones/agente/especificacion_agente/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Visión general
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../especificaciones/agente/modulo_incertidumbre/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Módulo incertidumbre
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../especificaciones/agente/modulo_metricas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Módulo métricas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../especificaciones/agente/modulo_controlador/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Módulo controlador
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../especificaciones/agente/tests/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tests
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_4" id="__nav_1_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Especificaciones — Benchmark
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Especificaciones — Benchmark
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../especificaciones/benchmark/especificacion_benchmark/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Visión general
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../especificaciones/benchmark/modulo_dataset/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Módulo dataset
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../especificaciones/benchmark/modulo_ejecucion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Módulo ejecución
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../especificaciones/benchmark/modulo_evaluacion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Módulo evaluación
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../especificaciones/benchmark/modulo_resultados/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Módulo resultados
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../especificaciones/benchmark/ejemplo_evaluation_result/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ejemplo evaluation result
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_5" id="__nav_1_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Especificaciones — Análisis
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Especificaciones — Análisis
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../especificaciones/analisis/especificacion_analisis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Visión general
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../especificaciones/analisis/modulo_metricas_agentes_externos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Módulo métricas de agentes externos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../especificaciones/analisis/modulo_consolidacion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Módulo consolidación
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../especificaciones/analisis/modulo_diagramas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Módulo diagramas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Implementación
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Implementación
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Visión general
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Agente
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Agente
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../agent/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Resumen
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../agent/robust_agent/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RobustAgent
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../agent/config/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuración
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../agent/episode_state/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Estado y traza
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../agent/structural_metrics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Métricas estructurales
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../agent/uncertainty/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Incertidumbre
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../agent/controller/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Controlador
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Benchmark
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Benchmark
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../benchmark/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Resumen
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../benchmark/benchmark_runner/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BenchmarkRunner
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../benchmark/config/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuración
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../benchmark/dataset/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dataset
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../benchmark/execution/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ejecución
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../benchmark/evaluation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Evaluación
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../benchmark/results/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Resultados
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2_4" id="__nav_2_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Análisis
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Análisis
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Resumen
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Consolidación
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Consolidación
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#analysis.consolidation_module.ConsolidationModule" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;ConsolidationModule
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" ConsolidationModule">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#analysis.consolidation_module.ConsolidationModule.consolidate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;consolidate
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#analysis.consolidation_module.ConsolidationModule.write_csv" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;write_csv
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#analysis.consolidation_module.ConsolidationConfig" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;ConsolidationConfig
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#analysis.consolidation_module.ConsolidatedRunRow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;ConsolidatedRunRow
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" ConsolidatedRunRow">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#analysis.consolidation_module.ConsolidatedRunRow.to_dict" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;to_dict
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#analysis.consolidation_module.ConsolidatedRunRow.fieldnames" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;fieldnames
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#analysis.consolidation_module.ConsolidatedStepRow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;ConsolidatedStepRow
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" ConsolidatedStepRow">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#analysis.consolidation_module.ConsolidatedStepRow.to_dict" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;to_dict
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#analysis.consolidation_module.ConsolidatedStepRow.fieldnames" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;fieldnames
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#implementacion-interna" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Implementación interna
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#analysis.consolidation_module.runs_scanner.RunsScanner" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;RunsScanner
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" RunsScanner">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#analysis.consolidation_module.runs_scanner.RunsScanner.scan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;scan
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" scan">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#analysis.consolidation_module.runs_scanner.RunsScanner.scan--parametros" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parametros
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#analysis.consolidation_module.runs_scanner.RunsScanner.scan--retorna" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Retorna
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#analysis.consolidation_module.trajectory_reader.TrajectoryReader" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;TrajectoryReader
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" TrajectoryReader">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#analysis.consolidation_module.trajectory_reader.TrajectoryReader.read" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;read
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" read">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#analysis.consolidation_module.trajectory_reader.TrajectoryReader.read--parametros" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parametros
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#analysis.consolidation_module.trajectory_reader.TrajectoryReader.read--retorna" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Retorna
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#analysis.consolidation_module.trajectory_reader.TrajectoryReader.build_step_rows" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;build_step_rows
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#analysis.consolidation_module.row_builder.RowBuilder" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;RowBuilder
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" RowBuilder">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#analysis.consolidation_module.row_builder.RowBuilder--parametros" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parametros
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#analysis.consolidation_module.row_builder.RowBuilder.build_own" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;build_own
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" build_own">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#analysis.consolidation_module.row_builder.RowBuilder.build_own--parametros" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parametros
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#analysis.consolidation_module.row_builder.RowBuilder.build_own--retorna" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Retorna
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#analysis.consolidation_module.row_builder.RowBuilder.build_external" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;build_external
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" build_external">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#analysis.consolidation_module.row_builder.RowBuilder.build_external--parametros" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parametros
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#analysis.consolidation_module.row_builder.RowBuilder.build_external--retorna" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Retorna
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../external_metrics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Métricas externas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../diagrams/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Diagramas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../run/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Punto de entrada CLI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#analysis.consolidation_module.ConsolidationModule" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;ConsolidationModule
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" ConsolidationModule">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#analysis.consolidation_module.ConsolidationModule.consolidate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;consolidate
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#analysis.consolidation_module.ConsolidationModule.write_csv" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;write_csv
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#analysis.consolidation_module.ConsolidationConfig" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;ConsolidationConfig
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#analysis.consolidation_module.ConsolidatedRunRow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;ConsolidatedRunRow
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" ConsolidatedRunRow">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#analysis.consolidation_module.ConsolidatedRunRow.to_dict" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;to_dict
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#analysis.consolidation_module.ConsolidatedRunRow.fieldnames" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;fieldnames
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#analysis.consolidation_module.ConsolidatedStepRow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;ConsolidatedStepRow
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" ConsolidatedStepRow">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#analysis.consolidation_module.ConsolidatedStepRow.to_dict" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;to_dict
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#analysis.consolidation_module.ConsolidatedStepRow.fieldnames" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;fieldnames
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#implementacion-interna" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Implementación interna
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#analysis.consolidation_module.runs_scanner.RunsScanner" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;RunsScanner
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" RunsScanner">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#analysis.consolidation_module.runs_scanner.RunsScanner.scan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;scan
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" scan">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#analysis.consolidation_module.runs_scanner.RunsScanner.scan--parametros" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parametros
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#analysis.consolidation_module.runs_scanner.RunsScanner.scan--retorna" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Retorna
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#analysis.consolidation_module.trajectory_reader.TrajectoryReader" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;TrajectoryReader
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" TrajectoryReader">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#analysis.consolidation_module.trajectory_reader.TrajectoryReader.read" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;read
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" read">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#analysis.consolidation_module.trajectory_reader.TrajectoryReader.read--parametros" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parametros
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#analysis.consolidation_module.trajectory_reader.TrajectoryReader.read--retorna" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Retorna
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#analysis.consolidation_module.trajectory_reader.TrajectoryReader.build_step_rows" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;build_step_rows
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#analysis.consolidation_module.row_builder.RowBuilder" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;RowBuilder
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" RowBuilder">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#analysis.consolidation_module.row_builder.RowBuilder--parametros" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parametros
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#analysis.consolidation_module.row_builder.RowBuilder.build_own" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;build_own
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" build_own">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#analysis.consolidation_module.row_builder.RowBuilder.build_own--parametros" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parametros
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#analysis.consolidation_module.row_builder.RowBuilder.build_own--retorna" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Retorna
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#analysis.consolidation_module.row_builder.RowBuilder.build_external" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;build_external
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" build_external">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#analysis.consolidation_module.row_builder.RowBuilder.build_external--parametros" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parametros
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#analysis.consolidation_module.row_builder.RowBuilder.build_external--retorna" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Retorna
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="consolidacion">Consolidación<a class="headerlink" href="#consolidacion" title="Permanent link">&para;</a></h1>
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="analysis.consolidation_module.ConsolidationModule" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">analysis.consolidation_module.ConsolidationModule</span>
+
+
+<a href="#analysis.consolidation_module.ConsolidationModule" class="headerlink" title="Permanent link">&para;</a></h2>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">ConsolidationModule</span><span class="p">(</span>
+    <span class="n">config</span><span class="p">:</span> <span class="n">ConsolidationConfig</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents first">
+
+
+
+        <p>Consolida resultados propios y externos en <code>datos_consolidados.csv</code>.</p>
+<p>Uso tipico::</p>
+<div class="highlight"><pre><span></span><code>module = ConsolidationModule()
+run_rows, step_rows = module.consolidate(
+    runs_root=Path(&quot;runs/full-lite-120inst-6agents&quot;),
+    external_metrics_paths=[
+        Path(&quot;data/external_predictions/agentless_v1.5/extracted_metrics.jsonl&quot;),
+    ],
+)
+csv_path, steps_csv_path = module.write_csv(
+    run_rows, step_rows, output_dir=Path(&quot;data/full-lite-120inst-6agents&quot;)
+)
+</code></pre></div>
+
+        <p>Inicializa <code>ConsolidationModule</code>.</p>
+
+
+
+
+
+
+
+
+                  <details class="mkdocstrings-source">
+                    <summary>Source code in <code>src/analysis/consolidation_module/consolidation_module.py</code></summary>
+                    <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">75</span>
+<span class="normal">76</span>
+<span class="normal">77</span>
+<span class="normal">78</span>
+<span class="normal">79</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="n">ConsolidationConfig</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Inicializa `ConsolidationModule`.&quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_config</span> <span class="o">=</span> <span class="n">config</span> <span class="ow">or</span> <span class="n">ConsolidationConfig</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_scanner</span> <span class="o">=</span> <span class="n">RunsScanner</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_row_builder</span> <span class="o">=</span> <span class="n">RowBuilder</span><span class="p">(</span><span class="n">test_globs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="o">.</span><span class="n">test_globs</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+                  </details>
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="analysis.consolidation_module.ConsolidationModule.consolidate" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">consolidate</span>
+
+
+<a href="#analysis.consolidation_module.ConsolidationModule.consolidate" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">consolidate</span><span class="p">(</span>
+    <span class="n">runs_root</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span>
+    <span class="n">external_metrics_paths</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Path</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span>
+    <span class="nb">list</span><span class="p">[</span><span class="n">ConsolidatedRunRow</span><span class="p">],</span> <span class="nb">list</span><span class="p">[</span><span class="n">ConsolidatedStepRow</span><span class="p">]</span>
+<span class="p">]</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Punto de entrada unico: escaneo -&gt; seleccion canonica -&gt; filas.</p>
+<p>Idempotente: relanzarla sobre el mismo estado en disco produce el
+mismo resultado, sin fusion incremental con ejecuciones anteriores.
+<code>runs_root</code> apunta a <code>runs/&lt;experiment_id&gt;/</code>. <code>external_metrics_paths</code>
+son las rutas a los <code>extracted_metrics.jsonl</code> de <code>ExternalMetricsModule</code>;
+<code>None</code> o lista vacia si no hay externos en esta pasada.</p>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>src/analysis/consolidation_module/consolidation_module.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 85</span>
+<span class="normal"> 86</span>
+<span class="normal"> 87</span>
+<span class="normal"> 88</span>
+<span class="normal"> 89</span>
+<span class="normal"> 90</span>
+<span class="normal"> 91</span>
+<span class="normal"> 92</span>
+<span class="normal"> 93</span>
+<span class="normal"> 94</span>
+<span class="normal"> 95</span>
+<span class="normal"> 96</span>
+<span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span>
+<span class="normal">110</span>
+<span class="normal">111</span>
+<span class="normal">112</span>
+<span class="normal">113</span>
+<span class="normal">114</span>
+<span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span>
+<span class="normal">120</span>
+<span class="normal">121</span>
+<span class="normal">122</span>
+<span class="normal">123</span>
+<span class="normal">124</span>
+<span class="normal">125</span>
+<span class="normal">126</span>
+<span class="normal">127</span>
+<span class="normal">128</span>
+<span class="normal">129</span>
+<span class="normal">130</span>
+<span class="normal">131</span>
+<span class="normal">132</span>
+<span class="normal">133</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">consolidate</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">runs_root</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span>
+    <span class="n">external_metrics_paths</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Path</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="n">ConsolidatedRunRow</span><span class="p">],</span> <span class="nb">list</span><span class="p">[</span><span class="n">ConsolidatedStepRow</span><span class="p">]]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Punto de entrada unico: escaneo -&gt; seleccion canonica -&gt; filas.</span>
+
+<span class="sd">    Idempotente: relanzarla sobre el mismo estado en disco produce el</span>
+<span class="sd">    mismo resultado, sin fusion incremental con ejecuciones anteriores.</span>
+<span class="sd">    `runs_root` apunta a `runs/&lt;experiment_id&gt;/`. `external_metrics_paths`</span>
+<span class="sd">    son las rutas a los `extracted_metrics.jsonl` de `ExternalMetricsModule`;</span>
+<span class="sd">    `None` o lista vacia si no hay externos en esta pasada.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">run_rows</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">ConsolidatedRunRow</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">step_rows</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">ConsolidatedStepRow</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">scanned</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_scanner</span><span class="o">.</span><span class="n">scan</span><span class="p">(</span><span class="n">runs_root</span><span class="p">):</span>
+        <span class="n">run_record</span> <span class="o">=</span> <span class="n">_read_json_safe</span><span class="p">(</span><span class="n">scanned</span><span class="o">.</span><span class="n">run_dir</span> <span class="o">/</span> <span class="n">_RUN_RECORD_FILENAME</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">run_record</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># No deberia ocurrir (RunsScanner ya exige el fichero), pero</span>
+            <span class="c1"># degradamos igual ante corrupcion detectada tarde (S6).</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                <span class="s2">&quot;Ignorando </span><span class="si">%s</span><span class="s2">: run_record.json invalido tras el escaneo.&quot;</span><span class="p">,</span>
+                <span class="n">scanned</span><span class="o">.</span><span class="n">run_dir</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="k">continue</span>
+
+        <span class="n">evaluation_path</span> <span class="o">=</span> <span class="n">scanned</span><span class="o">.</span><span class="n">run_dir</span> <span class="o">/</span> <span class="n">_EVALUATION_RESULT_FILENAME</span>
+        <span class="n">evaluation_result</span> <span class="o">=</span> <span class="n">_read_json_safe</span><span class="p">(</span><span class="n">evaluation_path</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">evaluation_result</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">evaluation_path</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># type: ignore[assignment]</span>
+
+        <span class="n">trajectory_data</span> <span class="o">=</span> <span class="n">_read_json_safe</span><span class="p">(</span><span class="n">scanned</span><span class="o">.</span><span class="n">run_dir</span> <span class="o">/</span> <span class="n">_TRAJECTORY_FILENAME</span><span class="p">)</span>
+
+        <span class="n">row</span><span class="p">,</span> <span class="n">steps</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_row_builder</span><span class="o">.</span><span class="n">build_own</span><span class="p">(</span>
+            <span class="n">scanned</span><span class="p">,</span>
+            <span class="n">run_record</span><span class="o">=</span><span class="n">run_record</span><span class="p">,</span>
+            <span class="n">evaluation_result</span><span class="o">=</span><span class="n">evaluation_result</span><span class="p">,</span>
+            <span class="n">evaluation_path</span><span class="o">=</span><span class="n">evaluation_path</span><span class="p">,</span>
+            <span class="n">trajectory_data</span><span class="o">=</span><span class="n">trajectory_data</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">run_rows</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+        <span class="n">step_rows</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">steps</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">external_path</span> <span class="ow">in</span> <span class="n">external_metrics_paths</span> <span class="ow">or</span> <span class="p">[]:</span>
+        <span class="k">for</span> <span class="n">record</span> <span class="ow">in</span> <span class="n">_load_external_records</span><span class="p">(</span><span class="n">external_path</span><span class="p">):</span>
+            <span class="n">run_rows</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_row_builder</span><span class="o">.</span><span class="n">build_external</span><span class="p">(</span><span class="n">record</span><span class="p">,</span> <span class="n">external_path</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">run_rows</span><span class="p">,</span> <span class="n">step_rows</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="analysis.consolidation_module.ConsolidationModule.write_csv" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">write_csv</span>
+
+
+<a href="#analysis.consolidation_module.ConsolidationModule.write_csv" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">write_csv</span><span class="p">(</span>
+    <span class="n">run_rows</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">ConsolidatedRunRow</span><span class="p">],</span>
+    <span class="n">step_rows</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">ConsolidatedStepRow</span><span class="p">],</span>
+    <span class="n">output_dir</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Path</span><span class="p">,</span> <span class="n">Path</span><span class="p">]</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Serializa ambas listas a CSV en <code>output_dir</code>, sobrescribiendo si existen.</p>
+<p>Devuelve la tupla <code>(ruta_datos_consolidados_csv, ruta_datos_pasos_consolidados_csv)</code>.</p>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>src/analysis/consolidation_module/consolidation_module.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">135</span>
+<span class="normal">136</span>
+<span class="normal">137</span>
+<span class="normal">138</span>
+<span class="normal">139</span>
+<span class="normal">140</span>
+<span class="normal">141</span>
+<span class="normal">142</span>
+<span class="normal">143</span>
+<span class="normal">144</span>
+<span class="normal">145</span>
+<span class="normal">146</span>
+<span class="normal">147</span>
+<span class="normal">148</span>
+<span class="normal">149</span>
+<span class="normal">150</span>
+<span class="normal">151</span>
+<span class="normal">152</span>
+<span class="normal">153</span>
+<span class="normal">154</span>
+<span class="normal">155</span>
+<span class="normal">156</span>
+<span class="normal">157</span>
+<span class="normal">158</span>
+<span class="normal">159</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">write_csv</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">run_rows</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">ConsolidatedRunRow</span><span class="p">],</span>
+    <span class="n">step_rows</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">ConsolidatedStepRow</span><span class="p">],</span>
+    <span class="n">output_dir</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Path</span><span class="p">,</span> <span class="n">Path</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Serializa ambas listas a CSV en `output_dir`, sobrescribiendo si existen.</span>
+
+<span class="sd">    Devuelve la tupla `(ruta_datos_consolidados_csv, ruta_datos_pasos_consolidados_csv)`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">output_dir</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">runs_path</span> <span class="o">=</span> <span class="n">output_dir</span> <span class="o">/</span> <span class="n">_RUNS_CSV_FILENAME</span>
+    <span class="n">steps_path</span> <span class="o">=</span> <span class="n">output_dir</span> <span class="o">/</span> <span class="n">_STEPS_CSV_FILENAME</span>
+
+    <span class="n">_write_dicts_csv</span><span class="p">(</span><span class="n">runs_path</span><span class="p">,</span> <span class="n">ConsolidatedRunRow</span><span class="o">.</span><span class="n">fieldnames</span><span class="p">(),</span> <span class="p">[</span><span class="n">r</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">run_rows</span><span class="p">])</span>
+    <span class="n">_write_dicts_csv</span><span class="p">(</span><span class="n">steps_path</span><span class="p">,</span> <span class="n">ConsolidatedStepRow</span><span class="o">.</span><span class="n">fieldnames</span><span class="p">(),</span> <span class="p">[</span><span class="n">s</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">step_rows</span><span class="p">])</span>
+
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+        <span class="s2">&quot;Consolidacion escrita: </span><span class="si">%d</span><span class="s2"> runs en </span><span class="si">%s</span><span class="s2">, </span><span class="si">%d</span><span class="s2"> pasos en </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="nb">len</span><span class="p">(</span><span class="n">run_rows</span><span class="p">),</span>
+        <span class="n">runs_path</span><span class="p">,</span>
+        <span class="nb">len</span><span class="p">(</span><span class="n">step_rows</span><span class="p">),</span>
+        <span class="n">steps_path</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">runs_path</span><span class="p">,</span> <span class="n">steps_path</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="analysis.consolidation_module.ConsolidationConfig" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">analysis.consolidation_module.ConsolidationConfig</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+<a href="#analysis.consolidation_module.ConsolidationConfig" class="headerlink" title="Permanent link">&para;</a></h2>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">ConsolidationConfig</span><span class="p">(</span>
+    <span class="n">test_globs</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="k">lambda</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="n">DEFAULT_TEST_GLOBS</span><span class="p">)</span>
+    <span class="p">)(),</span>
+<span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents first">
+
+
+
+        <p>Configuracion operativa de <code>ConsolidationModule</code>.</p>
+<p><code>test_globs</code> define los patrones para detectar ficheros de test en
+<code>test_touch_ratio</code>; por defecto los mismos que
+<code>StructuralMetricsConfig.test_globs</code> (<code>src/agent/config.py</code>).</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="analysis.consolidation_module.ConsolidatedRunRow" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">analysis.consolidation_module.ConsolidatedRunRow</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+<a href="#analysis.consolidation_module.ConsolidatedRunRow" class="headerlink" title="Permanent link">&para;</a></h2>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">ConsolidatedRunRow</span><span class="p">(</span>
+    <span class="n">run_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">instance_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">repository</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">agent_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">configuration_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">source_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">model_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">sample_group</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">run_status</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">exit_status</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">termination</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">failure_category</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">patch_available</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="n">submitted</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="n">empty_submission</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">evaluable</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">resolved</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">steps_used</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">cost_usd</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">duration_seconds</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">prompt_tokens</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">completion_tokens</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">total_tokens</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">run_sequence</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">retry_count</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">started_at</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">completed_at</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">uncertainty_mean</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">uncertainty_max</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">uncertainty_final</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">uncertainty_std</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">uncertainty_p95</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">uncertainty_high_ratio</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">cycle_mean</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">failure_rate_mean</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">hedging_mean</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">volatility_mean</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">uncertainty_missing_components</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">structural_risk_mean</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">structural_risk_max</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">structural_risk_final</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">structural_risk_p95</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">structural_risk_high_ratio</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">files_changed_ratio</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">hunks_per_file</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">net_lines</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">cumulative_lines_changed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">surface_final_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">controller_intervention_count</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">proceed_count</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">feedback_count</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">validation_count</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">abort_count</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">first_intervention_step</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">controller_intervention_ratio</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">high_high_encounter_count</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">final_controller_action</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">validation_success_count</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">validation_failure_count</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">files_modified_count</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">lines_added</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">lines_deleted</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">churn_total</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">hunks_count</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">dispersion_score</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">test_touch_ratio</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">matching_files_count</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">unexpected_files_count</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">missing_files_count</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">jaccard_files</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">jaccard_lines</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">patch_path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">trajectory_path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">evaluation_path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">external_release</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">external_source</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">external_model_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents first">
+
+
+
+        <p>Fila de <code>datos_consolidados.csv</code> (una por run logico, propio o externo).</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="analysis.consolidation_module.ConsolidatedRunRow.to_dict" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">to_dict</span>
+
+
+<a href="#analysis.consolidation_module.ConsolidatedRunRow.to_dict" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">to_dict</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Diccionario serializable a CSV (orden estable de columnas).</p>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>src/analysis/consolidation_module/consolidated_run_row.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">119</span>
+<span class="normal">120</span>
+<span class="normal">121</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Diccionario serializable a CSV (orden estable de columnas).&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">asdict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="analysis.consolidation_module.ConsolidatedRunRow.fieldnames" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">fieldnames</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-classmethod"><code>classmethod</code></small>
+  </span>
+
+<a href="#analysis.consolidation_module.ConsolidatedRunRow.fieldnames" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">fieldnames</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Nombres de columna en el orden declarado (para <code>csv.DictWriter</code>).</p>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>src/analysis/consolidation_module/consolidated_run_row.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">123</span>
+<span class="normal">124</span>
+<span class="normal">125</span>
+<span class="normal">126</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@classmethod</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">fieldnames</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Nombres de columna en el orden declarado (para `csv.DictWriter`).&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">f</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">fields</span><span class="p">(</span><span class="bp">cls</span><span class="p">)]</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="analysis.consolidation_module.ConsolidatedStepRow" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">analysis.consolidation_module.ConsolidatedStepRow</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+<a href="#analysis.consolidation_module.ConsolidatedStepRow" class="headerlink" title="Permanent link">&para;</a></h2>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">ConsolidatedStepRow</span><span class="p">(</span>
+    <span class="n">run_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">instance_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">configuration_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">step_index</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">uncertainty_score</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">uncertainty_level</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">structural_risk_score</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">structural_risk_level</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">controller_action</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents first">
+
+
+
+        <p>Fila de <code>datos_pasos_consolidados.csv</code> (un paso de un run <code>robust_agent</code>).</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="analysis.consolidation_module.ConsolidatedStepRow.to_dict" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">to_dict</span>
+
+
+<a href="#analysis.consolidation_module.ConsolidatedStepRow.to_dict" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">to_dict</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Diccionario serializable a CSV (orden estable de columnas).</p>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>src/analysis/consolidation_module/consolidated_step_row.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Diccionario serializable a CSV (orden estable de columnas).&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">asdict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="analysis.consolidation_module.ConsolidatedStepRow.fieldnames" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">fieldnames</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-classmethod"><code>classmethod</code></small>
+  </span>
+
+<a href="#analysis.consolidation_module.ConsolidatedStepRow.fieldnames" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">fieldnames</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Nombres de columna en el orden declarado (para <code>csv.DictWriter</code>).</p>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>src/analysis/consolidation_module/consolidated_step_row.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@classmethod</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">fieldnames</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Nombres de columna en el orden declarado (para `csv.DictWriter`).&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">f</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">fields</span><span class="p">(</span><span class="bp">cls</span><span class="p">)]</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div><h2 id="implementacion-interna">Implementación interna<a class="headerlink" href="#implementacion-interna" title="Permanent link">&para;</a></h2>
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="analysis.consolidation_module.runs_scanner.RunsScanner" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">analysis.consolidation_module.runs_scanner.RunsScanner</span>
+
+
+<a href="#analysis.consolidation_module.runs_scanner.RunsScanner" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents first">
+
+
+
+        <p>Recorre <code>runs_root/instances/*/*/*/</code> y devuelve runs logicos canonicos.</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="analysis.consolidation_module.runs_scanner.RunsScanner.scan" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">scan</span>
+
+
+<a href="#analysis.consolidation_module.runs_scanner.RunsScanner.scan" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">scan</span><span class="p">(</span><span class="n">runs_root</span><span class="p">:</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">ScannedRun</span><span class="p">]</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Escanea <code>runs_root/instances/**</code> y aplica la seleccion canonica.</p>
+<h5 id="analysis.consolidation_module.runs_scanner.RunsScanner.scan--parametros">Parametros<a class="headerlink" href="#analysis.consolidation_module.runs_scanner.RunsScanner.scan--parametros" title="Permanent link">&para;</a></h5>
+<p>runs_root:
+    Ruta a <code>runs/&lt;experiment_id&gt;/</code> (debe contener <code>instances/</code>).</p>
+<h5 id="analysis.consolidation_module.runs_scanner.RunsScanner.scan--retorna">Retorna<a class="headerlink" href="#analysis.consolidation_module.runs_scanner.RunsScanner.scan--retorna" title="Permanent link">&para;</a></h5>
+<p>Lista de <code>ScannedRun</code>, uno por run logico (grupo de reintentos)
+encontrado. Orden estable: por <code>instance_id</code>, luego <code>agent_id</code>.</p>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>src/analysis/consolidation_module/runs_scanner.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span>
+<span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span>
+<span class="normal">60</span>
+<span class="normal">61</span>
+<span class="normal">62</span>
+<span class="normal">63</span>
+<span class="normal">64</span>
+<span class="normal">65</span>
+<span class="normal">66</span>
+<span class="normal">67</span>
+<span class="normal">68</span>
+<span class="normal">69</span>
+<span class="normal">70</span>
+<span class="normal">71</span>
+<span class="normal">72</span>
+<span class="normal">73</span>
+<span class="normal">74</span>
+<span class="normal">75</span>
+<span class="normal">76</span>
+<span class="normal">77</span>
+<span class="normal">78</span>
+<span class="normal">79</span>
+<span class="normal">80</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">scan</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">runs_root</span><span class="p">:</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">ScannedRun</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Escanea `runs_root/instances/**` y aplica la seleccion canonica.</span>
+
+<span class="sd">    Parametros</span>
+<span class="sd">    ----------</span>
+<span class="sd">    runs_root:</span>
+<span class="sd">        Ruta a `runs/&lt;experiment_id&gt;/` (debe contener `instances/`).</span>
+
+<span class="sd">    Retorna</span>
+<span class="sd">    -------</span>
+<span class="sd">    Lista de `ScannedRun`, uno por run logico (grupo de reintentos)</span>
+<span class="sd">    encontrado. Orden estable: por `instance_id`, luego `agent_id`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">instances_dir</span> <span class="o">=</span> <span class="n">runs_root</span> <span class="o">/</span> <span class="s2">&quot;instances&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">instances_dir</span><span class="o">.</span><span class="n">is_dir</span><span class="p">():</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;No existe </span><span class="si">%s</span><span class="s2">; no hay runs que escanear.&quot;</span><span class="p">,</span> <span class="n">instances_dir</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[]</span>
+
+    <span class="n">scanned</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">ScannedRun</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">instance_dir</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">instances_dir</span><span class="o">.</span><span class="n">iterdir</span><span class="p">()</span> <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">is_dir</span><span class="p">()):</span>
+        <span class="k">for</span> <span class="n">agent_dir</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">instance_dir</span><span class="o">.</span><span class="n">iterdir</span><span class="p">()</span> <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">is_dir</span><span class="p">()):</span>
+            <span class="n">scanned</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_scan_agent_dir</span><span class="p">(</span>
+                    <span class="n">instance_id</span><span class="o">=</span><span class="n">instance_dir</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                    <span class="n">agent_id</span><span class="o">=</span><span class="n">agent_dir</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                    <span class="n">agent_dir</span><span class="o">=</span><span class="n">agent_dir</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+    <span class="k">return</span> <span class="n">scanned</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="analysis.consolidation_module.trajectory_reader.TrajectoryReader" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">analysis.consolidation_module.trajectory_reader.TrajectoryReader</span>
+
+
+<a href="#analysis.consolidation_module.trajectory_reader.TrajectoryReader" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents first">
+
+
+
+        <p>Parsea <code>trajectory.traj.json</code> (ya cargado como dict) y agrega sus campos.</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="analysis.consolidation_module.trajectory_reader.TrajectoryReader.read" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">read</span>
+
+
+<a href="#analysis.consolidation_module.trajectory_reader.TrajectoryReader.read" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">read</span><span class="p">(</span><span class="n">trajectory_data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">TrajectoryMetrics</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Extrae <code>TrajectoryMetrics</code> de una traza ya parseada.</p>
+<h5 id="analysis.consolidation_module.trajectory_reader.TrajectoryReader.read--parametros">Parametros<a class="headerlink" href="#analysis.consolidation_module.trajectory_reader.TrajectoryReader.read--parametros" title="Permanent link">&para;</a></h5>
+<p>trajectory_data:
+    Contenido de <code>trajectory.traj.json</code> ya deserializado.</p>
+<h5 id="analysis.consolidation_module.trajectory_reader.TrajectoryReader.read--retorna">Retorna<a class="headerlink" href="#analysis.consolidation_module.trajectory_reader.TrajectoryReader.read--retorna" title="Permanent link">&para;</a></h5>
+<p><code>TrajectoryMetrics</code> con los campos disponibles; los campos exclusivos
+de <code>robust_agent</code> quedan a <code>None</code> si la traza no trae ese bloque.</p>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>src/analysis/consolidation_module/trajectory_reader.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 95</span>
+<span class="normal"> 96</span>
+<span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span>
+<span class="normal">110</span>
+<span class="normal">111</span>
+<span class="normal">112</span>
+<span class="normal">113</span>
+<span class="normal">114</span>
+<span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span>
+<span class="normal">120</span>
+<span class="normal">121</span>
+<span class="normal">122</span>
+<span class="normal">123</span>
+<span class="normal">124</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trajectory_data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">TrajectoryMetrics</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Extrae `TrajectoryMetrics` de una traza ya parseada.</span>
+
+<span class="sd">    Parametros</span>
+<span class="sd">    ----------</span>
+<span class="sd">    trajectory_data:</span>
+<span class="sd">        Contenido de `trajectory.traj.json` ya deserializado.</span>
+
+<span class="sd">    Retorna</span>
+<span class="sd">    -------</span>
+<span class="sd">    `TrajectoryMetrics` con los campos disponibles; los campos exclusivos</span>
+<span class="sd">    de `robust_agent` quedan a `None` si la traza no trae ese bloque.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">metrics</span> <span class="o">=</span> <span class="n">TrajectoryMetrics</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_read_tokens</span><span class="p">(</span><span class="n">trajectory_data</span><span class="p">,</span> <span class="n">metrics</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_read_api_calls</span><span class="p">(</span><span class="n">trajectory_data</span><span class="p">,</span> <span class="n">metrics</span><span class="p">)</span>
+
+    <span class="n">robust_agent</span> <span class="o">=</span> <span class="n">trajectory_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;robust_agent&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">robust_agent</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">metrics</span>
+
+    <span class="n">metrics</span><span class="o">.</span><span class="n">has_robust_agent</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">metrics</span><span class="o">.</span><span class="n">termination</span> <span class="o">=</span> <span class="n">robust_agent</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;termination&quot;</span><span class="p">)</span>
+
+    <span class="n">episode_state</span> <span class="o">=</span> <span class="n">robust_agent</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;episode_state_final&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">{}</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_read_uncertainty</span><span class="p">(</span><span class="n">episode_state</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;signals_history&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">[],</span> <span class="n">metrics</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_read_structural_risk</span><span class="p">(</span><span class="n">episode_state</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;signals_history&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">[],</span> <span class="n">metrics</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_read_controller</span><span class="p">(</span><span class="n">episode_state</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;decisions_history&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">[],</span> <span class="n">metrics</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_read_validation_outcomes</span><span class="p">(</span><span class="n">robust_agent</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;steps&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">[],</span> <span class="n">metrics</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">metrics</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="analysis.consolidation_module.trajectory_reader.TrajectoryReader.build_step_rows" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">build_step_rows</span>
+
+
+<a href="#analysis.consolidation_module.trajectory_reader.TrajectoryReader.build_step_rows" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">build_step_rows</span><span class="p">(</span>
+    <span class="n">trajectory_data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">run_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">instance_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">configuration_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">ConsolidatedStepRow</span><span class="p">]</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Construye <code>datos_pasos_consolidados.csv</code> para un run <code>robust_agent</code>.</p>
+<p>Devuelve lista vacia si la traza no trae bloque <code>robust_agent</code> (p. ej.
+agente <code>default</code>, sin instrumentacion de incertidumbre/riesgo).</p>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>src/analysis/consolidation_module/trajectory_reader.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">126</span>
+<span class="normal">127</span>
+<span class="normal">128</span>
+<span class="normal">129</span>
+<span class="normal">130</span>
+<span class="normal">131</span>
+<span class="normal">132</span>
+<span class="normal">133</span>
+<span class="normal">134</span>
+<span class="normal">135</span>
+<span class="normal">136</span>
+<span class="normal">137</span>
+<span class="normal">138</span>
+<span class="normal">139</span>
+<span class="normal">140</span>
+<span class="normal">141</span>
+<span class="normal">142</span>
+<span class="normal">143</span>
+<span class="normal">144</span>
+<span class="normal">145</span>
+<span class="normal">146</span>
+<span class="normal">147</span>
+<span class="normal">148</span>
+<span class="normal">149</span>
+<span class="normal">150</span>
+<span class="normal">151</span>
+<span class="normal">152</span>
+<span class="normal">153</span>
+<span class="normal">154</span>
+<span class="normal">155</span>
+<span class="normal">156</span>
+<span class="normal">157</span>
+<span class="normal">158</span>
+<span class="normal">159</span>
+<span class="normal">160</span>
+<span class="normal">161</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">build_step_rows</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">trajectory_data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">run_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">instance_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">configuration_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">ConsolidatedStepRow</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Construye `datos_pasos_consolidados.csv` para un run `robust_agent`.</span>
+
+<span class="sd">    Devuelve lista vacia si la traza no trae bloque `robust_agent` (p. ej.</span>
+<span class="sd">    agente `default`, sin instrumentacion de incertidumbre/riesgo).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">robust_agent</span> <span class="o">=</span> <span class="n">trajectory_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;robust_agent&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">robust_agent</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[]</span>
+
+    <span class="n">rows</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">ConsolidatedStepRow</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">step</span> <span class="ow">in</span> <span class="n">robust_agent</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;steps&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">[]:</span>
+        <span class="n">uncertainty</span> <span class="o">=</span> <span class="n">step</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;uncertainty&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">{}</span>
+        <span class="n">structural_risk</span> <span class="o">=</span> <span class="n">step</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;structural_risk&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">{}</span>
+        <span class="n">decision</span> <span class="o">=</span> <span class="n">step</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;decision&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">{}</span>
+        <span class="n">rows</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="n">ConsolidatedStepRow</span><span class="p">(</span>
+                <span class="n">run_id</span><span class="o">=</span><span class="n">run_id</span><span class="p">,</span>
+                <span class="n">instance_id</span><span class="o">=</span><span class="n">instance_id</span><span class="p">,</span>
+                <span class="n">configuration_id</span><span class="o">=</span><span class="n">configuration_id</span><span class="p">,</span>
+                <span class="n">step_index</span><span class="o">=</span><span class="n">step</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;step_id&quot;</span><span class="p">),</span>
+                <span class="n">uncertainty_score</span><span class="o">=</span><span class="n">uncertainty</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;score&quot;</span><span class="p">),</span>
+                <span class="n">uncertainty_level</span><span class="o">=</span><span class="n">uncertainty</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;level&quot;</span><span class="p">),</span>
+                <span class="n">structural_risk_score</span><span class="o">=</span><span class="n">structural_risk</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;score&quot;</span><span class="p">),</span>
+                <span class="n">structural_risk_level</span><span class="o">=</span><span class="n">structural_risk</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;level&quot;</span><span class="p">),</span>
+                <span class="n">controller_action</span><span class="o">=</span><span class="n">decision</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;action&quot;</span><span class="p">),</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+    <span class="k">return</span> <span class="n">rows</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="analysis.consolidation_module.row_builder.RowBuilder" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">analysis.consolidation_module.row_builder.RowBuilder</span>
+
+
+<a href="#analysis.consolidation_module.row_builder.RowBuilder" class="headerlink" title="Permanent link">&para;</a></h2>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">RowBuilder</span><span class="p">(</span><span class="n">test_globs</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents first">
+
+
+
+        <p>Construye filas de <code>datos_consolidados.csv</code>/<code>datos_pasos_consolidados.csv</code>.</p>
+
+        <h4 id="analysis.consolidation_module.row_builder.RowBuilder--parametros">Parametros<a class="headerlink" href="#analysis.consolidation_module.row_builder.RowBuilder--parametros" title="Permanent link">&para;</a></h4>
+<p>test_globs:
+    Patrones para detectar ficheros de test en <code>test_touch_ratio</code>.
+    Por defecto, los mismos que <code>StructuralMetricsConfig.test_globs</code>
+    (<code>src/agent/config.py</code>).</p>
+
+
+
+
+
+
+
+
+                  <details class="mkdocstrings-source">
+                    <summary>Source code in <code>src/analysis/consolidation_module/row_builder.py</code></summary>
+                    <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">56</span>
+<span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span>
+<span class="normal">60</span>
+<span class="normal">61</span>
+<span class="normal">62</span>
+<span class="normal">63</span>
+<span class="normal">64</span>
+<span class="normal">65</span>
+<span class="normal">66</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">test_globs</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Parametros</span>
+<span class="sd">    ----------</span>
+<span class="sd">    test_globs:</span>
+<span class="sd">        Patrones para detectar ficheros de test en `test_touch_ratio`.</span>
+<span class="sd">        Por defecto, los mismos que `StructuralMetricsConfig.test_globs`</span>
+<span class="sd">        (`src/agent/config.py`).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_test_globs</span> <span class="o">=</span> <span class="n">test_globs</span> <span class="ow">or</span> <span class="n">DEFAULT_TEST_GLOBS</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_trajectory_reader</span> <span class="o">=</span> <span class="n">TrajectoryReader</span><span class="p">()</span>
+</code></pre></div></td></tr></table></div>
+                  </details>
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="analysis.consolidation_module.row_builder.RowBuilder.build_own" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">build_own</span>
+
+
+<a href="#analysis.consolidation_module.row_builder.RowBuilder.build_own" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">build_own</span><span class="p">(</span>
+    <span class="n">scanned</span><span class="p">:</span> <span class="n">ScannedRun</span><span class="p">,</span>
+    <span class="n">run_record</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
+    <span class="n">evaluation_result</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">evaluation_path</span><span class="p">:</span> <span class="n">Path</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">trajectory_data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">ConsolidatedRunRow</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="n">ConsolidatedStepRow</span><span class="p">]]</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Construye la fila de run y (si aplica) las filas de paso de un run propio.</p>
+<h5 id="analysis.consolidation_module.row_builder.RowBuilder.build_own--parametros">Parametros<a class="headerlink" href="#analysis.consolidation_module.row_builder.RowBuilder.build_own--parametros" title="Permanent link">&para;</a></h5>
+<p>scanned:
+    Run logico canonico ya seleccionado por <code>RunsScanner</code>.
+run_record:
+    Contenido de <code>run_record.json</code> (siempre presente, S6 "run_record.json ausente").
+evaluation_result:
+    Contenido de <code>evaluation_result.json</code>, o <code>None</code> si no existe/es invalido (PA6).
+evaluation_path:
+    Ruta a <code>evaluation_result.json</code> usada, o <code>None</code> si no se leyo.
+trajectory_data:
+    Contenido de <code>trajectory.traj.json</code>, o <code>None</code> si no existe/es invalido.</p>
+<h5 id="analysis.consolidation_module.row_builder.RowBuilder.build_own--retorna">Retorna<a class="headerlink" href="#analysis.consolidation_module.row_builder.RowBuilder.build_own--retorna" title="Permanent link">&para;</a></h5>
+<p>Tupla <code>(ConsolidatedRunRow, list[ConsolidatedStepRow])</code>. La lista de
+pasos esta vacia si la traza no trae bloque <code>robust_agent</code>.</p>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>src/analysis/consolidation_module/row_builder.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 72</span>
+<span class="normal"> 73</span>
+<span class="normal"> 74</span>
+<span class="normal"> 75</span>
+<span class="normal"> 76</span>
+<span class="normal"> 77</span>
+<span class="normal"> 78</span>
+<span class="normal"> 79</span>
+<span class="normal"> 80</span>
+<span class="normal"> 81</span>
+<span class="normal"> 82</span>
+<span class="normal"> 83</span>
+<span class="normal"> 84</span>
+<span class="normal"> 85</span>
+<span class="normal"> 86</span>
+<span class="normal"> 87</span>
+<span class="normal"> 88</span>
+<span class="normal"> 89</span>
+<span class="normal"> 90</span>
+<span class="normal"> 91</span>
+<span class="normal"> 92</span>
+<span class="normal"> 93</span>
+<span class="normal"> 94</span>
+<span class="normal"> 95</span>
+<span class="normal"> 96</span>
+<span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span>
+<span class="normal">110</span>
+<span class="normal">111</span>
+<span class="normal">112</span>
+<span class="normal">113</span>
+<span class="normal">114</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">build_own</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">scanned</span><span class="p">:</span> <span class="n">ScannedRun</span><span class="p">,</span>
+    <span class="n">run_record</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
+    <span class="n">evaluation_result</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">evaluation_path</span><span class="p">:</span> <span class="n">Path</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">trajectory_data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">ConsolidatedRunRow</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="n">ConsolidatedStepRow</span><span class="p">]]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Construye la fila de run y (si aplica) las filas de paso de un run propio.</span>
+
+<span class="sd">    Parametros</span>
+<span class="sd">    ----------</span>
+<span class="sd">    scanned:</span>
+<span class="sd">        Run logico canonico ya seleccionado por `RunsScanner`.</span>
+<span class="sd">    run_record:</span>
+<span class="sd">        Contenido de `run_record.json` (siempre presente, S6 &quot;run_record.json ausente&quot;).</span>
+<span class="sd">    evaluation_result:</span>
+<span class="sd">        Contenido de `evaluation_result.json`, o `None` si no existe/es invalido (PA6).</span>
+<span class="sd">    evaluation_path:</span>
+<span class="sd">        Ruta a `evaluation_result.json` usada, o `None` si no se leyo.</span>
+<span class="sd">    trajectory_data:</span>
+<span class="sd">        Contenido de `trajectory.traj.json`, o `None` si no existe/es invalido.</span>
+
+<span class="sd">    Retorna</span>
+<span class="sd">    -------</span>
+<span class="sd">    Tupla `(ConsolidatedRunRow, list[ConsolidatedStepRow])`. La lista de</span>
+<span class="sd">    pasos esta vacia si la traza no trae bloque `robust_agent`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">trajectory_metrics</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_trajectory_reader</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">trajectory_data</span><span class="p">)</span> <span class="k">if</span> <span class="n">trajectory_data</span> <span class="k">else</span> <span class="n">TrajectoryMetrics</span><span class="p">()</span>
+    <span class="p">)</span>
+    <span class="n">row</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_own_row</span><span class="p">(</span><span class="n">scanned</span><span class="p">,</span> <span class="n">run_record</span><span class="p">,</span> <span class="n">evaluation_result</span><span class="p">,</span> <span class="n">evaluation_path</span><span class="p">,</span> <span class="n">trajectory_metrics</span><span class="p">)</span>
+    <span class="n">step_rows</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_trajectory_reader</span><span class="o">.</span><span class="n">build_step_rows</span><span class="p">(</span>
+            <span class="n">trajectory_data</span><span class="p">,</span>
+            <span class="n">run_id</span><span class="o">=</span><span class="n">row</span><span class="o">.</span><span class="n">run_id</span><span class="p">,</span>
+            <span class="n">instance_id</span><span class="o">=</span><span class="n">row</span><span class="o">.</span><span class="n">instance_id</span><span class="p">,</span>
+            <span class="n">configuration_id</span><span class="o">=</span><span class="n">row</span><span class="o">.</span><span class="n">configuration_id</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">trajectory_data</span>
+        <span class="k">else</span> <span class="p">[]</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">row</span><span class="p">,</span> <span class="n">step_rows</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="analysis.consolidation_module.row_builder.RowBuilder.build_external" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">build_external</span>
+
+
+<a href="#analysis.consolidation_module.row_builder.RowBuilder.build_external" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">build_external</span><span class="p">(</span>
+    <span class="n">record</span><span class="p">:</span> <span class="s2">&quot;ExternalMetricsRecord&quot;</span><span class="p">,</span>
+    <span class="n">external_metrics_path</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ConsolidatedRunRow</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Construye la fila de <code>datos_consolidados.csv</code> para un run externo.</p>
+<h5 id="analysis.consolidation_module.row_builder.RowBuilder.build_external--parametros">Parametros<a class="headerlink" href="#analysis.consolidation_module.row_builder.RowBuilder.build_external--parametros" title="Permanent link">&para;</a></h5>
+<p>record:
+    Registro cargado de <code>extracted_metrics.jsonl</code>.
+external_metrics_path:
+    Ruta al <code>extracted_metrics.jsonl</code> de origen (usada como <code>patch_path</code>,
+    unica referencia disponible al parche publicado).</p>
+<h5 id="analysis.consolidation_module.row_builder.RowBuilder.build_external--retorna">Retorna<a class="headerlink" href="#analysis.consolidation_module.row_builder.RowBuilder.build_external--retorna" title="Permanent link">&para;</a></h5>
+<p><code>ConsolidatedRunRow</code> con <code>source_type="external"</code>; todas las familias
+exclusivas de <code>own</code> (coste/esfuerzo, incertidumbre, riesgo estructural,
+controlador) a <code>None</code>.</p>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>src/analysis/consolidation_module/row_builder.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">224</span>
+<span class="normal">225</span>
+<span class="normal">226</span>
+<span class="normal">227</span>
+<span class="normal">228</span>
+<span class="normal">229</span>
+<span class="normal">230</span>
+<span class="normal">231</span>
+<span class="normal">232</span>
+<span class="normal">233</span>
+<span class="normal">234</span>
+<span class="normal">235</span>
+<span class="normal">236</span>
+<span class="normal">237</span>
+<span class="normal">238</span>
+<span class="normal">239</span>
+<span class="normal">240</span>
+<span class="normal">241</span>
+<span class="normal">242</span>
+<span class="normal">243</span>
+<span class="normal">244</span>
+<span class="normal">245</span>
+<span class="normal">246</span>
+<span class="normal">247</span>
+<span class="normal">248</span>
+<span class="normal">249</span>
+<span class="normal">250</span>
+<span class="normal">251</span>
+<span class="normal">252</span>
+<span class="normal">253</span>
+<span class="normal">254</span>
+<span class="normal">255</span>
+<span class="normal">256</span>
+<span class="normal">257</span>
+<span class="normal">258</span>
+<span class="normal">259</span>
+<span class="normal">260</span>
+<span class="normal">261</span>
+<span class="normal">262</span>
+<span class="normal">263</span>
+<span class="normal">264</span>
+<span class="normal">265</span>
+<span class="normal">266</span>
+<span class="normal">267</span>
+<span class="normal">268</span>
+<span class="normal">269</span>
+<span class="normal">270</span>
+<span class="normal">271</span>
+<span class="normal">272</span>
+<span class="normal">273</span>
+<span class="normal">274</span>
+<span class="normal">275</span>
+<span class="normal">276</span>
+<span class="normal">277</span>
+<span class="normal">278</span>
+<span class="normal">279</span>
+<span class="normal">280</span>
+<span class="normal">281</span>
+<span class="normal">282</span>
+<span class="normal">283</span>
+<span class="normal">284</span>
+<span class="normal">285</span>
+<span class="normal">286</span>
+<span class="normal">287</span>
+<span class="normal">288</span>
+<span class="normal">289</span>
+<span class="normal">290</span>
+<span class="normal">291</span>
+<span class="normal">292</span>
+<span class="normal">293</span>
+<span class="normal">294</span>
+<span class="normal">295</span>
+<span class="normal">296</span>
+<span class="normal">297</span>
+<span class="normal">298</span>
+<span class="normal">299</span>
+<span class="normal">300</span>
+<span class="normal">301</span>
+<span class="normal">302</span>
+<span class="normal">303</span>
+<span class="normal">304</span>
+<span class="normal">305</span>
+<span class="normal">306</span>
+<span class="normal">307</span>
+<span class="normal">308</span>
+<span class="normal">309</span>
+<span class="normal">310</span>
+<span class="normal">311</span>
+<span class="normal">312</span>
+<span class="normal">313</span>
+<span class="normal">314</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">build_external</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span> <span class="n">record</span><span class="p">:</span> <span class="s2">&quot;ExternalMetricsRecord&quot;</span><span class="p">,</span> <span class="n">external_metrics_path</span><span class="p">:</span> <span class="n">Path</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ConsolidatedRunRow</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Construye la fila de `datos_consolidados.csv` para un run externo.</span>
+
+<span class="sd">    Parametros</span>
+<span class="sd">    ----------</span>
+<span class="sd">    record:</span>
+<span class="sd">        Registro cargado de `extracted_metrics.jsonl`.</span>
+<span class="sd">    external_metrics_path:</span>
+<span class="sd">        Ruta al `extracted_metrics.jsonl` de origen (usada como `patch_path`,</span>
+<span class="sd">        unica referencia disponible al parche publicado).</span>
+
+<span class="sd">    Retorna</span>
+<span class="sd">    -------</span>
+<span class="sd">    `ConsolidatedRunRow` con `source_type=&quot;external&quot;`; todas las familias</span>
+<span class="sd">    exclusivas de `own` (coste/esfuerzo, incertidumbre, riesgo estructural,</span>
+<span class="sd">    controlador) a `None`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">patch_family</span> <span class="o">=</span> <span class="n">_patch_family_from_metrics</span><span class="p">(</span><span class="n">record</span><span class="o">.</span><span class="n">patch_metrics</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">ConsolidatedRunRow</span><span class="p">(</span>
+        <span class="n">run_id</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;ext-</span><span class="si">{</span><span class="n">record</span><span class="o">.</span><span class="n">source_id</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">record</span><span class="o">.</span><span class="n">instance_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">instance_id</span><span class="o">=</span><span class="n">record</span><span class="o">.</span><span class="n">instance_id</span><span class="p">,</span>
+        <span class="n">repository</span><span class="o">=</span><span class="n">_repository_from_instance_id</span><span class="p">(</span><span class="n">record</span><span class="o">.</span><span class="n">instance_id</span><span class="p">),</span>
+        <span class="n">agent_id</span><span class="o">=</span><span class="n">record</span><span class="o">.</span><span class="n">agent_id</span><span class="p">,</span>
+        <span class="n">configuration_id</span><span class="o">=</span><span class="n">record</span><span class="o">.</span><span class="n">agent_id</span><span class="p">,</span>
+        <span class="n">source_type</span><span class="o">=</span><span class="s2">&quot;external&quot;</span><span class="p">,</span>
+        <span class="n">model_id</span><span class="o">=</span><span class="n">record</span><span class="o">.</span><span class="n">model_id</span><span class="p">,</span>
+        <span class="n">sample_group</span><span class="o">=</span><span class="s2">&quot;external&quot;</span><span class="p">,</span>
+        <span class="n">run_status</span><span class="o">=</span><span class="s2">&quot;completed&quot;</span> <span class="k">if</span> <span class="nb">bool</span><span class="p">(</span><span class="n">record</span><span class="o">.</span><span class="n">model_patch</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">exit_status</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">termination</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">failure_category</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">patch_available</span><span class="o">=</span><span class="nb">bool</span><span class="p">(</span><span class="n">record</span><span class="o">.</span><span class="n">model_patch</span><span class="p">),</span>
+        <span class="n">submitted</span><span class="o">=</span><span class="nb">bool</span><span class="p">(</span><span class="n">record</span><span class="o">.</span><span class="n">model_patch</span><span class="p">),</span>
+        <span class="n">empty_submission</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">evaluable</span><span class="o">=</span><span class="n">record</span><span class="o">.</span><span class="n">resolved</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">resolved</span><span class="o">=</span><span class="n">record</span><span class="o">.</span><span class="n">resolved</span><span class="p">,</span>
+        <span class="n">steps_used</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">cost_usd</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">duration_seconds</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">prompt_tokens</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">completion_tokens</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">total_tokens</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">run_sequence</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">retry_count</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">started_at</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">completed_at</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">uncertainty_mean</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">uncertainty_max</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">uncertainty_final</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">uncertainty_std</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">uncertainty_p95</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">uncertainty_high_ratio</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">cycle_mean</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">failure_rate_mean</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">hedging_mean</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">volatility_mean</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">uncertainty_missing_components</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">structural_risk_mean</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">structural_risk_max</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">structural_risk_final</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">structural_risk_p95</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">structural_risk_high_ratio</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">files_changed_ratio</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">hunks_per_file</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">net_lines</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">cumulative_lines_changed</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">surface_final_size</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">controller_intervention_count</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">proceed_count</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">feedback_count</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">validation_count</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">abort_count</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">first_intervention_step</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">controller_intervention_ratio</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">high_high_encounter_count</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">final_controller_action</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">validation_success_count</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">validation_failure_count</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">dispersion_score</span><span class="o">=</span><span class="n">dispersion_score</span><span class="p">((</span><span class="n">record</span><span class="o">.</span><span class="n">patch_metrics</span> <span class="ow">or</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;files_modified&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">[]),</span>
+        <span class="n">test_touch_ratio</span><span class="o">=</span><span class="n">test_touch_ratio</span><span class="p">(</span><span class="n">record</span><span class="o">.</span><span class="n">model_patch</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_test_globs</span><span class="p">),</span>
+        <span class="n">patch_path</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">external_metrics_path</span><span class="p">),</span>
+        <span class="n">trajectory_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">evaluation_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">external_release</span><span class="o">=</span><span class="n">record</span><span class="o">.</span><span class="n">external_release</span><span class="p">,</span>
+        <span class="n">external_source</span><span class="o">=</span><span class="n">record</span><span class="o">.</span><span class="n">external_source_name</span><span class="p">,</span>
+        <span class="n">external_model_id</span><span class="o">=</span><span class="n">record</span><span class="o">.</span><span class="n">model_id</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">patch_family</span><span class="p">,</span>
+    <span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Volver al principio
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.top", "search.suggest", "search.highlight", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado al portapapeles", "clipboard.copy": "Copiar al portapapeles", "search.result.more.one": "1 m\u00e1s en esta p\u00e1gina", "search.result.more.other": "# m\u00e1s en esta p\u00e1gina", "search.result.none": "No se encontraron documentos", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Teclee para comenzar b\u00fasqueda", "search.result.term.missing": "Falta", "select.version": "Seleccionar versi\u00f3n"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
